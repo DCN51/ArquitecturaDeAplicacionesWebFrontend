@@ -1,0 +1,19 @@
+<mat-toolbar class="menu">
+  <button matIconButton routerLink="/">
+    <mat-icon>home</mat-icon>
+  </button>
+  <span class="titulo">Mind Health</span>
+
+  <button matButton [matMenuTriggerFor]="menuPlanes">Planes</button>
+  <mat-menu #menuPlanes="matMenu">
+    <button mat-menu-item routerLink="/planes/listar">Listar</button>
+    <button mat-menu-item routerLink="/planes/insertar">Registrar</button>
+  </mat-menu>
+
+  <button matButton [matMenuTriggerFor]="menuSuscripcion">Suscripción</button>
+  <mat-menu #menuSuscripcion="matMenu">
+    <button mat-menu-item routerLink="/suscripciones/contratar">Contratar plan</button>
+    <button mat-menu-item routerLink="/suscripciones/cambiar-plan">Cambiar plan</button>
+    <button mat-menu-item routerLink="/suscripciones/historial">Historial</button>
+  </mat-menu>
+</mat-toolbar>

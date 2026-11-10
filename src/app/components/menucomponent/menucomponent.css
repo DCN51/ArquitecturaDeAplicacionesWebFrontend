@@ -1,0 +1,8 @@
+.menu {
+  background: #1aab8b;
+  color: #ffffff;
+  gap: 8px;
+  --mat-button-text-label-text-color: #ffffff;
+}
+.menu mat-icon { color: #ffffff; }
+.titulo { font-weight: 600; margin-right: 16px; }

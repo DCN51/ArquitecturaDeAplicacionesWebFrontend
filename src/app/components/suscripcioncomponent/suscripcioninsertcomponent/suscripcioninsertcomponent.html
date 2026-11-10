@@ -1,0 +1,70 @@
+<div class="container">
+  <h2>Contratar plan</h2>
+
+  <form [formGroup]="suscripcionForm" (ngSubmit)="contratarPlan()">
+
+    <mat-form-field class="campo">
+      <mat-label>Id de usuario (paciente)</mat-label>
+      <input matInput type="number" formControlName="usuarioId">
+      <mat-hint>Temporal hasta tener login con JWT</mat-hint>
+      @if (suscripcionForm.get('usuarioId')?.invalid) {
+        <mat-error>Ingrese un id de usuario válido</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Plan</mat-label>
+      <mat-select formControlName="catalogoPlanId">
+        @for (p of planes; track p.catalogoPlanId) {
+          <mat-option [value]="p.catalogoPlanId">
+            {{ p.nombreCatalogoPlan }} - {{ p.precioMensualCatalogoPlan | currency:'PEN':'S/ ':'1.2-2' }}
+          </mat-option>
+        }
+      </mat-select>
+      @if (suscripcionForm.get('catalogoPlanId')?.hasError('required')) {
+        <mat-error>Elija un plan</mat-error>
+      }
+    </mat-form-field>
+
+    @if (planEsDePago) {
+      <mat-form-field class="campo">
+        <mat-label>Método de pago</mat-label>
+        <mat-select formControlName="metodoPago">
+          @for (m of metodosPago; track m) {
+            <mat-option [value]="m">{{ m }}</mat-option>
+          }
+        </mat-select>
+        @if (suscripcionForm.get('metodoPago')?.hasError('required')) {
+          <mat-error>Elija un método de pago</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="campo">
+        <mat-label>Referencia de pago</mat-label>
+        <input matInput formControlName="referenciaPago" placeholder="OP-2001">
+        @if (suscripcionForm.get('referenciaPago')?.hasError('required')) {
+          <mat-error>La referencia de pago es obligatoria</mat-error>
+        }
+      </mat-form-field>
+    }
+
+    <button matButton="filled" type="submit">Contratar</button>
+  </form>
+
+  @if (mensaje) {
+    <p class="mensaje">{{ mensaje }}</p>
+  }
+
+  @if (suscripcionCreada) {
+    <mat-card class="resultado">
+      <mat-card-content>
+        <p><strong>Plan:</strong> {{ nombrePlan(suscripcionCreada.catalogoPlanId) }}</p>
+        <p><strong>Fecha de inicio:</strong> {{ suscripcionCreada.fechaInicio | date:'dd/MM/yyyy':'UTC' }}</p>
+        <p><strong>Fecha de fin:</strong>
+          {{ suscripcionCreada.fechaFin ? (suscripcionCreada.fechaFin | date:'dd/MM/yyyy':'UTC') : 'Sin vencimiento' }}
+        </p>
+        <p><strong>Estado:</strong> {{ suscripcionCreada.estadoSuscripcion }}</p>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>
