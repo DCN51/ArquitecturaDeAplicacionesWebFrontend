@@ -1,0 +1,64 @@
+<div class="container">
+  <h2>Historial de suscripciones</h2>
+
+  <div class="buscador">
+    <mat-form-field>
+      <mat-label>Id de usuario (paciente)</mat-label>
+      <input matInput type="number" [(ngModel)]="usuarioId" (keyup.enter)="buscarHistorial()">
+    </mat-form-field>
+    <button matButton="filled" (click)="buscarHistorial()">Buscar</button>
+  </div>
+
+  @if (mensaje) {
+    <p class="mensaje">{{ mensaje }}</p>
+  }
+
+  <!-- HUF07: resultado de cancelar -->
+  @if (mensajeAccion) {
+    <p class="mensaje">{{ mensajeAccion }}</p>
+  }
+
+  @if (lista.length > 0) {
+    <table mat-table [dataSource]="lista" class="mat-elevation-z2">
+
+      <ng-container matColumnDef="plan">
+        <th mat-header-cell *matHeaderCellDef>Plan</th>
+        <td mat-cell *matCellDef="let element">{{ nombrePlan(element.catalogoPlanId) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="inicio">
+        <th mat-header-cell *matHeaderCellDef>Fecha de inicio</th>
+        <td mat-cell *matCellDef="let element">{{ element.fechaInicio | date:'dd/MM/yyyy':'UTC' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="fin">
+        <th mat-header-cell *matHeaderCellDef>Fecha de fin</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.fechaFin ? (element.fechaFin | date:'dd/MM/yyyy':'UTC') : 'Sin vencimiento' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef>Estado</th>
+        <td mat-cell *matCellDef="let element">
+          <span [class]="element.estadoSuscripcion">{{ element.estadoSuscripcion }}</span>
+        </td>
+      </ng-container>
+
+      <!-- HUF07: el botón solo aparece en la suscripción activa -->
+      <ng-container matColumnDef="cancelar">
+        <th mat-header-cell *matHeaderCellDef>Cancelar</th>
+        <td mat-cell *matCellDef="let element">
+          @if (element.estadoSuscripcion === 'activa') {
+            <button matIconButton (click)="cancelarSuscripcion(element)">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          }
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  }
+</div>
