@@ -1,59 +1,33 @@
-# MindhealthFront
+# ArquitecturaDeAplicacionesWebFrontend
+<img width="1125" height="160" alt="ascii-art-text" src="https://github.com/user-attachments/assets/c840e7a5-e853-4c72-815f-5c0ac6177b0f" />
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.29.
+# Arquitectura-De-Aplicaciones-Web-Grupo-02
 
-## Development server
+#MindHealth - Plataforma de Apoyo a la Salud Mental MindHealth es una aplicación de chat digital diseñada para mejorar el bienestar emocional de los usuarios a través de herramientas de seguimiento, conexión con profesionales de salud mental, y recursos personalizados.
 
-To start a local development server, run:
+##Funcionalidades ofrecidas
 
-```bash
-ng serve
-```
+Registro y gestión de las sesiones psicológicas con el chatbot.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Recomendaciones de actividades personalizadas en base a las sesiones.
 
-## Code scaffolding
+Sistema de notificaciones de alertas y derivación a especialistas.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Servicio gratuito básico, suscripción y planes de pago.
 
-```bash
-ng generate component component-name
-```
+##Público objetivo
+Personas en búsqueda de apoyo emocional.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Psicólogos y terapeutas interesados.
 
-```bash
-ng generate --help
-```
+Clínicas y centros de salud mental.
 
-## Building
+##Tecnologías usadas
 
-To build the project run:
+Trello: Historias de usuarios y planificacion de sprint
+Postgre: Base de datos
+Git & GitHub: Control de versiones.
 
-```bash
-ng build
-```
+##Créditos
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Proyecto desarrollado por el equipo MINDHEALTH como parte de su trabajo académico y profesional en diseño UX/UI aplicado a la salud mental.
