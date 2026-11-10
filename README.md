@@ -3,7 +3,7 @@
 
 # Arquitectura-De-Aplicaciones-Web-Grupo-02
 
-#MindHealth - Plataforma de Apoyo a la Salud Mental MindHealth es una aplicación de chat digital diseñada para mejorar el bienestar emocional de los usuarios a través de herramientas de seguimiento, conexión con profesionales de salud mental, y recursos personalizados.
+#MindHealth - Plataforma de chat integrada a api de IA digital diseñada para mejorar el bienestar emocional de los usuarios a través de herramientas de seguimiento, conexión con profesionales de salud mental, y recursos personalizados.
 
 ##Funcionalidades ofrecidas
 
@@ -27,6 +27,7 @@ Clínicas y centros de salud mental.
 Trello: Historias de usuarios y planificacion de sprint
 Postgre: Base de datos
 Git & GitHub: Control de versiones.
+Api: Gemini y Grok
 
 ##Créditos
 
