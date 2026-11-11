@@ -1,0 +1,75 @@
+<div class="container">
+  <h2>Registrar actividad recomendada</h2>
+
+  <form [formGroup]="actividadForm" (ngSubmit)="insertarActividad()">
+
+    <div class="fila">
+      <mat-form-field class="campo">
+        <mat-label>Id del paciente</mat-label>
+        <input matInput type="number" formControlName="usuarioId">
+        @if (actividadForm.get('usuarioId')?.invalid) {
+          <mat-error>Ingrese un id válido</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="campo">
+        <mat-label>Id del diagnóstico</mat-label>
+        <input matInput type="number" formControlName="diagnosticoId">
+        @if (actividadForm.get('diagnosticoId')?.invalid) {
+          <mat-error>Ingrese un id válido</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <mat-form-field class="campo">
+      <mat-label>Título</mat-label>
+      <input matInput formControlName="titulo" placeholder="Respiración 4-7-8">
+      @if (actividadForm.get('titulo')?.hasError('required')) {
+        <mat-error>El título es obligatorio</mat-error>
+      }
+      @if (actividadForm.get('titulo')?.hasError('maxlength')) {
+        <mat-error>Máximo 100 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput formControlName="descripcion" rows="3"></textarea>
+      @if (actividadForm.get('descripcion')?.hasError('required')) {
+        <mat-error>La descripción es obligatoria</mat-error>
+      }
+      @if (actividadForm.get('descripcion')?.hasError('maxlength')) {
+        <mat-error>Máximo 255 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Tipo</mat-label>
+      <mat-select formControlName="tipo">
+        @for (t of tipos; track t) {
+          <mat-option [value]="t">{{ t }}</mat-option>
+        }
+      </mat-select>
+      @if (actividadForm.get('tipo')?.hasError('required')) {
+        <mat-error>Elija un tipo</mat-error>
+      }
+    </mat-form-field>
+
+    <button matButton="filled" type="submit">Registrar</button>
+  </form>
+
+  @if (mensaje) {
+    <p class="mensaje">{{ mensaje }}</p>
+  }
+
+  @if (actividadCreada) {
+    <mat-card class="resultado">
+      <mat-card-content>
+        <p><strong>Actividad:</strong> {{ actividadCreada.title }}</p>
+        <p><strong>Paciente:</strong> {{ actividadCreada.userId }} | <strong>Diagnóstico:</strong> {{ actividadCreada.diagnosisId }}</p>
+        <p><strong>Asignada:</strong> {{ actividadCreada.assignedDate | date:'dd/MM/yyyy':'UTC' }}</p>
+        <p><strong>Estado:</strong> {{ actividadCreada.status }}</p>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

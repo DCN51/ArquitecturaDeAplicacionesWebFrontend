@@ -1,0 +1,23 @@
+<div class="container">
+  <h2>Completar actividad</h2>
+
+  @if (actividad) {
+    <p><strong>{{ actividad.title }}</strong></p>
+    <p>{{ actividad.description }}</p>
+
+    <mat-form-field class="campo">
+      <mat-label>¿Cómo te fue? (opcional)</mat-label>
+      <textarea matInput [(ngModel)]="comentario" rows="4" maxlength="255"></textarea>
+      <mat-hint align="end">{{ comentario.length }}/255</mat-hint>
+    </mat-form-field>
+
+    <div class="botones">
+      <button matButton="filled" (click)="completarActividad()">Confirmar</button>
+      <button matButton routerLink="/actividades/listar">Cancelar</button>
+    </div>
+  }
+
+  @if (mensaje) {
+    <p class="mensaje">{{ mensaje }}</p>
+  }
+</div>

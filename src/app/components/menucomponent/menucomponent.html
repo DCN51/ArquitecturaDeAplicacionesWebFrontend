@@ -4,6 +4,12 @@
   </button>
   <span class="titulo">Mind Health</span>
 
+  <button matButton [matMenuTriggerFor]="menuUsuarios">Usuarios</button>
+  <mat-menu #menuUsuarios="matMenu">
+    <button mat-menu-item routerLink="/usuarios/listar">Listar</button>
+    <button mat-menu-item routerLink="/roles/listar">Roles</button>
+  </mat-menu>
+
   <button matButton [matMenuTriggerFor]="menuPlanes">Planes</button>
   <mat-menu #menuPlanes="matMenu">
     <button mat-menu-item routerLink="/planes/listar">Listar</button>
@@ -15,5 +21,11 @@
     <button mat-menu-item routerLink="/suscripciones/contratar">Contratar plan</button>
     <button mat-menu-item routerLink="/suscripciones/cambiar-plan">Cambiar plan</button>
     <button mat-menu-item routerLink="/suscripciones/historial">Historial</button>
+  </mat-menu>
+
+  <button matButton [matMenuTriggerFor]="menuActividades">Actividades</button>
+  <mat-menu #menuActividades="matMenu">
+    <button mat-menu-item routerLink="/actividades/listar">Listar</button>
+    <button mat-menu-item routerLink="/actividades/insertar">Registrar</button>
   </mat-menu>
 </mat-toolbar>
