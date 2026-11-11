@@ -8,6 +8,11 @@ import { Suscripcioncomponent } from './components/suscripcioncomponent/suscripc
 import { Suscripcioninsertcomponent } from './components/suscripcioncomponent/suscripcioninsertcomponent/suscripcioninsertcomponent';
 import { Suscripcionhistorialcomponent } from './components/suscripcioncomponent/suscripcionhistorialcomponent/suscripcionhistorialcomponent';
 import { Suscripcioncambiarcomponent } from './components/suscripcioncomponent/suscripcioncambiarcomponent/suscripcioncambiarcomponent';
+import { Sesionclinicacomponent } from './components/sesionclinicacomponent/sesionclinicacomponent';
+import { Sesionclinicainsertcomponent } from './components/sesionclinicacomponent/sesionclinicainsertcomponent/sesionclinicainsertcomponent';
+import { Sesionclinicahistorialcomponent } from './components/sesionclinicacomponent/sesionclinicahistorialcomponent/sesionclinicahistorialcomponent';
+import { Sesionclinicafinalizarcomponent } from './components/sesionclinicacomponent/sesionclinicafinalizarcomponent/sesionclinicafinalizarcomponent';
+import { Sesionclinicaderivacionescomponent } from './components/sesionclinicacomponent/sesionclinicaderivacionescomponent/sesionclinicaderivacionescomponent';
 
 export const routes: Routes = [
   {
@@ -33,6 +38,17 @@ export const routes: Routes = [
       { path: 'contratar', component: Suscripcioninsertcomponent },
       { path: 'historial', component: Suscripcionhistorialcomponent },
       { path: 'cambiar-plan', component: Suscripcioncambiarcomponent },
+    ],
+  },
+  {
+    path: 'sesiones',
+    component: Sesionclinicacomponent,
+    children: [
+      { path: '', redirectTo: 'historial', pathMatch: 'full' },
+      { path: 'iniciar', component: Sesionclinicainsertcomponent },
+      { path: 'historial', component: Sesionclinicahistorialcomponent },
+      { path: 'finalizar/:id', component: Sesionclinicafinalizarcomponent },
+      { path: 'derivaciones', component: Sesionclinicaderivacionescomponent },
     ],
   },
 ];

@@ -1,0 +1,86 @@
+<div class="container">
+  <h2>Historial de sesiones clínicas</h2>
+
+  <div class="buscador">
+    <mat-form-field>
+      <mat-label>Id de usuario (paciente)</mat-label>
+      <input matInput type="number" [(ngModel)]="usuarioId" (keyup.enter)="buscarHistorial()">
+    </mat-form-field>
+    <button matButton="filled" (click)="buscarHistorial()">Buscar</button>
+  </div>
+
+  @if (mensaje) {
+    <p class="mensaje">{{ mensaje }}</p>
+  }
+
+  @if (mensajeAccion) {
+    <p class="mensaje">{{ mensajeAccion }}</p>
+  }
+
+  @if (lista.length > 0) {
+    <table mat-table [dataSource]="lista" class="mat-elevation-z2">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Sesión</th>
+        <td mat-cell *matCellDef="let element">{{ element.sesionClinicaId }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="inicio">
+        <th mat-header-cell *matHeaderCellDef>Inicio</th>
+        <td mat-cell *matCellDef="let element">{{ element.fechaHoraInicio | date:'dd/MM/yyyy HH:mm' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="fin">
+        <th mat-header-cell *matHeaderCellDef>Fin</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.fechaHoraFin ? (element.fechaHoraFin | date:'dd/MM/yyyy HH:mm') : '-' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef>Estado</th>
+        <td mat-cell *matCellDef="let element">
+          <span [class]="element.estado">{{ element.estado === 'en_curso' ? 'En curso' : 'Finalizada' }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="emocion">
+        <th mat-header-cell *matHeaderCellDef>Emoción</th>
+        <td mat-cell *matCellDef="let element">{{ element.emocionDetectada || '-' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="urgencia">
+        <th mat-header-cell *matHeaderCellDef>Urgencia</th>
+        <td mat-cell *matCellDef="let element">{{ element.nivelUrgencia }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="derivacion">
+        <th mat-header-cell *matHeaderCellDef>Derivación</th>
+        <td mat-cell *matCellDef="let element">{{ element.requiereDerivacion ? 'Sí' : 'No' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="finalizar">
+        <th mat-header-cell *matHeaderCellDef>Finalizar</th>
+        <td mat-cell *matCellDef="let element">
+          @if (element.estado === 'en_curso') {
+            <button matIconButton [routerLink]="['/sesiones/finalizar', element.sesionClinicaId]">
+              <mat-icon>stop_circle</mat-icon>
+            </button>
+          }
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="eliminar">
+        <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+        <td mat-cell *matCellDef="let element">
+          <button matIconButton (click)="eliminarSesion(element)" [disabled]="element.estado === 'en_curso'">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  }
+</div>
