@@ -70,6 +70,17 @@
         </td>
       </ng-container>
 
+      <ng-container matColumnDef="diagnostico">
+        <th mat-header-cell *matHeaderCellDef>Registrar diagnóstico</th>
+        <td mat-cell *matCellDef="let element">
+          @if (element.estado === 'finalizada') {
+            <button matIconButton [routerLink]="['/diagnosticos/insertar', element.sesionClinicaId]">
+              <mat-icon>note_add</mat-icon>
+            </button>
+          }
+        </td>
+      </ng-container>
+
       <ng-container matColumnDef="eliminar">
         <th mat-header-cell *matHeaderCellDef>Eliminar</th>
         <td mat-cell *matCellDef="let element">

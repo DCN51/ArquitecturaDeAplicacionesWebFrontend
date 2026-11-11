@@ -1,0 +1,55 @@
+<div class="container">
+  <h2>Diagnósticos validados por psicólogo</h2>
+
+  <div class="buscador">
+    <mat-form-field>
+      <mat-label>Id del psicólogo</mat-label>
+      <input matInput type="number" [(ngModel)]="psicologoId" (keyup.enter)="buscarValidados()">
+    </mat-form-field>
+    <button matButton="filled" (click)="buscarValidados()">Buscar</button>
+  </div>
+
+  @if (mensaje) {
+    <p class="mensaje">{{ mensaje }}</p>
+  }
+
+  @if (lista.length > 0) {
+    <table mat-table [dataSource]="lista" class="mat-elevation-z2">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Diagnóstico</th>
+        <td mat-cell *matCellDef="let element">{{ element.diagnosticoClinicoId }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="usuario">
+        <th mat-header-cell *matHeaderCellDef>Usuario</th>
+        <td mat-cell *matCellDef="let element">{{ element.usuarioId }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="sesion">
+        <th mat-header-cell *matHeaderCellDef>Sesión</th>
+        <td mat-cell *matCellDef="let element">{{ element.sesionClinicaId }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="resultado">
+        <th mat-header-cell *matHeaderCellDef>Resultado</th>
+        <td mat-cell *matCellDef="let element">{{ element.resultadoPrincipal }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="riesgo">
+        <th mat-header-cell *matHeaderCellDef>Riesgo</th>
+        <td mat-cell *matCellDef="let element">
+          <span [class]="element.nivelRiesgo">{{ element.nivelRiesgo }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="validacion">
+        <th mat-header-cell *matHeaderCellDef>Fecha de validación</th>
+        <td mat-cell *matCellDef="let element">{{ element.fechaValidacion | date:'dd/MM/yyyy HH:mm' }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  }
+</div>

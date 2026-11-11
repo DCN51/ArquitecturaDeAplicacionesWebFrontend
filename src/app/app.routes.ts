@@ -13,6 +13,11 @@ import { Sesionclinicainsertcomponent } from './components/sesionclinicacomponen
 import { Sesionclinicahistorialcomponent } from './components/sesionclinicacomponent/sesionclinicahistorialcomponent/sesionclinicahistorialcomponent';
 import { Sesionclinicafinalizarcomponent } from './components/sesionclinicacomponent/sesionclinicafinalizarcomponent/sesionclinicafinalizarcomponent';
 import { Sesionclinicaderivacionescomponent } from './components/sesionclinicacomponent/sesionclinicaderivacionescomponent/sesionclinicaderivacionescomponent';
+import { Diagnosticoclinicocomponent } from './components/diagnosticoclinicocomponent/diagnosticoclinicocomponent';
+import { Diagnosticoclinicoinsertcomponent } from './components/diagnosticoclinicocomponent/diagnosticoclinicoinsertcomponent/diagnosticoclinicoinsertcomponent';
+import { Diagnosticoclinicohistorialcomponent } from './components/diagnosticoclinicocomponent/diagnosticoclinicohistorialcomponent/diagnosticoclinicohistorialcomponent';
+import { Diagnosticoclinicopendientescomponent } from './components/diagnosticoclinicocomponent/diagnosticoclinicopendientescomponent/diagnosticoclinicopendientescomponent';
+import { Diagnosticoclinicovalidadoscomponent } from './components/diagnosticoclinicocomponent/diagnosticoclinicovalidadoscomponent/diagnosticoclinicovalidadoscomponent';
 
 export const routes: Routes = [
   {
@@ -49,6 +54,18 @@ export const routes: Routes = [
       { path: 'historial', component: Sesionclinicahistorialcomponent },
       { path: 'finalizar/:id', component: Sesionclinicafinalizarcomponent },
       { path: 'derivaciones', component: Sesionclinicaderivacionescomponent },
+    ],
+  },
+  {
+    path: 'diagnosticos',
+    component: Diagnosticoclinicocomponent,
+    children: [
+      { path: '', redirectTo: 'historial', pathMatch: 'full' },
+      { path: 'insertar', component: Diagnosticoclinicoinsertcomponent },
+      { path: 'insertar/:sesionId', component: Diagnosticoclinicoinsertcomponent },
+      { path: 'historial', component: Diagnosticoclinicohistorialcomponent },
+      { path: 'pendientes', component: Diagnosticoclinicopendientescomponent },
+      { path: 'validados', component: Diagnosticoclinicovalidadoscomponent },
     ],
   },
 ];

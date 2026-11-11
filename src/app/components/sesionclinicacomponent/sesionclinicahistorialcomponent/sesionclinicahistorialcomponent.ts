@@ -31,7 +31,7 @@ export class Sesionclinicahistorialcomponent {
   lista: SesionClinicaDTO[] = [];
   mensaje: string = '';
   mensajeAccion: string = '';
-  displayedColumns: string[] = ['id', 'inicio', 'fin', 'estado', 'emocion', 'urgencia', 'derivacion', 'finalizar', 'eliminar'];
+  displayedColumns: string[] = ['id', 'inicio', 'fin', 'estado', 'emocion', 'urgencia', 'derivacion', 'finalizar', 'diagnostico', 'eliminar'];
 
   constructor(private scS: Sesionclinicaservice, private cdr: ChangeDetectorRef) { }
 

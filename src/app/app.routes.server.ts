@@ -6,6 +6,10 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client
   },
   {
+    path: 'diagnosticos/insertar/:sesionId',
+    renderMode: RenderMode.Client
+  },
+  {
     path: '**',
     renderMode: RenderMode.Prerender
   }
