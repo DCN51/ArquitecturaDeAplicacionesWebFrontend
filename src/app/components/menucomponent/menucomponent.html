@@ -16,4 +16,19 @@
     <button mat-menu-item routerLink="/suscripciones/cambiar-plan">Cambiar plan</button>
     <button mat-menu-item routerLink="/suscripciones/historial">Historial</button>
   </mat-menu>
+
+  <button matButton [matMenuTriggerFor]="menuSesiones">Sesiones</button>
+  <mat-menu #menuSesiones="matMenu">
+    <button mat-menu-item routerLink="/sesiones/iniciar">Iniciar sesión</button>
+    <button mat-menu-item routerLink="/sesiones/historial">Historial</button>
+    <button mat-menu-item routerLink="/sesiones/derivaciones">Derivaciones</button>
+  </mat-menu>
+
+  <button matButton [matMenuTriggerFor]="menuDiagnosticos">Diagnósticos</button>
+  <mat-menu #menuDiagnosticos="matMenu">
+    <button mat-menu-item routerLink="/diagnosticos/insertar">Registrar</button>
+    <button mat-menu-item routerLink="/diagnosticos/historial">Historial</button>
+    <button mat-menu-item routerLink="/diagnosticos/pendientes">Pendientes de validar</button>
+    <button mat-menu-item routerLink="/diagnosticos/validados">Validados por psicólogo</button>
+  </mat-menu>
 </mat-toolbar>
