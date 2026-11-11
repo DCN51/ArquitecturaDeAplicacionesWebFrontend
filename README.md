@@ -27,7 +27,7 @@ Clínicas y centros de salud mental.
 Trello: Historias de usuarios y planificacion de sprint
 Postgre: Base de datos
 Git & GitHub: Control de versiones.
-Api: Gemini y Grok
+Api: Grog (gratuita)
 
 ##Créditos
 
