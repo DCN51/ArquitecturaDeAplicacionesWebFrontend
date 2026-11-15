@@ -52,6 +52,7 @@ export class Sesionclinicafinalizarcomponent implements OnInit {
     this.idSesion = Number(this.route.snapshot.paramMap.get('id'));
 
     if (!this.idSesion || isNaN(this.idSesion)) {
+      this.sesionForm.disable();
       this.mensaje = 'Sesión no encontrada';
       return;
     }
@@ -72,11 +73,15 @@ export class Sesionclinicafinalizarcomponent implements OnInit {
           resumen: data.resumenIa ?? '',
           derivacion: data.requiereDerivacion
         });
+        if (!this.editable) {
+          this.sesionForm.disable();
+        }
         this.cdr.detectChanges();
       },
       error: (err) => {
         console.log(err);
         this.editable = false;
+        this.sesionForm.disable();
         this.mensaje = 'Sesión no encontrada';
         this.cdr.detectChanges();
       }
@@ -102,6 +107,7 @@ export class Sesionclinicafinalizarcomponent implements OnInit {
       next: () => {
         this.mensaje = 'Sesión finalizada correctamente';
         this.editable = false;
+        this.sesionForm.disable();
         this.cdr.detectChanges();
         setTimeout(() => this.router.navigate(['/sesiones/historial']), 1200);
       },

@@ -10,6 +10,18 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client
   },
   {
+    path: 'sesiones/derivaciones',
+    renderMode: RenderMode.Client
+  },
+  {
+    path: 'diagnosticos/pendientes',
+    renderMode: RenderMode.Client
+  },
+  {
+    path: 'planes/editar/:id',
+    renderMode: RenderMode.Client
+  },
+  {
     path: '**',
     renderMode: RenderMode.Prerender
   }
