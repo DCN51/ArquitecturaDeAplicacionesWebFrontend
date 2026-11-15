@@ -17,6 +17,7 @@ export class Diagnosticoclinicopendientescomponent implements OnInit {
   displayedColumns: string[] = ['id', 'usuario', 'sesion', 'fecha', 'resultado', 'riesgo', 'validar'];
   mensaje: string = '';
   mensajeAccion: string = '';
+  cargando: boolean = true;
 
   constructor(private dcS: Diagnosticoclinicoservice, private cdr: ChangeDetectorRef) { }
 
@@ -28,11 +29,13 @@ export class Diagnosticoclinicopendientescomponent implements OnInit {
     this.dcS.pendientes().subscribe({
       next: (data: DiagnosticoClinicoDTO[]) => {
         this.dataSource = data;
+        this.cargando = false;
         this.mensaje = data.length > 0 ? '' : 'No hay diagnósticos pendientes de validar';
         this.cdr.detectChanges();
       },
       error: (err) => {
         console.log(err);
+        this.cargando = false;
         this.mensaje = 'Ocurrió un error al obtener los diagnósticos pendientes';
         this.cdr.detectChanges();
       }

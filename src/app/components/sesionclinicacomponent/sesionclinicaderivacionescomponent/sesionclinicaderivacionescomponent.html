@@ -1,7 +1,9 @@
 <div class="container">
   <h2>Sesiones que requieren derivación</h2>
 
-  @if (mensaje) {
+  @if (cargando) {
+    <p class="mensaje">Cargando...</p>
+  } @else if (mensaje) {
     <p class="mensaje">{{ mensaje }}</p>
   } @else {
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z2">

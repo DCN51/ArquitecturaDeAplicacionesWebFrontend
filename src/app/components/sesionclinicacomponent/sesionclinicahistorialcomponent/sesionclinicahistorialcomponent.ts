@@ -9,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Sesionclinicaservice } from '../../../services/sesionclinicaservice';
 import { SesionClinicaDTO } from '../../../models/SesionClinicaDTO';
+import { Diagnosticoclinicoservice } from '../../../services/diagnosticoclinicoservice';
+import { DiagnosticoClinicoDTO } from '../../../models/DiagnosticoClinicoDTO';
 
 @Component({
   selector: 'app-sesionclinicahistorialcomponent',
@@ -31,9 +33,14 @@ export class Sesionclinicahistorialcomponent {
   lista: SesionClinicaDTO[] = [];
   mensaje: string = '';
   mensajeAccion: string = '';
+  sesionesConDiagnostico: Set<number> = new Set<number>();
   displayedColumns: string[] = ['id', 'inicio', 'fin', 'estado', 'emocion', 'urgencia', 'derivacion', 'finalizar', 'diagnostico', 'eliminar'];
 
-  constructor(private scS: Sesionclinicaservice, private cdr: ChangeDetectorRef) { }
+  constructor(
+    private scS: Sesionclinicaservice,
+    private dcS: Diagnosticoclinicoservice,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   buscarHistorial(): void {
     this.mensajeAccion = '';
@@ -52,6 +59,7 @@ export class Sesionclinicahistorialcomponent {
         this.lista = data;
         this.mensaje = data.length > 0 ? '' : 'No tienes sesiones registradas';
         this.cdr.detectChanges();
+        this.cargarDiagnosticos();
       },
       error: (err) => {
         console.log(err);
@@ -64,6 +72,24 @@ export class Sesionclinicahistorialcomponent {
         this.cdr.detectChanges();
       }
     });
+  }
+
+  cargarDiagnosticos(): void {
+    this.dcS.historial(this.usuarioBuscado).subscribe({
+      next: (data: DiagnosticoClinicoDTO[]) => {
+        this.sesionesConDiagnostico = new Set<number>(data.map(d => d.sesionClinicaId));
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.log(err);
+        this.sesionesConDiagnostico = new Set<number>();
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  tieneDiagnostico(s: SesionClinicaDTO): boolean {
+    return this.sesionesConDiagnostico.has(s.sesionClinicaId);
   }
 
   eliminarSesion(s: SesionClinicaDTO): void {
