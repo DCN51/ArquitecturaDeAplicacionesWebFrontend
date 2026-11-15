@@ -1,6 +1,760 @@
-<app-menucomponent></app-menucomponent>
-<div class="container" style="text-align: center; margin-top: 5%;">
-  <h2>Mind Health</h2>
-  <p>Gestión de planes y suscripciones</p>
-  
+
+<div class="landing">
+
+  <!-- BARRA SUPERIOR -->
+  <div class="barra-anuncio">
+    Tu bienestar es valioso y merece un espacio para ser escuchado.
+  </div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-contenido">
+
+      <a routerLink="/" class="logo">
+        <span class="logo-icono">m</span>
+        <span>mindhealth</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#inicio">Inicio</a>
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#planes">Planes</a>
+      </nav>
+
+      <div class="nav-acciones">
+        <a routerLink="/sesiones/historial" class="enlace-menu">
+          Iniciar sesión
+        </a>
+
+        <a routerLink="/sesiones/iniciar" class="boton boton-azul">
+          Comenzar gratis
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <main>
+
+    <!-- SECCIÓN 1: INICIO -->
+    <section class="hero contenedor" id="inicio">
+
+      <span class="eyebrow hero-etiqueta">
+        BIENVENIDO A MIND HEALTH
+      </span>
+
+      <h1>
+        Un espacio para hablar,<br>
+        sentir y cuidar de ti.
+      </h1>
+
+      <p class="hero-descripcion">
+        Mind Health combina herramientas de inteligencia artificial
+        y acompañamiento psicológico profesional para ayudarte
+        a comprender tus emociones, encontrar apoyo y avanzar
+        a tu propio ritmo.
+      </p>
+
+      <div class="hero-tarjetas">
+
+        <article class="tarjeta-hero fondo-amarillo">
+
+          <div>
+            <span class="eyebrow">ATENCIÓN CON IA</span>
+
+            <h2>
+              Todo comienza con una conversación.
+            </h2>
+
+            <p>
+              Inicia una sesión con tranquilidad y explora
+              lo que estás sintiendo.
+            </p>
+
+            <a routerLink="/sesiones/iniciar"
+               class="boton boton-oscuro">
+              Conocer las sesiones
+            </a>
+          </div>
+
+          <img
+            src="/conversacion.png"
+            alt="Ilustración de una persona expresando emociones"
+            class="ilustracion-hero"
+          >
+
+        </article>
+
+        <article class="tarjeta-hero fondo-rosa">
+
+          <div>
+            <span class="eyebrow">
+              ACOMPAÑAMIENTO PROFESIONAL
+            </span>
+
+            <h2>
+              No tienes que recorrerlo todo sin apoyo.
+            </h2>
+
+            <p>
+              Tus evaluaciones preliminares pueden ser revisadas
+              por psicólogos para brindarte orientación
+              cuando la necesites.
+            </p>
+
+            <a routerLink="/sesiones/derivaciones"
+               class="boton boton-oscuro">
+              Conocer el acompañamiento
+            </a>
+          </div>
+
+          <img
+            src="/landing/psicologo.png"
+            alt="Ilustración de acompañamiento psicológico"
+            class="ilustracion-hero"
+          >
+
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: SERVICIOS -->
+    <section class="recursos contenedor" id="servicios">
+
+      <h2 class="titulo-seccion">
+        Cada emoción merece atención.
+      </h2>
+
+      <div class="recursos-grid">
+
+        @for (recurso of recursos; track recurso.nombre) {
+
+          @if (recurso.color === 'amarillo') {
+            <a href="#actividades" class="recurso">
+              <span class="recurso-icono"
+                    [class]="recurso.color">
+                {{ recurso.icono }}
+              </span>
+
+              <span>{{ recurso.nombre }}</span>
+
+              <span class="flecha">›</span>
+            </a>
+          } @else {
+            <a [routerLink]="recurso.ruta" class="recurso">
+              <span class="recurso-icono"
+                    [class]="recurso.color">
+                {{ recurso.icono }}
+              </span>
+
+              <span>{{ recurso.nombre }}</span>
+
+              <span class="flecha">›</span>
+            </a>
+          }
+
+        }
+
+      </div>
+
+    </section>
+
+    <!-- SECCIÓN 3: SESIONES CON IA -->
+    <section class="contenedor bloque bloque-ia"
+             id="sesiones">
+
+      <div class="bloque-visual">
+
+        <div class="chat-ejemplo">
+
+          <div class="chat-encabezado">
+            <span class="icono-chat">✦</span>
+
+            <div>
+              <strong>Un espacio para expresarte</strong>
+              <small>Conversa a tu propio ritmo</small>
+            </div>
+          </div>
+
+          <div class="mensaje mensaje-pregunta">
+            ¿Cómo te has sentido últimamente?
+          </div>
+
+          <div class="mensaje mensaje-respuesta">
+            He tenido muchas cosas en mente.
+            Me gustaría entender lo que siento.
+          </div>
+
+          <p class="chat-sugerencias-titulo">
+            Algunas ideas para comenzar:
+          </p>
+
+          <div class="chat-sugerencias">
+            <span>Conocer mis emociones</span>
+            <span>Aprender a gestionar mis emociones</span>
+          </div>
+
+          <p class="chat-pie">
+            Aquí puedes encontrar un espacio para expresarte.
+          </p>
+
+        </div>
+
+        <p class="texto-ilustrativo">
+          Vista ilustrativa de una conversación.
+        </p>
+
+      </div>
+
+      <div class="bloque-informacion">
+
+        <span class="eyebrow">
+          HABLEMOS DE LO QUE SIENTES
+        </span>
+
+        <h2>
+          Hablar de lo que sientes
+          puede ser un primer paso.
+        </h2>
+
+        <p>
+          En Mind Health puedes iniciar sesiones clínicas con IA
+          sin presión, explorar tus emociones y recibir
+          una evaluación preliminar orientada a identificar
+          tus necesidades de apoyo.
+        </p>
+
+        <ul class="lista-beneficios">
+          <li>Un espacio para conversar</li>
+          <li>Herramientas de autoconocimiento</li>
+          <li>Historial para tu seguimiento</li>
+        </ul>
+
+        <a routerLink="/sesiones/iniciar"
+           class="boton boton-oscuro">
+          Conocer las sesiones
+        </a>
+
+      </div>
+
+    </section>
+
+    <!-- SECCIÓN 4: CÓMO FUNCIONA -->
+    <section class="contenedor bloque-proceso"
+             id="como-funciona">
+
+      <span class="eyebrow">
+        TECNOLOGÍA + ACOMPAÑAMIENTO
+      </span>
+
+      <h2>
+        La tecnología identifica señales.<br>
+        Los profesionales aportan su criterio.
+      </h2>
+
+      <p class="proceso-descripcion">
+        Cada sesión genera una evaluación de apoyo preliminar
+        basada en las emociones y el nivel de atención
+        identificado. Las evaluaciones clínicas requieren
+        revisión y validación profesional.
+      </p>
+
+      <div class="pasos-grid">
+
+        @for (paso of pasos; track paso.numero) {
+
+          <article class="paso">
+
+            <span class="paso-numero">
+              {{ paso.numero }}
+            </span>
+
+            <h3>{{ paso.titulo }}</h3>
+
+            <p>{{ paso.descripcion }}</p>
+
+            <span class="paso-etiqueta">
+              {{ paso.etiqueta }}
+            </span>
+
+          </article>
+
+        }
+
+      </div>
+
+      <p class="nota-proceso">
+        Las evaluaciones preliminares no sustituyen
+        un diagnóstico profesional.
+      </p>
+
+    </section>
+
+    <!-- SECCIÓN 5: ACTIVIDADES -->
+    <section class="contenedor bloque bloque-actividades"
+             id="actividades">
+
+      <div class="bloque-informacion">
+
+        <span class="eyebrow">
+          BIENESTAR EN TU RUTINA
+        </span>
+
+        <h2>
+          Pequeñas acciones para
+          seguir avanzando.
+        </h2>
+
+        <p>
+          Las actividades pueden ayudarte a desarrollar
+          hábitos de autocuidado. Mind Health contempla
+          recomendaciones de bienestar para acompañar
+          tu progreso emocional.
+        </p>
+
+        <a href="#recorrido" class="boton boton-oscuro">
+          Explorar mi bienestar
+        </a>
+
+      </div>
+
+      <div class="actividad-visual">
+
+        <div class="actividad-tarjeta">
+
+          <h3>Un paso a la vez</h3>
+
+          <p>
+            Actividades recomendadas para tu bienestar
+          </p>
+
+          <div class="actividad-item">
+
+            <span class="circulo-vacio"></span>
+
+            <div>
+              <strong>Pausa de respiración</strong>
+              <small>Dedica unos minutos para ti</small>
+            </div>
+
+          </div>
+
+          <div class="actividad-item">
+
+            <span class="circulo-vacio"></span>
+
+            <div>
+              <strong>Reflexiona sobre tu día</strong>
+              <small>Reconoce tus emociones</small>
+            </div>
+
+          </div>
+
+          <div class="actividad-item">
+
+            <span class="check-verde">✓</span>
+
+            <div>
+              <strong>Conecta con alguien</strong>
+              <small>Comparte cómo te sientes</small>
+            </div>
+
+          </div>
+
+          <div class="actividad-mensaje">
+            Mi recordatorio:<br>
+            Hoy puedo dedicarme un momento.
+          </div>
+
+        </div>
+
+        <img
+          src="/cuaderno.png"
+          alt=""
+          class="decoracion-libro"
+        >
+
+      </div>
+
+    </section>
+
+    <!-- SECCIÓN 6: RECORRIDO -->
+    <section class="contenedor recorrido" id="recorrido">
+
+      <h2 class="titulo-seccion">
+        Tu camino en Mind Health.
+      </h2>
+
+      <div class="recorrido-grid">
+
+        @for (item of recorrido; track item.numero) {
+
+          <article class="recorrido-item">
+
+            <div class="recorrido-imagen"
+                 [class]="item.color">
+
+              <span class="numero-recorrido">
+                {{ item.numero }}
+              </span>
+
+              @if (item.imagen) {
+
+                <img
+                  [src]="item.imagen"
+                  [alt]="item.titulo"
+                >
+
+              } @else if (item.numero === '01') {
+
+                <div class="mini-chat">
+                  <strong>Hola, ¿cómo te sientes?</strong>
+                  <span>Tu espacio para expresarte</span>
+                  <span class="mini-boton">Iniciar sesión</span>
+                </div>
+
+              } @else {
+
+                <div class="mini-evaluacion">
+                  <strong>Así me siento</strong>
+                  <span>Evaluación preliminar</span>
+                  <span class="mini-boton amarillo">
+                    Ver orientación
+                  </span>
+                </div>
+
+              }
+
+            </div>
+
+            <h3>{{ item.titulo }}</h3>
+
+          </article>
+
+        }
+
+      </div>
+
+    </section>
+
+    <!-- SECCIÓN 7: PROFESIONALES -->
+    <section class="contenedor bloque bloque-profesionales">
+
+      <div class="bloque-informacion">
+
+        <span class="eyebrow texto-morado">
+          ACOMPAÑAMIENTO Y RESPALDO
+        </span>
+
+        <h2>
+          Cuando se necesita más atención,
+          el seguimiento profesional importa.
+        </h2>
+
+        <p>
+          Los psicólogos pueden revisar evaluaciones,
+          valorar situaciones que requieran mayor
+          atención y acompañar el proceso de orientación.
+        </p>
+
+        <div class="aviso">
+
+          <strong>
+            La IA no reemplaza la atención profesional.
+          </strong>
+
+          <span>
+            Mind Health utiliza la tecnología como
+            herramienta de apoyo, no como sustituto
+            de una evaluación clínica.
+          </span>
+
+        </div>
+
+      </div>
+
+      <div class="panel-acompanamiento">
+
+        <h3>Acompañamiento, paso a paso.</h3>
+
+        <p>Así puede avanzar una evaluación:</p>
+
+        <div class="estado">
+
+          <span class="estado-icono amarillo">01</span>
+
+          <div>
+            <strong>Pendiente</strong>
+            <small>Evaluación registrada</small>
+          </div>
+
+        </div>
+
+        <div class="estado">
+
+          <span class="estado-icono celeste">02</span>
+
+          <div>
+            <strong>En revisión</strong>
+            <small>Evaluación por un psicólogo</small>
+          </div>
+
+        </div>
+
+        <div class="estado">
+
+          <span class="estado-icono verde">03</span>
+
+          <div>
+            <strong>Concluida</strong>
+            <small>Evaluación revisada</small>
+          </div>
+
+        </div>
+
+        <a routerLink="/diagnosticos/validados"
+           class="enlace-panel">
+          Conocer las evaluaciones validadas ›
+        </a>
+
+      </div>
+
+    </section>
+
+    <!-- SECCIÓN 8: PLANES -->
+    <section class="contenedor planes" id="planes">
+
+      <h2 class="titulo-seccion">
+        Encuentra un plan para<br>
+        acompañar tu bienestar.
+      </h2>
+
+      <div class="bloque bloque-planes">
+
+        <div class="bloque-informacion">
+
+          <span class="eyebrow texto-morado">
+            PLANES MIND HEALTH
+          </span>
+
+          <h2>
+            Elige con información clara.
+          </h2>
+
+          <p>
+            Compara las opciones disponibles,
+            conoce sus características y elige
+            la que mejor se adapte a tus necesidades.
+          </p>
+
+          <a routerLink="/planes/listar"
+             class="boton boton-oscuro">
+            Consultar planes
+          </a>
+
+        </div>
+
+        <div class="catalogo-preview">
+
+          <h3>Catálogo pendiente de conocer</h3>
+
+          <p>
+            Las opciones, condiciones y precios se muestran
+            directamente en el catálogo oficial.
+          </p>
+
+          <ul>
+            @for (beneficio of beneficios; track beneficio) {
+              <li>{{ beneficio }}</li>
+            }
+          </ul>
+
+          <a routerLink="/suscripciones/contratar"
+             class="enlace-panel">
+            Explorar suscripciones ›
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- SECCIÓN 9: CONEXIÓN -->
+    <section class="contenedor conexion">
+
+      <h2 class="titulo-seccion">
+        Un espacio que nos conecta.
+      </h2>
+
+      <div class="conexion-grid">
+
+        <article class="conexion-card fondo-rosa">
+
+          <div>
+
+            <span class="eyebrow">
+              PARA PACIENTES
+            </span>
+
+            <h2>
+              Tu bienestar,<br>
+              a tu ritmo.
+            </h2>
+
+            <p>
+              Conversa, reconoce tus emociones
+              y avanza a tu propio ritmo.
+              En Mind Health encontrarás un
+              primer espacio de apoyo.
+            </p>
+
+            <a routerLink="/sesiones/iniciar"
+               class="boton boton-oscuro">
+              Empezar mi proceso
+            </a>
+
+          </div>
+
+          <img
+            src="/conversacion.png"
+            alt="Persona cuidando su bienestar"
+          >
+
+        </article>
+
+        <article class="conexion-card fondo-celeste">
+
+          <div>
+
+            <span class="eyebrow">
+              PARA PROFESIONALES
+            </span>
+
+            <h2>
+              Tu criterio hace<br>
+              la diferencia.
+            </h2>
+
+            <p>
+              Conoce las evaluaciones que necesitan
+              seguimiento y el acompañamiento
+              profesional disponible.
+            </p>
+
+            <a routerLink="/diagnosticos/pendientes"
+               class="boton boton-oscuro">
+              Conocer el seguimiento
+            </a>
+
+          </div>
+
+          <img
+            src="/landing/psicologo.png"
+            alt="Psicólogo conversando con un paciente"
+          >
+
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- SECCIÓN 10: CTA FINAL -->
+    <section class="contenedor llamada-final">
+
+      <div>
+
+        <h2>
+          Tu bienestar merece ser escuchado.
+        </h2>
+
+        <p>
+          Empieza a conocer Mind Health y descubre
+          un espacio para explorar tus emociones
+          y cuidar de ti.
+        </p>
+
+        <a routerLink="/sesiones/iniciar"
+           class="boton boton-oscuro">
+          Crear mi espacio
+        </a>
+
+      </div>
+
+      <img
+        src="/cuaderno.png"
+        alt="Cuaderno de bienestar emocional"
+      >
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer contenedor">
+
+    <div class="footer-grid">
+
+      <div class="footer-marca">
+
+        <a routerLink="/" class="footer-logo">
+          mindhealth
+        </a>
+
+        <p>
+          Un espacio para expresar tus emociones,
+          encontrar orientación y cuidar de ti.
+        </p>
+
+      </div>
+
+      <div>
+        <h3>Explorar</h3>
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#recorrido">Mi recorrido</a>
+      </div>
+
+      <div>
+        <h3>Mind Health</h3>
+        <a routerLink="/sesiones/iniciar">Sesiones</a>
+        <a routerLink="/sesiones/historial">Historial</a>
+        <a routerLink="/planes/listar">Planes</a>
+      </div>
+
+      <div>
+        <h3>Tu espacio</h3>
+        <a routerLink="/suscripciones/historial">
+          Suscripciones
+        </a>
+        <a routerLink="/diagnosticos/historial">
+          Evaluaciones
+        </a>
+      </div>
+
+      <div>
+        <h3>Información</h3>
+        <p>Bienestar emocional</p>
+        <p>Orientación y uso responsable</p>
+      </div>
+
+    </div>
+
+    <div class="footer-inferior">
+
+      <span>
+        © Mind Health. Todos los derechos reservados.
+      </span>
+
+      <span>
+        Hecho para acompañar tu bienestar emocional.
+      </span>
+
+    </div>
+
+  </footer>
+
 </div>
