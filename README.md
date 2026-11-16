@@ -17,15 +17,14 @@ Servicio gratuito básico, suscripción y planes de pago.
 
 ##Público objetivo
 Personas en búsqueda de apoyo emocional.
-
 Psicólogos y terapeutas interesados.
-
 Clínicas y centros de salud mental.
 
 ##Tecnologías usadas
 
 Trello: Historias de usuarios y planificacion de sprint
 Postgre: Base de datos
+Lenguaje: Angular 21
 Git & GitHub: Control de versiones.
 Api: Grog (gratuita)
 
