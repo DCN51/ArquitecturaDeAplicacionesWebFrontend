@@ -1,0 +1,6 @@
+.container { margin-top: 24px; }
+table { width: 100%; }
+.mensaje { font-weight: 500; }
+.aviso { padding: 8px 12px; border-left: 4px solid #e65100; background: #fff3e0; color: #6d3a00; }
+.alto { color: #e65100; font-weight: 600; }
+.critico { color: #c62828; font-weight: 600; }

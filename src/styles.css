@@ -11,6 +11,11 @@ html {
   scroll-behavior: smooth;
 }
 
+::selection {
+  background: #e4d2fc;
+  color: #39204f;
+}
+
 html,
 body {
   margin: 0;
@@ -19,4 +24,426 @@ body {
 
 body {
   font-family: 'Poppins', sans-serif;
+  background: #f9f4f2;
+  color: #2d2c2b;
+}
+
+/* Lenguaje visual compartido por las pantallas de gestion. */
+app-root {
+  --mat-sys-primary: #3b197f;
+  --mat-sys-on-primary: #ffffff;
+  --mat-sys-primary-container: #eee1fb;
+  --mat-sys-on-primary-container: #3b197f;
+  --mat-sys-surface: #ffffff;
+  --mat-sys-on-surface: #2d2c2b;
+  --mat-sys-on-surface-variant: #514955;
+  --mat-sys-surface-container: #f9f4f2;
+  --mat-sys-surface-container-high: #eee1fb;
+  --mat-sys-surface-container-highest: #f4eef8;
+  --mat-sys-outline: #817587;
+  --mat-sys-outline-variant: #bdb1c4;
+  --mat-sys-error: #a51d36;
+  --mat-sys-on-error: #ffffff;
+  --mat-sys-error-container: #ffe6eb;
+  --mat-sys-on-error-container: #721127;
+  --mat-sys-body-large-font: 'Poppins', sans-serif;
+  --mat-sys-body-medium-font: 'Poppins', sans-serif;
+  --mat-sys-body-small-font: 'Poppins', sans-serif;
+  --mat-sys-label-large-font: 'Poppins', sans-serif;
+  --mat-sys-label-medium-font: 'Poppins', sans-serif;
+  --mat-sys-title-medium-font: 'Poppins', sans-serif;
+}
+
+app-root .container {
+  box-sizing: border-box;
+  width: calc(100% - 48px);
+  max-width: 1200px;
+  margin: 40px auto 64px;
+  padding: clamp(22px, 4vw, 44px);
+  border: 1px solid #e2ded9;
+  border-radius: 32px;
+  background: #ffffff;
+  box-shadow: 0 2px 0 #413d4514;
+  color: #2d2c2b;
+  font: 400 14px/1.6 'Poppins', sans-serif;
+  overflow-x: auto;
+}
+
+app-root .container *,
+app-root .container *::before,
+app-root .container *::after {
+  box-sizing: border-box;
+}
+
+app-root .container h2 {
+  margin: 0 0 30px;
+  color: #2d2c2b;
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(28px, 3.5vw, 40px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+app-root .container h2::before {
+  content: '';
+  display: block;
+  width: 44px;
+  height: 8px;
+  margin-bottom: 18px;
+  border-radius: 20px;
+  background: #ffce00;
+}
+
+app-root .container form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+app-root .container .campo {
+  width: 100%;
+  min-width: 0;
+  margin: 0 0 6px;
+}
+
+app-root .container .fila {
+  display: flex;
+  gap: 16px;
+}
+
+app-root .container .fila > * {
+  flex: 1;
+  min-width: 0;
+}
+
+app-root .container .botones,
+app-root .container .buscador {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0 16px;
+}
+
+app-root .container .buscador mat-form-field {
+  flex: 1 1 220px;
+  max-width: 380px;
+}
+
+app-root .container .buscador > button {
+  margin-bottom: 22px;
+}
+
+app-root .container .mat-mdc-form-field {
+  --mdc-filled-text-field-container-color: #f9f4f2;
+  --mdc-filled-text-field-container-shape: 8px;
+  --mdc-outlined-text-field-container-shape: 8px;
+  --mdc-filled-text-field-focus-active-indicator-color: #3b197f;
+  --mdc-filled-text-field-focus-label-text-color: #3b197f;
+  --mdc-filled-text-field-input-text-color: #2d2c2b;
+  --mdc-filled-text-field-label-text-color: #514955;
+  --mdc-filled-text-field-input-text-placeholder-color: #62586a;
+  --mdc-filled-text-field-active-indicator-color: #817587;
+  --mdc-filled-text-field-hover-active-indicator-color: #514955;
+  --mdc-outlined-text-field-input-text-color: #2d2c2b;
+  --mdc-outlined-text-field-label-text-color: #514955;
+  --mdc-outlined-text-field-input-text-placeholder-color: #62586a;
+  --mdc-outlined-text-field-outline-color: #817587;
+  --mdc-outlined-text-field-hover-outline-color: #514955;
+  --mdc-outlined-text-field-focus-outline-color: #3b197f;
+  --mdc-outlined-text-field-focus-label-text-color: #3b197f;
+}
+
+app-root .container mat-hint {
+  color: #514955;
+}
+
+app-root .container button[matButton],
+app-root .container a[matButton] {
+  min-height: 48px;
+  padding-inline: 24px;
+  border-radius: 800px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color .2s, box-shadow .2s;
+  text-decoration: none;
+}
+
+app-root .container form > button {
+  align-self: flex-start;
+}
+
+app-root .container button[matButton='filled']:not(:disabled),
+app-root .container a[matButton='filled'] {
+  background: #2d2c2b;
+  color: #ffffff;
+  box-shadow: 0 2px 0 #413d4533;
+}
+
+app-root .container button[matButton='filled']:not(:disabled):hover,
+app-root .container a[matButton='filled']:hover {
+  background: #44423f;
+  box-shadow: 0 3px 0 #413d4533;
+}
+
+app-root .container button[matButton='']:not(:disabled) {
+  background: #e9dcf8;
+  color: #421b6a;
+}
+
+app-root .container button[matButton='']:not(:disabled):hover {
+  background: #dcc6f1;
+}
+
+app-root .container button[matButton]:disabled {
+  background: #e7e1eb;
+  color: #62566c;
+  box-shadow: none;
+}
+
+app-root .container button:focus-visible,
+app-root .container a:focus-visible {
+  outline: 3px solid #3b197f;
+  outline-offset: 3px;
+}
+
+app-root .container table {
+  width: 100%;
+  border: 1px solid #e2ded9;
+  border-radius: 16px;
+  border-spacing: 0;
+  overflow: hidden;
+  box-shadow: none;
+  background: #ffffff;
+}
+
+app-root .container .mat-mdc-header-row {
+  background: #e9dcf8;
+  height: 56px;
+}
+
+app-root .container .mat-mdc-header-cell {
+  color: #3b197f;
+  font: 600 12px/1.5 'Poppins', sans-serif;
+  white-space: nowrap;
+}
+
+app-root .container .mat-mdc-cell {
+  color: #39333e;
+  font: 400 12px/1.7 'Poppins', sans-serif;
+}
+
+app-root .container .mat-mdc-header-cell,
+app-root .container .mat-mdc-cell {
+  padding: 16px;
+  border-bottom-color: #e2ded9;
+}
+
+app-root .container .mat-mdc-row:hover {
+  background: #f9f4f2;
+}
+
+app-root .container .mat-mdc-row:nth-child(even) {
+  background: #fdfbf9;
+}
+
+app-root .container .mat-mdc-row:nth-child(even):hover {
+  background: #f5f0ec;
+}
+
+app-root .container .mat-mdc-row:last-child .mat-mdc-cell {
+  border-bottom: 0;
+}
+
+app-root .container button[matIconButton]:not(:disabled) {
+  color: #3b197f;
+}
+
+app-root .container .mensaje,
+app-root .container > p {
+  margin: 18px 0;
+  padding: 15px 18px;
+  border-radius: 12px;
+  background: #eee1fb;
+  color: #421b6a;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+app-root .container .resultado {
+  margin-top: 24px;
+  border: 0;
+  border-radius: 18px;
+  background: #b9e7fa;
+  box-shadow: none;
+}
+
+app-root .container .resultado p {
+  margin: 8px 0;
+  overflow-wrap: anywhere;
+}
+
+app-root .container .beneficios {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 4px 0 20px;
+  padding: 16px;
+  border-radius: 14px;
+  background: #f4eef9;
+}
+
+app-root .container :is(.ACTIVO, .activa, .COMPLETADA,
+  .INACTIVO, .cancelada, .PENDIENTE) {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+app-root .container :is(.ACTIVO, .activa, .COMPLETADA) {
+  background: #d5f1e3;
+  color: #216345;
+}
+
+app-root .container :is(.INACTIVO, .cancelada) {
+  background: #ffe0ed;
+  color: #923052;
+}
+
+app-root .container .PENDIENTE {
+  background: #fff0b3;
+  color: #795800;
+}
+
+/* Sesiones y diagnosticos conservan sus plantillas y logica originales. */
+app-sesionclinicacomponent,
+app-diagnosticoclinicocomponent {
+  display: block;
+  min-height: 100vh;
+  background: #f9f4f2;
+}
+
+app-root :is(app-sesionclinicacomponent, app-diagnosticoclinicocomponent)
+  .container :is(.bajo, .medio, .alto, .critico, .en_curso, .finalizada,
+  .validado, .pendiente) {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+app-root :is(app-sesionclinicacomponent, app-diagnosticoclinicocomponent)
+  .container :is(.bajo, .validado) {
+  background: #d5f1e3;
+  color: #216345;
+}
+
+app-root :is(app-sesionclinicacomponent, app-diagnosticoclinicocomponent)
+  .container :is(.medio, .pendiente) {
+  background: #fff0b3;
+  color: #795800;
+}
+
+app-root :is(app-sesionclinicacomponent, app-diagnosticoclinicocomponent)
+  .container .alto {
+  background: #ffe0be;
+  color: #8a410e;
+}
+
+app-root :is(app-sesionclinicacomponent, app-diagnosticoclinicocomponent)
+  .container .critico {
+  background: #ffe0ed;
+  color: #923052;
+}
+
+app-root app-sesionclinicacomponent .container .en_curso {
+  background: #b9e7fa;
+  color: #20556c;
+}
+
+app-root app-sesionclinicacomponent .container .finalizada {
+  background: #eee1fb;
+  color: #5f2b89;
+}
+
+app-root app-sesionclinicacomponent .container .detalle {
+  background: #b9e7fa;
+  color: #20556c;
+}
+
+app-root app-diagnosticoclinicocomponent .container .aviso {
+  padding: 16px 18px;
+  border: 0;
+  border-left: 4px solid #ffce00;
+  border-radius: 12px;
+  background: #fff6d6;
+  color: #795800;
+}
+
+app-root app-sesionclinicacomponent .container .opciones {
+  display: flex;
+  flex-direction: column;
+  margin: 8px 0 16px;
+  padding: 16px;
+  border-radius: 14px;
+  background: #eee1fb;
+}
+
+app-root :is(app-sesionclinicacomponent, app-diagnosticoclinicocomponent)
+  .container textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+app-root app-sesionclinicacomponent .container button[matButton='outlined'] {
+  border-color: #3b197f;
+  background: #eee1fb;
+  color: #5f2b89;
+}
+
+@media (max-width: 650px) {
+  app-root .container {
+    width: calc(100% - 28px);
+    margin-top: 24px;
+    margin-bottom: 32px;
+    padding: 22px 18px;
+    border-radius: 20px;
+  }
+
+  app-root .container .fila {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  app-root .container .botones > button {
+    flex: 1 1 auto;
+  }
+
+  app-root .container .buscador mat-form-field {
+    max-width: none;
+  }
+
+  app-root .container .mat-mdc-cell,
+  app-root .container .mat-mdc-header-cell {
+    padding: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  app-root .container button[matButton],
+  app-root .container a[matButton] {
+    transition: none;
+  }
 }

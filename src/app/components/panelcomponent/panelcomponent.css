@@ -1,0 +1,8 @@
+:host { display: block; min-height: 100vh; }
+.secciones { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 18px; margin-top: 28px; }
+.seccion { display: flex; flex-direction: column; align-items: flex-start; padding: 26px; border-radius: 20px; background: #eee1fb; }
+.seccion:nth-child(3n + 2) { background: #b9e7fa; }
+.seccion:nth-child(3n) { background: #ffe0ed; }
+.seccion mat-icon { color: #583881; margin-bottom: 16px; }
+h3 { font: 26px 'Cal Sans', sans-serif; color: #282427; }
+.seccion a { color: #49256d; font-family: 'Poppins', sans-serif; }

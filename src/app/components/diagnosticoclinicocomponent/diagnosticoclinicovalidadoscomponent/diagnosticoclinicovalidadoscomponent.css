@@ -1,0 +1,6 @@
+.container { margin-top: 24px; }
+.buscador { display: flex; gap: 12px; align-items: baseline; }
+.mensaje { font-weight: 500; }
+table { width: 100%; }
+.alto { color: #e65100; font-weight: 600; }
+.critico { color: #c62828; font-weight: 600; }

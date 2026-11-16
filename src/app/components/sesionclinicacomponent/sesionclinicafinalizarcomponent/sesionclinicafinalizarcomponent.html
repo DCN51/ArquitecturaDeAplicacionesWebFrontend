@@ -1,0 +1,52 @@
+<div class="container">
+  <h2>Finalizar sesión clínica</h2>
+
+  @if (sesion) {
+    <p class="detalle">
+      Sesión {{ sesion.sesionClinicaId }} · Usuario {{ sesion.usuarioId }} ·
+      Inicio {{ sesion.fechaHoraInicio | date:'dd/MM/yyyy HH:mm' }} · Estado {{ sesion.estado }}
+    </p>
+  }
+
+  <form [formGroup]="sesionForm" (ngSubmit)="finalizarSesion()">
+
+    <mat-form-field class="campo">
+      <mat-label>Emoción detectada</mat-label>
+      <input matInput formControlName="emocion" placeholder="Ansiedad">
+      @if (sesionForm.get('emocion')?.hasError('maxlength')) {
+        <mat-error>Máximo 50 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Nivel de urgencia</mat-label>
+      <mat-select formControlName="urgencia">
+        @for (n of niveles; track n) {
+          <mat-option [value]="n">{{ n }}</mat-option>
+        }
+      </mat-select>
+      <mat-hint>Alto o crítico marcan la sesión para derivación automáticamente</mat-hint>
+      @if (sesionForm.get('urgencia')?.hasError('required')) {
+        <mat-error>El nivel de urgencia es obligatorio</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Resumen de la IA</mat-label>
+      <textarea matInput formControlName="resumen" rows="4"></textarea>
+    </mat-form-field>
+
+    <section class="opciones">
+      <mat-checkbox formControlName="derivacion">Requiere derivación a psicólogo</mat-checkbox>
+    </section>
+
+    <div class="botones">
+      <button matButton="filled" type="submit" [disabled]="!editable">Finalizar</button>
+      <button matButton type="button" routerLink="/sesiones/historial">Volver</button>
+    </div>
+  </form>
+
+  @if (mensaje) {
+    <p class="mensaje">{{ mensaje }}</p>
+  }
+</div>

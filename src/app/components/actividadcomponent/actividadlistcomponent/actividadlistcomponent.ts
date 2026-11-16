@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
+import { Loginservice } from '../../../services/loginservice';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -31,9 +32,12 @@ export class Actividadlistcomponent {
   lista: ActividadDTO[] = [];
   mensaje: string = '';
   mensajeAccion: string = '';
-  displayedColumns: string[] = ['id', 'titulo', 'tipo', 'diagnostico', 'asignada', 'estado', 'comentario', 'editar', 'completar', 'eliminar'];
+  displayedColumns: string[];
 
-  constructor(private aS: Actividadservice, private cdr: ChangeDetectorRef) { }
+  constructor(private loginService: Loginservice, private aS: Actividadservice, private cdr: ChangeDetectorRef) {
+    this.displayedColumns = ['id', 'titulo', 'tipo', 'diagnostico', 'asignada', 'estado', 'comentario',
+    ...(this.loginService.tieneRol(['PSICOLOGO']) ? ['editar', 'eliminar'] : ['completar'])];
+  }
 
   buscarActividades(): void {
     this.mensajeAccion = '';

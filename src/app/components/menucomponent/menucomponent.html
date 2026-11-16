@@ -1,31 +1,92 @@
 <mat-toolbar class="menu">
-  <button matIconButton routerLink="/">
+  <button matIconButton routerLink="/app" aria-label="Ir al inicio de Mind Health">
     <mat-icon>home</mat-icon>
   </button>
-  <span class="titulo">Mind Health</span>
-
-  <button matButton [matMenuTriggerFor]="menuUsuarios">Usuarios</button>
-  <mat-menu #menuUsuarios="matMenu">
-    <button mat-menu-item routerLink="/usuarios/listar">Listar</button>
-    <button mat-menu-item routerLink="/roles/listar">Roles</button>
-  </mat-menu>
-
-  <button matButton [matMenuTriggerFor]="menuPlanes">Planes</button>
-  <mat-menu #menuPlanes="matMenu">
-    <button mat-menu-item routerLink="/planes/listar">Listar</button>
-    <button mat-menu-item routerLink="/planes/insertar">Registrar</button>
-  </mat-menu>
-
-  <button matButton [matMenuTriggerFor]="menuSuscripcion">Suscripción</button>
-  <mat-menu #menuSuscripcion="matMenu">
-    <button mat-menu-item routerLink="/suscripciones/contratar">Contratar plan</button>
-    <button mat-menu-item routerLink="/suscripciones/cambiar-plan">Cambiar plan</button>
-    <button mat-menu-item routerLink="/suscripciones/historial">Historial</button>
-  </mat-menu>
-
-  <button matButton [matMenuTriggerFor]="menuActividades">Actividades</button>
-  <mat-menu #menuActividades="matMenu">
-    <button mat-menu-item routerLink="/actividades/listar">Listar</button>
-    <button mat-menu-item routerLink="/actividades/insertar">Registrar</button>
-  </mat-menu>
+  <a routerLink="/app" class="titulo">
+    <img src="/logo-mindhealth.png" alt="Mind Health" width="142" height="57">
+  </a>
+  @if (loginService.tieneRol(['ADMINISTRADOR'])) {
+    <button matButton [matMenuTriggerFor]="menu0">Usuarios</button>
+    <mat-menu #menu0="matMenu">
+      @if (loginService.tieneRol(['ADMINISTRADOR'])) {
+        <button mat-menu-item routerLink="/usuarios/listar">Usuarios registrados</button>
+      }
+      @if (loginService.tieneRol(['ADMINISTRADOR'])) {
+        <button mat-menu-item routerLink="/roles/listar">Roles</button>
+      }
+    </mat-menu>
+  }
+  @if (loginService.tieneRol(['PACIENTE', 'PSICOLOGO', 'ADMINISTRADOR'])) {
+    <button matButton [matMenuTriggerFor]="menu1">Planes</button>
+    <mat-menu #menu1="matMenu">
+      @if (loginService.tieneRol(['PACIENTE', 'PSICOLOGO', 'ADMINISTRADOR'])) {
+        <button mat-menu-item routerLink="/planes/listar">Planes disponibles</button>
+      }
+      @if (loginService.tieneRol(['ADMINISTRADOR'])) {
+        <button mat-menu-item routerLink="/planes/insertar">Registrar plan</button>
+      }
+    </mat-menu>
+  }
+  @if (loginService.tieneRol(['PACIENTE', 'ADMINISTRADOR'])) {
+    <button matButton [matMenuTriggerFor]="menu2">Suscripción</button>
+    <mat-menu #menu2="matMenu">
+      @if (loginService.tieneRol(['PACIENTE'])) {
+        <button mat-menu-item routerLink="/suscripciones/contratar">Contratar plan</button>
+      }
+      @if (loginService.tieneRol(['PACIENTE'])) {
+        <button mat-menu-item routerLink="/suscripciones/cambiar-plan">Cambiar plan</button>
+      }
+      @if (loginService.tieneRol(['PACIENTE', 'ADMINISTRADOR'])) {
+        <button mat-menu-item routerLink="/suscripciones/historial">Historial</button>
+      }
+    </mat-menu>
+  }
+  @if (loginService.tieneRol(['PACIENTE', 'PSICOLOGO'])) {
+    <button matButton [matMenuTriggerFor]="menu3">Sesiones</button>
+    <mat-menu #menu3="matMenu">
+      @if (loginService.tieneRol(['PACIENTE'])) {
+        <button mat-menu-item routerLink="/sesiones/iniciar">Iniciar sesión clínica</button>
+      }
+      @if (loginService.tieneRol(['PACIENTE'])) {
+        <button mat-menu-item routerLink="/sesiones/historial">Historial</button>
+      }
+      @if (loginService.tieneRol(['PSICOLOGO'])) {
+        <button mat-menu-item routerLink="/sesiones/derivaciones">Derivaciones</button>
+      }
+    </mat-menu>
+  }
+  @if (loginService.tieneRol(['PACIENTE', 'PSICOLOGO', 'ADMINISTRADOR'])) {
+    <button matButton [matMenuTriggerFor]="menu4">Diagnósticos</button>
+    <mat-menu #menu4="matMenu">
+      @if (loginService.tieneRol(['PACIENTE'])) {
+        <button mat-menu-item routerLink="/diagnosticos/insertar">Registrar</button>
+      }
+      @if (loginService.tieneRol(['PACIENTE', 'PSICOLOGO'])) {
+        <button mat-menu-item routerLink="/diagnosticos/historial">Historial</button>
+      }
+      @if (loginService.tieneRol(['PSICOLOGO', 'ADMINISTRADOR'])) {
+        <button mat-menu-item routerLink="/diagnosticos/pendientes">Pendientes de validar</button>
+      }
+      @if (loginService.tieneRol(['PSICOLOGO', 'ADMINISTRADOR'])) {
+        <button mat-menu-item routerLink="/diagnosticos/validados">Validados por psicólogo</button>
+      }
+    </mat-menu>
+  }
+  @if (loginService.tieneRol(['PACIENTE', 'PSICOLOGO'])) {
+    <button matButton [matMenuTriggerFor]="menu5">Actividades</button>
+    <mat-menu #menu5="matMenu">
+      @if (loginService.tieneRol(['PACIENTE', 'PSICOLOGO'])) {
+        <button mat-menu-item routerLink="/actividades/listar">Listar</button>
+      }
+      @if (loginService.tieneRol(['PSICOLOGO'])) {
+        <button mat-menu-item routerLink="/actividades/insertar">Registrar</button>
+      }
+    </mat-menu>
+  }
+  @if (loginService.sesion(); as sesion) {
+    <button matButton type="button" (click)="cerrarSesion()">Cerrar sesión ({{ sesion.username }})</button>
+  } @else {
+    <button matButton routerLink="/iniciar-sesion">Iniciar sesión</button>
+    <button matButton routerLink="/registrarse">Registrarse</button>
+  }
 </mat-toolbar>

@@ -1,10 +1,12 @@
 
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-homecomponent',
-  imports: [RouterLink],
+  imports: [RouterLink, MatButtonModule, MatIconModule],
   templateUrl: './homecomponent.html',
   styleUrl: './homecomponent.css',
 })
@@ -12,37 +14,38 @@ export class Homecomponent {
 
   recursos = [
     {
-      icono: '💬',
+      icono: 'chat',
       nombre: 'Sesiones clínicas con IA',
-      ruta: '/sesiones/iniciar',
+      ruta: '/iniciar-sesion',
       color: 'azul'
     },
     {
-      icono: '📋',
+      icono: 'history',
       nombre: 'Historial de sesiones',
-      ruta: '/sesiones/historial',
+      ruta: '/iniciar-sesion',
       color: 'naranja'
     },
     {
-      icono: '✦',
+      icono: 'psychology',
       nombre: 'Evaluaciones preliminares',
-      ruta: '/diagnosticos/historial',
+      ruta: '/iniciar-sesion',
       color: 'morado'
     },
     {
-      icono: '✓',
+      icono: 'verified',
       nombre: 'Validación psicológica',
-      ruta: '/diagnosticos/validados',
+      ruta: '/iniciar-sesion',
       color: 'rosa'
     },
     {
-      icono: '🌼',
+      icono: 'spa',
       nombre: 'Actividades recomendadas',
-      ruta: '/#actividades',
+      ruta: '/',
+      fragmento: 'actividades',
       color: 'amarillo'
     },
     {
-      icono: '▣',
+      icono: 'subscriptions',
       nombre: 'Planes y suscripciones',
       ruta: '/planes/listar',
       color: 'celeste'
@@ -106,7 +109,7 @@ export class Homecomponent {
     }
   ];
 
-  beneficios = [
+  beneficios: string[] = [
     'Sesiones de conversación con IA',
     'Historial de sesiones',
     'Evaluaciones preliminares',

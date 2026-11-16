@@ -1,0 +1,23 @@
+--- a/src/main/java/pe/edu/upc/arquiwebgrupo02/securities/SecurityConfig.java
++++ b/src/main/java/pe/edu/upc/arquiwebgrupo02/securities/SecurityConfig.java
+@@ -151,6 +151,20 @@
+                         .requestMatchers( HttpMethod.PUT, "/api/activities/**" ).permitAll()
+                         .requestMatchers( HttpMethod.DELETE, "/api/activities/**" ).permitAll()
+ 
++                        // Registro de usuarios
++                        .requestMatchers( HttpMethod.POST, "/api/usuarios" ).permitAll()
++
++                        // Sesiones clínicas
++                        .requestMatchers( HttpMethod.POST, "/api/sesiones" ).permitAll()
++                        .requestMatchers( HttpMethod.GET, "/api/sesiones/**" ).permitAll()
++                        .requestMatchers( HttpMethod.PUT, "/api/sesiones/**" ).permitAll()
++                        .requestMatchers( HttpMethod.DELETE, "/api/sesiones/**" ).permitAll()
++
++                        // Diagnósticos clínicos
++                        .requestMatchers( HttpMethod.POST, "/api/diagnosticos" ).permitAll()
++                        .requestMatchers( HttpMethod.GET, "/api/diagnosticos/**" ).permitAll()
++                        .requestMatchers( HttpMethod.DELETE, "/api/diagnosticos/**" ).permitAll()
++
+                         // Swagger / OpenAPI
+                         .requestMatchers(
+                                 "/swagger-ui.html",

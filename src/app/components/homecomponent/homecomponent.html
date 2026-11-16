@@ -11,8 +11,7 @@
     <div class="header-contenido">
 
       <a routerLink="/" class="logo">
-        <span class="logo-icono">m</span>
-        <span>mindhealth</span>
+        <img src="/logo-mindhealth.png" alt="Mind Health" width="142" height="57">
       </a>
 
       <nav class="nav-links">
@@ -23,12 +22,12 @@
       </nav>
 
       <div class="nav-acciones">
-        <a routerLink="/sesiones/historial" class="enlace-menu">
+        <a routerLink="/iniciar-sesion" class="enlace-menu">
           Iniciar sesión
         </a>
 
-        <a routerLink="/sesiones/iniciar" class="boton boton-azul">
-          Comenzar gratis
+        <a matButton="filled" routerLink="/registrarse" class="boton boton-azul">
+          Registrarse
         </a>
       </div>
 
@@ -72,7 +71,7 @@
               lo que estás sintiendo.
             </p>
 
-            <a routerLink="/sesiones/iniciar"
+            <a matButton="filled" routerLink="/registrarse"
                class="boton boton-oscuro">
               Conocer las sesiones
             </a>
@@ -103,7 +102,7 @@
               cuando la necesites.
             </p>
 
-            <a routerLink="/sesiones/derivaciones"
+            <a matButton="filled" routerLink="/iniciar-sesion"
                class="boton boton-oscuro">
               Conocer el acompañamiento
             </a>
@@ -131,11 +130,10 @@
 
         @for (recurso of recursos; track recurso.nombre) {
 
-          @if (recurso.color === 'amarillo') {
-            <a href="#actividades" class="recurso">
-              <span class="recurso-icono"
-                    [class]="recurso.color">
-                {{ recurso.icono }}
+          @if (recurso.fragmento) {
+            <a [attr.href]="'#' + recurso.fragmento" class="recurso">
+              <span class="recurso-icono" [class]="recurso.color">
+                <mat-icon aria-hidden="true">{{ recurso.icono }}</mat-icon>
               </span>
 
               <span>{{ recurso.nombre }}</span>
@@ -144,9 +142,8 @@
             </a>
           } @else {
             <a [routerLink]="recurso.ruta" class="recurso">
-              <span class="recurso-icono"
-                    [class]="recurso.color">
-                {{ recurso.icono }}
+              <span class="recurso-icono" [class]="recurso.color">
+                <mat-icon aria-hidden="true">{{ recurso.icono }}</mat-icon>
               </span>
 
               <span>{{ recurso.nombre }}</span>
@@ -232,7 +229,7 @@
           <li>Historial para tu seguimiento</li>
         </ul>
 
-        <a routerLink="/sesiones/iniciar"
+        <a matButton="filled" routerLink="/registrarse"
            class="boton boton-oscuro">
           Conocer las sesiones
         </a>
@@ -314,7 +311,7 @@
           tu progreso emocional.
         </p>
 
-        <a href="#recorrido" class="boton boton-oscuro">
+        <a matButton="filled" href="#recorrido" class="boton boton-oscuro">
           Explorar mi bienestar
         </a>
 
@@ -514,7 +511,7 @@
 
         </div>
 
-        <a routerLink="/diagnosticos/validados"
+        <a routerLink="/iniciar-sesion"
            class="enlace-panel">
           Conocer las evaluaciones validadas ›
         </a>
@@ -549,7 +546,7 @@
             la que mejor se adapte a tus necesidades.
           </p>
 
-          <a routerLink="/planes/listar"
+          <a matButton="filled" routerLink="/planes/listar"
              class="boton boton-oscuro">
             Consultar planes
           </a>
@@ -571,7 +568,7 @@
             }
           </ul>
 
-          <a routerLink="/suscripciones/contratar"
+          <a routerLink="/iniciar-sesion"
              class="enlace-panel">
             Explorar suscripciones ›
           </a>
@@ -611,7 +608,7 @@
               primer espacio de apoyo.
             </p>
 
-            <a routerLink="/sesiones/iniciar"
+            <a matButton="filled" routerLink="/registrarse"
                class="boton boton-oscuro">
               Empezar mi proceso
             </a>
@@ -644,7 +641,7 @@
               profesional disponible.
             </p>
 
-            <a routerLink="/diagnosticos/pendientes"
+            <a matButton="filled" routerLink="/iniciar-sesion"
                class="boton boton-oscuro">
               Conocer el seguimiento
             </a>
@@ -677,7 +674,7 @@
           y cuidar de ti.
         </p>
 
-        <a routerLink="/sesiones/iniciar"
+        <a matButton="filled" routerLink="/registrarse"
            class="boton boton-oscuro">
           Crear mi espacio
         </a>
@@ -701,7 +698,7 @@
       <div class="footer-marca">
 
         <a routerLink="/" class="footer-logo">
-          mindhealth
+          <img src="/logo-mindhealth.png" alt="Mind Health" width="142" height="57">
         </a>
 
         <p>
@@ -720,17 +717,17 @@
 
       <div>
         <h3>Mind Health</h3>
-        <a routerLink="/sesiones/iniciar">Sesiones</a>
-        <a routerLink="/sesiones/historial">Historial</a>
+        <a routerLink="/registrarse">Sesiones</a>
+        <a routerLink="/iniciar-sesion">Historial</a>
         <a routerLink="/planes/listar">Planes</a>
       </div>
 
       <div>
         <h3>Tu espacio</h3>
-        <a routerLink="/suscripciones/historial">
+        <a routerLink="/iniciar-sesion">
           Suscripciones
         </a>
-        <a routerLink="/diagnosticos/historial">
+        <a routerLink="/iniciar-sesion">
           Evaluaciones
         </a>
       </div>
