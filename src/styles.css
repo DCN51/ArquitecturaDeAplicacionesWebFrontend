@@ -168,7 +168,7 @@ app-root .container a[matButton] {
   font-family: 'Poppins', sans-serif;
   font-size: 14px;
   font-weight: 600;
-  transition: background-color .2s, box-shadow .2s;
+  transition: background-color .2s, box-shadow .2s, transform .18s;
   text-decoration: none;
 }
 
@@ -434,6 +434,56 @@ app-root app-sesionclinicacomponent .container button[matButton='outlined'] {
   app-root .container .mat-mdc-cell,
   app-root .container .mat-mdc-header-cell {
     padding: 12px;
+  }
+}
+
+@keyframes entrada-pantalla {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes entrada-campo {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  app-root .container {
+    animation: entrada-pantalla .4s ease-out both;
+  }
+
+  app-root .container form > .campo,
+  app-root .container form > .fila {
+    animation: entrada-campo .25s ease-out both;
+  }
+
+  app-root .container button[matButton]:not(:disabled):active,
+  app-root .container a[matButton]:active {
+    transform: scale(.98);
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  app-root .container button[matButton]:not(:disabled):hover,
+  app-root .container a[matButton]:hover {
+    transform: translateY(-2px);
+  }
+
+  app-root .container button[matButton]:not(:disabled):active,
+  app-root .container a[matButton]:active {
+    transform: scale(.98);
   }
 }
 
