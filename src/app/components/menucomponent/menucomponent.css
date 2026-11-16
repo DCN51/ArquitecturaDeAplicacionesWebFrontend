@@ -4,8 +4,8 @@
   padding: 16px max(24px, calc((100% - 1200px) / 2));
   flex-wrap: wrap;
   gap: 8px;
-  border-bottom: 1px solid #e2ded9;
-  background: #f9f4f2;
+  border-bottom: 1px solid #cbbdb5;
+  background: #e8dfda;
   color: #2d2c2b;
   --mat-button-text-label-text-color: #39303f;
 }
