@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
+import { Loginservice } from '../../../services/loginservice';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
@@ -29,9 +30,12 @@ export class Diagnosticoclinicohistorialcomponent {
   lista: DiagnosticoClinicoDTO[] = [];
   mensaje: string = '';
   mensajeAccion: string = '';
-  displayedColumns: string[] = ['id', 'sesion', 'fecha', 'resultado', 'riesgo', 'recomendacion', 'validacion', 'eliminar'];
+  displayedColumns: string[];
 
-  constructor(private dcS: Diagnosticoclinicoservice, private cdr: ChangeDetectorRef) { }
+  constructor(private loginService: Loginservice, private dcS: Diagnosticoclinicoservice, private cdr: ChangeDetectorRef) {
+    this.displayedColumns = ['id', 'sesion', 'fecha', 'resultado', 'riesgo', 'recomendacion', 'validacion',
+    ...(this.loginService.tieneRol(['ADMINISTRADOR']) ? ['eliminar'] : [])];
+  }
 
   buscarHistorial(): void {
     this.mensajeAccion = '';

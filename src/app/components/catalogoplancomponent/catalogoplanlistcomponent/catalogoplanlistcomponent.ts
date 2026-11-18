@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Loginservice } from '../../../services/loginservice';
 import { CurrencyPipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,11 +16,14 @@ import { Catalogoplanservice } from '../../../services/catalogoplanservice';
 })
 export class Catalogoplanlistcomponent implements OnInit {
   dataSource: CatalogoPlanDTO[] = [];
-  displayedColumns: string[] = ['nombre', 'precio', 'sesiones', 'diagnostico', 'actividades', 'derivacion', 'descripcion', 'editar', 'desactivar'];
+  displayedColumns: string[];
   mensaje: string = '';        // error al cargar la lista
   mensajeAccion: string = '';  // resultado de desactivar
 
-  constructor(private cpS: Catalogoplanservice, private cdr: ChangeDetectorRef) { }
+  constructor(private loginService: Loginservice, private cpS: Catalogoplanservice, private cdr: ChangeDetectorRef) {
+    this.displayedColumns = ['nombre', 'precio', 'sesiones', 'diagnostico', 'actividades', 'derivacion', 'descripcion',
+    ...(this.loginService.tieneRol(['ADMINISTRADOR']) ? ['editar', 'desactivar'] : [])];
+  }
 
   ngOnInit(): void {
     this.listarPlanes();

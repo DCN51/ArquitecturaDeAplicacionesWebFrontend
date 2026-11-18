@@ -1,0 +1,22 @@
+<div class="container">
+  <a routerLink="/" class="marca">
+    <img src="/logo-mindhealth.png" alt="Mind Health" width="142" height="57">
+  </a>
+  <h2>Iniciar sesión</h2>
+  @if (mensaje) { <p class="mensaje" role="status" aria-live="polite">{{ mensaje }}</p> }
+  <p>Ingresa con tu usuario registrado.</p>
+  <form [formGroup]="loginForm" (ngSubmit)="iniciarSesion()">
+    <mat-form-field class="campo">
+      <mat-label>Nombre de usuario</mat-label>
+      <input matInput formControlName="username" autocomplete="username">
+      <mat-error>Ingresa tu nombre de usuario</mat-error>
+    </mat-form-field>
+    <mat-form-field class="campo">
+      <mat-label>Contraseña</mat-label>
+      <input matInput type="password" formControlName="password" autocomplete="current-password">
+      <mat-error>Ingresa tu contraseña</mat-error>
+    </mat-form-field>
+    <button matButton="filled" type="submit" [disabled]="enviando">{{ enviando ? 'Ingresando…' : 'Iniciar sesión' }}</button>
+  </form>
+  <p class="enlace">¿Aún no tienes cuenta? <a routerLink="/registrarse">Registrarse</a></p>
+</div>

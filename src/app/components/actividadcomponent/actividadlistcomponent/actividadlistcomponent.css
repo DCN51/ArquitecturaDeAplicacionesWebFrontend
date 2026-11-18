@@ -1,0 +1,6 @@
+.container { margin-top: 24px; }
+.buscador { display: flex; gap: 12px; align-items: baseline; }
+.mensaje { font-weight: 500; }
+table { width: 100%; }
+.PENDIENTE { color: #e08a00; font-weight: 600; }
+.COMPLETADA { color: #1aab8b; font-weight: 600; }

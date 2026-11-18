@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
+import { Loginservice } from '../../../services/loginservice';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
@@ -31,14 +32,18 @@ export class Suscripcionhistorialcomponent {
   lista: SuscripcionDTO[] = [];
   mensaje: string = '';
   mensajeAccion: string = '';     // resultado de cancelar (HUF07)
-  displayedColumns: string[] = ['plan', 'inicio', 'fin', 'estado', 'cancelar'];
+  displayedColumns: string[];
   planes: CatalogoPlanDTO[] = [];
 
   constructor(
+    private loginService: Loginservice,
     private sS: Suscripcionservice,
     private cpS: Catalogoplanservice,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {
+    this.displayedColumns = ['plan', 'inicio', 'fin', 'estado',
+    ...(this.loginService.tieneRol(['PACIENTE']) ? ['cancelar'] : [])];
+  }
 
   // HUF08
   buscarHistorial(): void {

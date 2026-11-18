@@ -1,0 +1,65 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  padding: 1px 0;
+  background: #f9f4f2;
+}
+
+.container {
+  max-width: 620px;
+}
+
+.marca {
+  display: inline-block;
+  margin-bottom: 28px;
+  color: #3b197f;
+  font: 30px 'Cal Sans', sans-serif;
+  letter-spacing: -1px;
+  text-decoration: none;
+}
+
+.marca img {
+  display: block;
+  width: 142px;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Keep the account links visually separate from status messages. */
+:host .container > .enlace {
+  margin-top: 28px;
+  padding: 20px 0 0;
+  border-top: 1px solid #e2ded9;
+  border-radius: 0;
+  background: transparent;
+  color: #514955;
+  text-align: center;
+}
+
+.enlace a {
+  color: #51208c;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.enlace a:hover {
+  color: #3b197f;
+}
+
+:host .container form > button[type='submit'] {
+  align-self: stretch;
+  min-height: 48px;
+  margin-top: 10px;
+}
+
+:host .container form > button[type='submit']:not(:disabled) {
+  background: #0055cf;
+  color: #ffffff;
+  box-shadow: 0 2px 0 #003b9126;
+}
+
+:host .container form > button[type='submit']:not(:disabled):hover {
+  background: #003e9c;
+}

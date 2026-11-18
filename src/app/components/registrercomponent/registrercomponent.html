@@ -1,0 +1,97 @@
+<div class="container">
+  <a routerLink="/" class="marca">
+    <img src="/logo-mindhealth.png" alt="Mind Health" width="142" height="57">
+  </a>
+  <h2>Crea tu cuenta</h2>
+  @if (mensaje) { <p class="mensaje" role="status" aria-live="polite">{{ mensaje }}</p> }
+  <p>Regístrate para empezar a cuidar de tu bienestar.</p>
+  @if (errorRoles) {
+    <p class="mensaje" role="alert">{{ errorRoles }}</p>
+    <button matButton type="button" (click)="cargarRoles()">Reintentar cargar roles</button>
+  }
+  <form [formGroup]="registroForm" (ngSubmit)="registrar()">
+    <mat-form-field class="campo">
+      <mat-label>Tipo de cuenta</mat-label>
+      <mat-select formControlName="rolId" (selectionChange)="cambiarRol()">
+        @for (rol of roles; track rol.roleId) {
+          <mat-option [value]="rol.roleId">{{ nombreRol(rol.name) === 'PACIENTE' ? 'Usuario (paciente)' : 'Psicólogo' }}</mat-option>
+        }
+      </mat-select>
+      <mat-error>Selecciona un tipo de cuenta</mat-error>
+    </mat-form-field>
+    <mat-form-field class="campo">
+      <mat-label>Nombres</mat-label>
+      <input matInput type="text" formControlName="nombres" autocomplete="given-name" maxlength="100">
+      <mat-error>Completa este campo correctamente</mat-error>
+    </mat-form-field>
+    <mat-form-field class="campo">
+      <mat-label>Apellidos</mat-label>
+      <input matInput type="text" formControlName="apellidos" autocomplete="family-name" maxlength="100">
+      <mat-error>Completa este campo correctamente</mat-error>
+    </mat-form-field>
+    <mat-form-field class="campo">
+      <mat-label>Correo electrónico</mat-label>
+      <input matInput type="email" formControlName="correoElectronico" autocomplete="email" maxlength="150">
+      <mat-error>Completa este campo correctamente</mat-error>
+    </mat-form-field>
+    <mat-form-field class="campo">
+      <mat-label>Teléfono</mat-label>
+      <input matInput type="tel" formControlName="telefono" autocomplete="tel" maxlength="20">
+      <mat-error>Completa este campo correctamente</mat-error>
+    </mat-form-field>
+    <div class="fila">
+      <mat-form-field class="campo">
+        <mat-label>Fecha de nacimiento</mat-label>
+        <input matInput type="date" formControlName="fechaNacimiento" autocomplete="bday" [max]="hoy">
+        <mat-error>Ingresa tu fecha de nacimiento</mat-error>
+      </mat-form-field>
+      <mat-form-field class="campo">
+        <mat-label>Género</mat-label>
+        <mat-select formControlName="genero">
+          <mat-option value="Femenino">Femenino</mat-option>
+          <mat-option value="Masculino">Masculino</mat-option>
+          <mat-option value="Otro">Otro</mat-option>
+          <mat-option value="Prefiero no decirlo">Prefiero no decirlo</mat-option>
+        </mat-select>
+        <mat-error>Selecciona una opción</mat-error>
+      </mat-form-field>
+    </div>
+    @if (esPsicologo) {
+      <mat-form-field class="campo">
+        <mat-label>Número de colegiatura</mat-label>
+        <input matInput formControlName="numeroColegiatura" maxlength="20">
+        <mat-error>Ingresa tu número de colegiatura</mat-error>
+      </mat-form-field>
+      <mat-form-field class="campo">
+        <mat-label>Especialización</mat-label>
+        <input matInput formControlName="especializacion" maxlength="150">
+        <mat-error>Ingresa tu especialización</mat-error>
+      </mat-form-field>
+      <mat-form-field class="campo">
+        <mat-label>Años de experiencia</mat-label>
+        <input matInput type="number" min="0" max="2147483647" step="1" formControlName="anosExperiencia">
+        <mat-error>Ingresa un número entero mayor o igual a cero</mat-error>
+      </mat-form-field>
+    }
+    <mat-form-field class="campo">
+      <mat-label>Nombre de usuario</mat-label>
+      <input matInput formControlName="username" autocomplete="username" maxlength="50">
+      <mat-error>Ingresa un nombre de usuario</mat-error>
+    </mat-form-field>
+    <mat-form-field class="campo">
+      <mat-label>Contraseña</mat-label>
+      <input matInput type="password" formControlName="contrasena" autocomplete="new-password" maxlength="100">
+      <mat-hint>Entre 8 y 100 caracteres</mat-hint>
+      <mat-error>La contraseña debe tener entre 8 y 100 caracteres</mat-error>
+    </mat-form-field>
+    <mat-form-field class="campo">
+      <mat-label>Confirmar contraseña</mat-label>
+      <input matInput type="password" formControlName="confirmar" autocomplete="new-password">
+      <mat-error>Confirma tu contraseña</mat-error>
+    </mat-form-field>
+    <button matButton="filled" type="submit" [disabled]="enviando || registrado || !roles.length">
+      {{ enviando ? 'Registrando…' : 'Registrarse' }}
+    </button>
+  </form>
+  <p class="enlace">¿Ya tienes cuenta? <a routerLink="/iniciar-sesion">Iniciar sesión</a></p>
+</div>

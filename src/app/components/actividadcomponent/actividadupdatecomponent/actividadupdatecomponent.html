@@ -1,0 +1,65 @@
+<div class="container">
+  <h2>Editar actividad recomendada</h2>
+
+  <form [formGroup]="actividadForm" (ngSubmit)="actualizarActividad()">
+
+    <div class="fila">
+      <mat-form-field class="campo">
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="codigo" readonly>
+      </mat-form-field>
+      <mat-form-field class="campo">
+        <mat-label>Paciente</mat-label>
+        <input matInput formControlName="usuarioId" readonly>
+      </mat-form-field>
+      <mat-form-field class="campo">
+        <mat-label>Diagnóstico</mat-label>
+        <input matInput formControlName="diagnosticoId" readonly>
+      </mat-form-field>
+      <mat-form-field class="campo">
+        <mat-label>Estado</mat-label>
+        <input matInput formControlName="estado" readonly>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field class="campo">
+      <mat-label>Título</mat-label>
+      <input matInput formControlName="titulo">
+      @if (actividadForm.get('titulo')?.hasError('required')) {
+        <mat-error>El título es obligatorio</mat-error>
+      }
+      @if (actividadForm.get('titulo')?.hasError('maxlength')) {
+        <mat-error>Máximo 100 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput formControlName="descripcion" rows="3"></textarea>
+      @if (actividadForm.get('descripcion')?.hasError('required')) {
+        <mat-error>La descripción es obligatoria</mat-error>
+      }
+      @if (actividadForm.get('descripcion')?.hasError('maxlength')) {
+        <mat-error>Máximo 255 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Tipo</mat-label>
+      <mat-select formControlName="tipo">
+        @for (t of tipos; track t) {
+          <mat-option [value]="t">{{ t }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <div class="botones">
+      <button matButton="filled" type="submit" [disabled]="!actividad">Guardar</button>
+      <button matButton type="button" routerLink="/actividades/listar">Volver</button>
+    </div>
+  </form>
+
+  @if (mensaje) {
+    <p class="mensaje">{{ mensaje }}</p>
+  }
+</div>

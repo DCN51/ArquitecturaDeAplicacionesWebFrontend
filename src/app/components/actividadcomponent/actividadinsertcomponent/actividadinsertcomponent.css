@@ -1,0 +1,5 @@
+.container { margin-top: 24px; max-width: 600px; }
+.fila { display: flex; gap: 12px; }
+.campo { width: 100%; margin-bottom: 8px; }
+.mensaje { margin-top: 16px; font-weight: 500; }
+.resultado { margin-top: 12px; }

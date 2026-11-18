@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Loginservice } from '../../../services/loginservice';
 import { DatePipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,12 +15,15 @@ import { DiagnosticoClinicoDTO } from '../../../models/DiagnosticoClinicoDTO';
 })
 export class Diagnosticoclinicopendientescomponent implements OnInit {
   dataSource: DiagnosticoClinicoDTO[] = [];
-  displayedColumns: string[] = ['id', 'usuario', 'sesion', 'fecha', 'resultado', 'riesgo', 'validar'];
+  displayedColumns: string[];
   mensaje: string = '';
   mensajeAccion: string = '';
   cargando: boolean = true;
 
-  constructor(private dcS: Diagnosticoclinicoservice, private cdr: ChangeDetectorRef) { }
+  constructor(private loginService: Loginservice, private dcS: Diagnosticoclinicoservice, private cdr: ChangeDetectorRef) {
+    this.displayedColumns = ['id', 'usuario', 'sesion', 'fecha', 'resultado', 'riesgo',
+    ...(this.loginService.tieneRol(['PSICOLOGO']) ? ['validar'] : [])];
+  }
 
   ngOnInit(): void {
     this.listarPendientes();

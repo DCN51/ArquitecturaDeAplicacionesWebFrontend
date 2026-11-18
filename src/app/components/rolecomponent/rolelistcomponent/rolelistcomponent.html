@@ -1,0 +1,25 @@
+<div class="container">
+  <h2>Roles del sistema</h2>
+
+  @if (mensaje) {
+    <p>{{ mensaje }}</p>
+  } @else if (dataSource.length > 0) {
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.roleId }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef>Rol</th>
+        <td mat-cell *matCellDef="let element">{{ nombreRol(element.name) }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  } @else {
+    <p>No hay roles registrados</p>
+  }
+</div>

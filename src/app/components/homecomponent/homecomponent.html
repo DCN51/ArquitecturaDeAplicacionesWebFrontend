@@ -1,5 +1,652 @@
-<app-menucomponent></app-menucomponent>
-<div class="container" style="text-align: center; margin-top: 5%;">
-  <h2>Mind Health</h2>
-  <p>Gestión de planes y suscripciones</p>
+
+<div class="landing">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-contenido">
+
+      <a routerLink="/" class="logo">
+        <img src="/logo-mindhealth.png" alt="Mind Health" width="142" height="57">
+      </a>
+
+      <nav class="nav-links">
+        <a href="#inicio">Inicio</a>
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#planes">Planes</a>
+      </nav>
+
+      <div class="nav-acciones">
+        <a routerLink="/iniciar-sesion" class="enlace-menu">
+          Iniciar sesión
+        </a>
+
+        <a matButton="filled" routerLink="/registrarse" class="boton boton-azul">
+          Registrarse
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <main>
+
+    <!-- SECCIÓN 1: INICIO -->
+    <section class="hero contenedor" id="inicio">
+
+      <h1>
+        Un espacio para hablar,<br>
+        sentir y cuidar de ti.
+      </h1>
+
+      <p class="hero-descripcion">
+        Sesiones con IA, evaluaciones preliminares
+        y seguimiento psicológico en un solo lugar.
+      </p>
+
+      <div class="hero-tarjetas">
+
+        <article class="tarjeta-hero fondo-amarillo">
+
+          <div>
+            <span class="eyebrow">ATENCIÓN CON IA</span>
+
+            <h2>
+              Expresa lo que sientes.
+            </h2>
+
+            <p>
+              Explora tus emociones en una sesión con IA.
+            </p>
+
+            <a matButton="filled" routerLink="/registrarse"
+               class="boton boton-oscuro">
+              Crear cuenta
+            </a>
+          </div>
+
+          <img
+            src="/conversacion.png"
+            alt="Ilustración de una persona expresando emociones"
+            class="ilustracion-hero"
+          >
+
+        </article>
+
+        <article class="tarjeta-hero fondo-rosa">
+
+          <div>
+            <span class="eyebrow">
+              ACOMPAÑAMIENTO PROFESIONAL
+            </span>
+
+            <h2>
+              Recibe orientación profesional.
+            </h2>
+
+            <p>
+              Un psicólogo puede revisar y validar tus evaluaciones.
+            </p>
+
+            <a matButton="filled" routerLink="/iniciar-sesion"
+               class="boton boton-oscuro">
+              Iniciar sesión
+            </a>
+          </div>
+
+          <img
+            src="/landing/psicologo.png"
+            alt="Ilustración de acompañamiento psicológico"
+            class="ilustracion-hero"
+          >
+
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: SERVICIOS -->
+    <section class="recursos contenedor" id="servicios">
+
+      <h2 class="titulo-seccion">
+        Nuestros servicios
+      </h2>
+
+      <div class="recursos-grid">
+
+        @for (recurso of recursos; track recurso.nombre) {
+
+          @if (recurso.fragmento) {
+            <a [attr.href]="'#' + recurso.fragmento" class="recurso">
+              <span class="recurso-icono" [class]="recurso.color">
+                <mat-icon aria-hidden="true">{{ recurso.icono }}</mat-icon>
+              </span>
+
+              <span>{{ recurso.nombre }}</span>
+
+              <span class="flecha">›</span>
+            </a>
+          } @else {
+            <a [routerLink]="recurso.ruta" class="recurso">
+              <span class="recurso-icono" [class]="recurso.color">
+                <mat-icon aria-hidden="true">{{ recurso.icono }}</mat-icon>
+              </span>
+
+              <span>{{ recurso.nombre }}</span>
+
+              <span class="flecha">›</span>
+            </a>
+          }
+
+        }
+
+      </div>
+
+    </section>
+
+    <!-- SECCIÓN 3: SESIONES CON IA -->
+    <section class="contenedor bloque bloque-ia"
+             id="sesiones">
+
+      <div class="bloque-visual">
+
+        <div class="chat-ejemplo">
+
+          <div class="chat-encabezado">
+            <span class="icono-chat">✦</span>
+
+            <div>
+              <strong>Sesión con IA</strong>
+            </div>
+          </div>
+
+          <div class="mensaje mensaje-pregunta">
+            ¿Cómo te has sentido últimamente?
+          </div>
+
+          <div class="mensaje mensaje-respuesta">
+            He tenido muchas cosas en mente.
+            Me gustaría entender lo que siento.
+          </div>
+
+          <p class="chat-sugerencias-titulo">
+            Algunas ideas para comenzar:
+          </p>
+
+          <div class="chat-sugerencias">
+            <span>Conocer mis emociones</span>
+            <span>Aprender a gestionar mis emociones</span>
+          </div>
+
+        </div>
+
+        <p class="texto-ilustrativo">
+          Vista ilustrativa de una conversación.
+        </p>
+
+      </div>
+
+      <div class="bloque-informacion">
+
+        <h2>
+          Conoce tus emociones.
+        </h2>
+
+        <p>
+          Consulta tus evaluaciones preliminares
+          y conserva el historial de tus sesiones.
+        </p>
+
+        <ul class="lista-beneficios">
+          <li>Un espacio para conversar</li>
+          <li>Herramientas de autoconocimiento</li>
+          <li>Historial para tu seguimiento</li>
+        </ul>
+
+        <a matButton="filled" routerLink="/registrarse"
+           class="boton boton-oscuro">
+          Crear cuenta
+        </a>
+
+      </div>
+
+    </section>
+
+    <!-- SECCIÓN 4: CÓMO FUNCIONA -->
+    <section class="contenedor bloque-proceso"
+             id="como-funciona">
+
+      <h2>
+        Cómo funciona
+      </h2>
+
+      <p class="proceso-descripcion">
+        De la conversación a la revisión profesional.
+      </p>
+
+      <div class="pasos-grid">
+
+        @for (paso of pasos; track paso.numero) {
+
+          <article class="paso">
+
+            <span class="paso-numero">
+              {{ paso.numero }}
+            </span>
+
+            <h3>{{ paso.titulo }}</h3>
+
+            <p>{{ paso.descripcion }}</p>
+
+            <span class="paso-etiqueta">
+              {{ paso.etiqueta }}
+            </span>
+
+          </article>
+
+        }
+
+      </div>
+
+    </section>
+
+    <!-- SECCIÓN 5: ACTIVIDADES -->
+    <section class="contenedor bloque bloque-actividades"
+             id="actividades">
+
+      <div class="bloque-informacion">
+
+        <h2>
+          Actividades para tu día a día.
+        </h2>
+
+        <p>
+          Consulta las actividades recomendadas
+          y registra tu progreso.
+        </p>
+
+        <a matButton="filled" href="#recorrido" class="boton boton-oscuro">
+          Ver recorrido
+        </a>
+
+      </div>
+
+      <div class="actividad-visual">
+
+        <div class="actividad-tarjeta">
+
+          <h3>Un paso a la vez</h3>
+
+          <p>
+            Actividades recomendadas para tu bienestar
+          </p>
+
+          <div class="actividad-item">
+
+            <span class="circulo-vacio"></span>
+
+            <div>
+              <strong>Pausa de respiración</strong>
+              <small>Dedica unos minutos para ti</small>
+            </div>
+
+          </div>
+
+          <div class="actividad-item">
+
+            <span class="circulo-vacio"></span>
+
+            <div>
+              <strong>Reflexiona sobre tu día</strong>
+              <small>Reconoce tus emociones</small>
+            </div>
+
+          </div>
+
+          <div class="actividad-item">
+
+            <span class="check-verde">✓</span>
+
+            <div>
+              <strong>Conecta con alguien</strong>
+              <small>Comparte cómo te sientes</small>
+            </div>
+
+          </div>
+
+        </div>
+
+        <img
+          src="/cuaderno.png"
+          alt=""
+          class="decoracion-libro"
+        >
+
+      </div>
+
+    </section>
+
+    <!-- SECCIÓN 6: RECORRIDO -->
+    <section class="contenedor recorrido" id="recorrido">
+
+      <h2 class="titulo-seccion">
+        Tu camino en Mind Health.
+      </h2>
+
+      <div class="recorrido-grid">
+
+        @for (item of recorrido; track item.numero) {
+
+          <article class="recorrido-item">
+
+            <div class="recorrido-imagen"
+                 [class]="item.color">
+
+              <span class="numero-recorrido">
+                {{ item.numero }}
+              </span>
+
+              @if (item.imagen) {
+
+                <img
+                  [src]="item.imagen"
+                  [alt]="item.titulo"
+                >
+
+              } @else if (item.numero === '01') {
+
+                <div class="mini-chat">
+                  <strong>Hola, ¿cómo te sientes?</strong>
+                  <span>Tu espacio para expresarte</span>
+                  <span class="mini-boton">Iniciar sesión</span>
+                </div>
+
+              } @else {
+
+                <div class="mini-evaluacion">
+                  <strong>Así me siento</strong>
+                  <span>Evaluación preliminar</span>
+                  <span class="mini-boton amarillo">
+                    Ver orientación
+                  </span>
+                </div>
+
+              }
+
+            </div>
+
+            <h3>{{ item.titulo }}</h3>
+
+          </article>
+
+        }
+
+      </div>
+
+    </section>
+
+    <!-- SECCIÓN 7: PROFESIONALES -->
+    <section class="contenedor bloque bloque-profesionales">
+
+      <div class="bloque-informacion">
+
+        <h2>
+          Seguimiento psicológico.
+        </h2>
+
+        <p>
+          Los psicólogos revisan las evaluaciones
+          que requieren atención y validan los resultados.
+        </p>
+
+        <div class="aviso">
+
+          <strong>
+            La IA no reemplaza la atención profesional.
+          </strong>
+
+        </div>
+
+      </div>
+
+      <div class="panel-acompanamiento">
+
+        <h3>Estado de tu evaluación</h3>
+
+        <div class="estado">
+
+          <span class="estado-icono amarillo">01</span>
+
+          <div>
+            <strong>Pendiente</strong>
+            <small>Evaluación registrada</small>
+          </div>
+
+        </div>
+
+        <div class="estado">
+
+          <span class="estado-icono celeste">02</span>
+
+          <div>
+            <strong>En revisión</strong>
+            <small>Evaluación por un psicólogo</small>
+          </div>
+
+        </div>
+
+        <div class="estado">
+
+          <span class="estado-icono verde">03</span>
+
+          <div>
+            <strong>Concluida</strong>
+            <small>Evaluación revisada</small>
+          </div>
+
+        </div>
+
+        <a routerLink="/iniciar-sesion"
+           class="enlace-panel">
+          Consultar evaluaciones ›
+        </a>
+
+      </div>
+
+    </section>
+
+    <!-- SECCIÓN 8: PLANES -->
+    <section class="contenedor planes" id="planes">
+
+      <h2 class="titulo-seccion">
+        Planes y suscripciones
+      </h2>
+
+      <div class="bloque bloque-planes">
+
+        <div class="bloque-informacion">
+
+          <h2>
+            Elige tu plan.
+          </h2>
+
+          <p>
+            Compara precios y servicios incluidos.
+          </p>
+
+          <a matButton="filled" routerLink="/planes/listar"
+             class="boton boton-oscuro">
+            Consultar planes
+          </a>
+
+        </div>
+
+        <div class="catalogo-preview">
+
+          <h3>Servicios según tu plan</h3>
+
+          <ul>
+            @for (beneficio of beneficios; track beneficio) {
+              <li>{{ beneficio }}</li>
+            }
+          </ul>
+
+          <a routerLink="/iniciar-sesion"
+             class="enlace-panel">
+            Explorar suscripciones ›
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- SECCIÓN 9: CONEXIÓN -->
+    <section class="contenedor conexion">
+
+      <h2 class="titulo-seccion">
+        Tu espacio en Mind Health
+      </h2>
+
+      <div class="conexion-grid">
+
+        <article class="conexion-card fondo-rosa">
+
+          <div>
+
+            <span class="eyebrow">
+              PARA PACIENTES
+            </span>
+
+            <h2>
+              Pacientes
+            </h2>
+
+            <p>
+              Accede a tus sesiones, evaluaciones y actividades.
+            </p>
+
+            <a matButton="filled" routerLink="/registrarse"
+               class="boton boton-oscuro">
+              Crear cuenta
+            </a>
+
+          </div>
+
+          <img
+            src="/conversacion.png"
+            alt="Persona cuidando su bienestar"
+          >
+
+        </article>
+
+        <article class="conexion-card fondo-celeste">
+
+          <div>
+
+            <span class="eyebrow">
+              PARA PROFESIONALES
+            </span>
+
+            <h2>
+              Profesionales
+            </h2>
+
+            <p>
+              Revisa evaluaciones pendientes y realiza su seguimiento.
+            </p>
+
+            <a matButton="filled" routerLink="/iniciar-sesion"
+               class="boton boton-oscuro">
+              Iniciar sesión
+            </a>
+
+          </div>
+
+          <img
+            src="/landing/psicologo.png"
+            alt="Psicólogo conversando con un paciente"
+          >
+
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- SECCIÓN 10: CTA FINAL -->
+    <section class="contenedor llamada-final">
+
+      <div>
+
+        <h2>
+          Empieza hoy.
+        </h2>
+
+        <a matButton="filled" routerLink="/registrarse"
+           class="boton boton-oscuro">
+          Crear cuenta
+        </a>
+
+      </div>
+
+      <img
+        src="/cuaderno.png"
+        alt="Cuaderno de bienestar emocional"
+      >
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer contenedor">
+
+    <div class="footer-grid">
+
+      <div class="footer-marca">
+
+        <a routerLink="/" class="footer-logo">
+          <img src="/logo-mindhealth.png" alt="Mind Health" width="142" height="57">
+        </a>
+
+      </div>
+
+      <div>
+        <h3>Explorar</h3>
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#recorrido">Mi recorrido</a>
+      </div>
+
+      <div>
+        <h3>Mind Health</h3>
+        <a routerLink="/registrarse">Sesiones</a>
+        <a routerLink="/iniciar-sesion">Historial</a>
+        <a routerLink="/planes/listar">Planes</a>
+      </div>
+
+      <div>
+        <h3>Tu espacio</h3>
+        <a routerLink="/iniciar-sesion">
+          Suscripciones
+        </a>
+        <a routerLink="/iniciar-sesion">
+          Evaluaciones
+        </a>
+      </div>
+
+    </div>
+
+    <div class="footer-inferior">
+
+      <span>
+        © Mind Health. Todos los derechos reservados.
+      </span>
+
+    </div>
+
+  </footer>
+
 </div>

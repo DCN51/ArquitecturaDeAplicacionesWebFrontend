@@ -1,0 +1,5 @@
+.container { margin-top: 24px; }
+table { width: 100%; }
+.mensaje { font-weight: 500; }
+.ACTIVO { color: #1aab8b; font-weight: 600; }
+.INACTIVO { color: #c62828; }

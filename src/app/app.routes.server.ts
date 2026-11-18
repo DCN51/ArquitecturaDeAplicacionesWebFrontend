@@ -21,8 +21,9 @@ export const serverRoutes: ServerRoute[] = [
     path: 'planes/editar/:id',
     renderMode: RenderMode.Client
   },
+  { path: '', renderMode: RenderMode.Prerender },
   {
     path: '**',
-    renderMode: RenderMode.Prerender
+    renderMode: RenderMode.Client
   }
 ];

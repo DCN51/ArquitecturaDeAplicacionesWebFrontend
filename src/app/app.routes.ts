@@ -1,4 +1,7 @@
 import { Routes } from '@angular/router';
+import { Logincomponent } from './components/logincomponent/logincomponent';
+import { Registrercomponent } from './components/registrercomponent/registrercomponent';
+import { Panelcomponent } from './components/panelcomponent/panelcomponent';
 import { Homecomponent } from './components/homecomponent/homecomponent';
 import { Catalogoplancomponent } from './components/catalogoplancomponent/catalogoplancomponent';
 import { Catalogoplanlistcomponent } from './components/catalogoplancomponent/catalogoplanlistcomponent/catalogoplanlistcomponent';
@@ -18,8 +21,21 @@ import { Diagnosticoclinicoinsertcomponent } from './components/diagnosticoclini
 import { Diagnosticoclinicohistorialcomponent } from './components/diagnosticoclinicocomponent/diagnosticoclinicohistorialcomponent/diagnosticoclinicohistorialcomponent';
 import { Diagnosticoclinicopendientescomponent } from './components/diagnosticoclinicocomponent/diagnosticoclinicopendientescomponent/diagnosticoclinicopendientescomponent';
 import { Diagnosticoclinicovalidadoscomponent } from './components/diagnosticoclinicocomponent/diagnosticoclinicovalidadoscomponent/diagnosticoclinicovalidadoscomponent';
+import { Rolecomponent } from './components/rolecomponent/rolecomponent';
+import { Rolelistcomponent } from './components/rolecomponent/rolelistcomponent/rolelistcomponent';
+import { Userscomponent } from './components/userscomponent/userscomponent';
+import { Userslistcomponent } from './components/userscomponent/userslistcomponent/userslistcomponent';
+import { Usersupdatecomponent } from './components/userscomponent/usersupdatecomponent/usersupdatecomponent';
+import { Actividadcomponent } from './components/actividadcomponent/actividadcomponent';
+import { Actividadlistcomponent } from './components/actividadcomponent/actividadlistcomponent/actividadlistcomponent';
+import { Actividadinsertcomponent } from './components/actividadcomponent/actividadinsertcomponent/actividadinsertcomponent';
+import { Actividadupdatecomponent } from './components/actividadcomponent/actividadupdatecomponent/actividadupdatecomponent';
+import { Actividadcompletarcomponent } from './components/actividadcomponent/actividadcompletarcomponent/actividadcompletarcomponent';
 
 export const routes: Routes = [
+  { path: 'app', component: Panelcomponent },
+  { path: 'iniciar-sesion', component: Logincomponent },
+  { path: 'registrarse', component: Registrercomponent },
   {
     path: '',
     component: Homecomponent,
@@ -66,6 +82,34 @@ export const routes: Routes = [
       { path: 'historial', component: Diagnosticoclinicohistorialcomponent },
       { path: 'pendientes', component: Diagnosticoclinicopendientescomponent },
       { path: 'validados', component: Diagnosticoclinicovalidadoscomponent },
+    ],
+  },
+  {
+    path: 'roles',
+    component: Rolecomponent,
+    children: [
+      { path: '', redirectTo: 'listar', pathMatch: 'full' },
+      { path: 'listar', component: Rolelistcomponent },
+    ],
+  },
+  {
+    path: 'usuarios',
+    component: Userscomponent,
+    children: [
+      { path: '', redirectTo: 'listar', pathMatch: 'full' },
+      { path: 'listar', component: Userslistcomponent },
+      { path: 'editar/:id', component: Usersupdatecomponent },
+    ],
+  },
+    {
+    path: 'actividades',
+    component: Actividadcomponent,
+    children: [
+      { path: '', redirectTo: 'listar', pathMatch: 'full' },
+      { path: 'listar', component: Actividadlistcomponent },
+      { path: 'insertar', component: Actividadinsertcomponent },
+      { path: 'editar/:userId/:id', component: Actividadupdatecomponent },
+      { path: 'completar/:userId/:id', component: Actividadcompletarcomponent },
     ],
   },
 ];
