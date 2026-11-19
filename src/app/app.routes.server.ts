@@ -21,6 +21,18 @@ export const serverRoutes: ServerRoute[] = [
     path: 'planes/editar/:id',
     renderMode: RenderMode.Client
   },
+  {
+    path: 'usuarios/editar/:id',
+    renderMode: RenderMode.Client
+  },
+  {
+    path: 'actividades/editar/:userId/:id',
+    renderMode: RenderMode.Client
+  },
+  {
+    path: 'actividades/completar/:userId/:id',
+    renderMode: RenderMode.Client
+  },
   { path: '', renderMode: RenderMode.Prerender },
   {
     path: '**',
