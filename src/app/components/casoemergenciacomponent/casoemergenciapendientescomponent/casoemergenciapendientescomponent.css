@@ -1,0 +1,6 @@
+.container { margin-top: 24px; }
+table { width: 100%; }
+.critico { color: #b3261e; font-weight: 700; }
+.alto { color: #c2410c; font-weight: 600; }
+.medio { color: #a16207; }
+.bajo { color: #555; }
