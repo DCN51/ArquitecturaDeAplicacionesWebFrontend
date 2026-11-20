@@ -83,6 +83,23 @@
       }
     </mat-menu>
   }
+  @if (loginService.tieneRol(['PACIENTE', 'PSICOLOGO', 'ADMINISTRADOR'])) {
+    <button matButton [matMenuTriggerFor]="menu6">Casos de Emergencia</button>
+    <mat-menu #menu6="matMenu">
+      @if (loginService.tieneRol(['PACIENTE'])) {
+        <button mat-menu-item routerLink="/casos-emergencia/insertar">Registrar caso</button>
+      }
+      @if (loginService.tieneRol(['PSICOLOGO', 'ADMINISTRADOR'])) {
+        <button mat-menu-item routerLink="/casos-emergencia/listar">Listar casos</button>
+      }
+      @if (loginService.tieneRol(['PSICOLOGO'])) {
+        <button mat-menu-item routerLink="/casos-emergencia/pendientes">Pendientes por urgencia</button>
+      }
+      @if (loginService.tieneRol(['ADMINISTRADOR'])) {
+        <button mat-menu-item routerLink="/casos-emergencia/por-psicologo">Casos por psicólogo</button>
+      }
+    </mat-menu>
+  }
   @if (loginService.sesion(); as sesion) {
     <button matButton type="button" (click)="cerrarSesion()">Cerrar sesión ({{ sesion.username }})</button>
   } @else {

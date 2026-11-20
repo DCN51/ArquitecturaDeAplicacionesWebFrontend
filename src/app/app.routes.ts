@@ -31,6 +31,11 @@ import { Actividadlistcomponent } from './components/actividadcomponent/activida
 import { Actividadinsertcomponent } from './components/actividadcomponent/actividadinsertcomponent/actividadinsertcomponent';
 import { Actividadupdatecomponent } from './components/actividadcomponent/actividadupdatecomponent/actividadupdatecomponent';
 import { Actividadcompletarcomponent } from './components/actividadcomponent/actividadcompletarcomponent/actividadcompletarcomponent';
+import { Casoemergenciacomponent } from './components/casoemergenciacomponent/casoemergenciacomponent';
+import { Casoemergencialistcomponent } from './components/casoemergenciacomponent/casoemergencialistcomponent/casoemergencialistcomponent';
+import { Casoemergenciainsertcomponent } from './components/casoemergenciacomponent/casoemergenciainsertcomponent/casoemergenciainsertcomponent';
+import { Casoemergenciapendientescomponent } from './components/casoemergenciacomponent/casoemergenciapendientescomponent/casoemergenciapendientescomponent';
+import { Casosporpsicologocomponent } from './components/casoemergenciacomponent/casosporpsicologocomponent/casosporpsicologocomponent';
 
 export const routes: Routes = [
   { path: 'app', component: Panelcomponent },
@@ -110,6 +115,18 @@ export const routes: Routes = [
       { path: 'insertar', component: Actividadinsertcomponent },
       { path: 'editar/:userId/:id', component: Actividadupdatecomponent },
       { path: 'completar/:userId/:id', component: Actividadcompletarcomponent },
+    ],
+  },
+  {
+    path: 'casos-emergencia',
+    component: Casoemergenciacomponent,
+    children: [
+      { path: '', redirectTo: 'listar', pathMatch: 'full' },
+      { path: 'listar', component: Casoemergencialistcomponent },
+      { path: 'insertar', component: Casoemergenciainsertcomponent },
+      { path: 'editar/:id', component: Casoemergenciainsertcomponent },
+      { path: 'pendientes', component: Casoemergenciapendientescomponent },
+      { path: 'por-psicologo', component: Casosporpsicologocomponent },
     ],
   },
 ];
