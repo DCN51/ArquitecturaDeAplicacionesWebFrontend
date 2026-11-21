@@ -13,10 +13,28 @@ import { Loginservice } from '../../services/loginservice';
   styleUrl: './menucomponent.css',
 })
 export class Menucomponent {
-  constructor(public loginService: Loginservice, private router: Router) { }
+  constructor(private readonly loginService: Loginservice,
+    private readonly router: Router
+  ) { }
+
+  get username(): string {
+    return this.loginService.getUsername();
+  }
+
+  get esAdmin(): boolean {
+    return this.loginService.hasAnyRole(['ADMINISTRADOR']);
+  }
+
+  get esPaciente(): boolean {
+    return this.loginService.hasAnyRole(['PACIENTE']);
+  }
+
+  get esPsicologo(): boolean {
+    return this.loginService.hasAnyRole(['PSICOLOGO']);
+  }
 
   cerrarSesion(): void {
     this.loginService.logout();
-    void this.router.navigate(['/']);
+    void this.router.navigateByUrl('/iniciar-sesion', { replaceUrl: true });
   }
 }

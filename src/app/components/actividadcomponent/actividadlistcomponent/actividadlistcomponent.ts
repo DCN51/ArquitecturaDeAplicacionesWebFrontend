@@ -32,12 +32,22 @@ export class Actividadlistcomponent {
   lista: ActividadDTO[] = [];
   mensaje: string = '';
   mensajeAccion: string = '';
-  displayedColumns: string[];
 
-  constructor(private loginService: Loginservice, private aS: Actividadservice, private cdr: ChangeDetectorRef) {
-    this.displayedColumns = ['id', 'titulo', 'tipo', 'diagnostico', 'asignada', 'estado', 'comentario',
-    ...(this.loginService.tieneRol(['PSICOLOGO']) ? ['editar', 'eliminar'] : ['completar'])];
+  // Columnas que ven todos
+  private baseColumns: string[] = ['id', 'titulo', 'tipo', 'diagnostico', 'asignada', 'estado', 'comentario'];
+
+  // El psicólogo ve editar y eliminar; el paciente ve completar
+  get displayedColumns(): string[] {
+    return this.esPsicologo
+      ? [...this.baseColumns, 'editar', 'eliminar']
+      : [...this.baseColumns, 'completar'];
   }
+
+  get esPsicologo(): boolean {
+    return this.loginService.hasAnyRole(['PSICOLOGO']);
+  }
+
+  constructor(private loginService: Loginservice, private aS: Actividadservice, private cdr: ChangeDetectorRef) { }
 
   buscarActividades(): void {
     this.mensajeAccion = '';

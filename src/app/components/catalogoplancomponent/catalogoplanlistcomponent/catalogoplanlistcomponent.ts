@@ -16,14 +16,24 @@ import { Catalogoplanservice } from '../../../services/catalogoplanservice';
 })
 export class Catalogoplanlistcomponent implements OnInit {
   dataSource: CatalogoPlanDTO[] = [];
-  displayedColumns: string[];
   mensaje: string = '';        // error al cargar la lista
   mensajeAccion: string = '';  // resultado de desactivar
 
-  constructor(private loginService: Loginservice, private cpS: Catalogoplanservice, private cdr: ChangeDetectorRef) {
-    this.displayedColumns = ['nombre', 'precio', 'sesiones', 'diagnostico', 'actividades', 'derivacion', 'descripcion',
-    ...(this.loginService.tieneRol(['ADMINISTRADOR']) ? ['editar', 'desactivar'] : [])];
+  // Columnas que ven todos
+  private baseColumns: string[] = ['nombre', 'precio', 'sesiones', 'diagnostico', 'actividades', 'derivacion', 'descripcion'];
+
+  // Solo el administrador ve editar y desactivar
+  get displayedColumns(): string[] {
+    return this.esAdmin
+      ? [...this.baseColumns, 'editar', 'desactivar']
+      : this.baseColumns;
   }
+
+  get esAdmin(): boolean {
+    return this.loginService.hasAnyRole(['ADMINISTRADOR']);
+  }
+
+  constructor(private loginService: Loginservice, private cpS: Catalogoplanservice, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.listarPlanes();

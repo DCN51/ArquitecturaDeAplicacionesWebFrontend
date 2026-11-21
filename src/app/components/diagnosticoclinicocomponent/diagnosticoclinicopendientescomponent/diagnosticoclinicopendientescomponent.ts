@@ -15,15 +15,25 @@ import { DiagnosticoClinicoDTO } from '../../../models/DiagnosticoClinicoDTO';
 })
 export class Diagnosticoclinicopendientescomponent implements OnInit {
   dataSource: DiagnosticoClinicoDTO[] = [];
-  displayedColumns: string[];
   mensaje: string = '';
   mensajeAccion: string = '';
   cargando: boolean = true;
 
-  constructor(private loginService: Loginservice, private dcS: Diagnosticoclinicoservice, private cdr: ChangeDetectorRef) {
-    this.displayedColumns = ['id', 'usuario', 'sesion', 'fecha', 'resultado', 'riesgo',
-    ...(this.loginService.tieneRol(['PSICOLOGO']) ? ['validar'] : [])];
+  // Columnas que ven todos
+  private baseColumns: string[] = ['id', 'usuario', 'sesion', 'fecha', 'resultado', 'riesgo'];
+
+  // Solo el psicólogo ve validar
+  get displayedColumns(): string[] {
+    return this.esPsicologo
+      ? [...this.baseColumns, 'validar']
+      : this.baseColumns;
   }
+
+  get esPsicologo(): boolean {
+    return this.loginService.hasAnyRole(['PSICOLOGO']);
+  }
+
+  constructor(private loginService: Loginservice, private dcS: Diagnosticoclinicoservice, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.listarPendientes();
