@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
-import { Loginservice } from './loginservice';
 import { SesionClinicaDTO } from '../models/SesionClinicaDTO';
 
 @Injectable({
@@ -11,41 +10,29 @@ import { SesionClinicaDTO } from '../models/SesionClinicaDTO';
 export class Sesionclinicaservice {
   private apiURL = `${environment.base}/api/sesiones`;
 
-  constructor(private http: HttpClient, private loginService: Loginservice) { }
+  constructor(private http: HttpClient) { }
 
   iniciar(s: SesionClinicaDTO): Observable<SesionClinicaDTO> {
-    const token = this.loginService.getToken() || '';
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-    return this.http.post<SesionClinicaDTO>(this.apiURL, s, { headers });
+    return this.http.post<SesionClinicaDTO>(this.apiURL, s);
   }
 
   finalizar(id: number, s: SesionClinicaDTO): Observable<SesionClinicaDTO> {
-    const token = this.loginService.getToken() || '';
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-    return this.http.put<SesionClinicaDTO>(`${this.apiURL}/${id}/finalizar`, s, { headers });
+    return this.http.put<SesionClinicaDTO>(`${this.apiURL}/${id}/finalizar`, s);
   }
 
   listId(id: number): Observable<SesionClinicaDTO> {
-    const token = this.loginService.getToken() || '';
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-    return this.http.get<SesionClinicaDTO>(`${this.apiURL}/${id}`, { headers });
+    return this.http.get<SesionClinicaDTO>(`${this.apiURL}/${id}`);
   }
 
   historial(usuarioId: number): Observable<SesionClinicaDTO[]> {
-    const token = this.loginService.getToken() || '';
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-    return this.http.get<SesionClinicaDTO[]>(`${this.apiURL}/usuario/${usuarioId}`, { headers });
+    return this.http.get<SesionClinicaDTO[]>(`${this.apiURL}/usuario/${usuarioId}`);
   }
 
   derivaciones(): Observable<SesionClinicaDTO[]> {
-    const token = this.loginService.getToken() || '';
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-    return this.http.get<SesionClinicaDTO[]>(`${this.apiURL}/derivaciones`, { headers });
+    return this.http.get<SesionClinicaDTO[]>(`${this.apiURL}/derivaciones`);
   }
 
   eliminar(id: number): Observable<void> {
-    const token = this.loginService.getToken() || '';
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-    return this.http.delete<void>(`${this.apiURL}/${id}`, { headers });
+    return this.http.delete<void>(`${this.apiURL}/${id}`);
   }
 }
