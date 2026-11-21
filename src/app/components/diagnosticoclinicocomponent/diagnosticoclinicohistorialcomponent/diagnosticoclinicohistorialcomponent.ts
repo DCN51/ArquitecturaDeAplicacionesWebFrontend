@@ -30,12 +30,22 @@ export class Diagnosticoclinicohistorialcomponent {
   lista: DiagnosticoClinicoDTO[] = [];
   mensaje: string = '';
   mensajeAccion: string = '';
-  displayedColumns: string[];
 
-  constructor(private loginService: Loginservice, private dcS: Diagnosticoclinicoservice, private cdr: ChangeDetectorRef) {
-    this.displayedColumns = ['id', 'sesion', 'fecha', 'resultado', 'riesgo', 'recomendacion', 'validacion',
-    ...(this.loginService.tieneRol(['ADMINISTRADOR']) ? ['eliminar'] : [])];
+  // Columnas que ven todos
+  private baseColumns: string[] = ['id', 'sesion', 'fecha', 'resultado', 'riesgo', 'recomendacion', 'validacion'];
+
+  // Solo el administrador ve eliminar
+  get displayedColumns(): string[] {
+    return this.esAdmin
+      ? [...this.baseColumns, 'eliminar']
+      : this.baseColumns;
   }
+
+  get esAdmin(): boolean {
+    return this.loginService.hasAnyRole(['ADMINISTRADOR']);
+  }
+
+  constructor(private loginService: Loginservice, private dcS: Diagnosticoclinicoservice, private cdr: ChangeDetectorRef) { }
 
   buscarHistorial(): void {
     this.mensajeAccion = '';

@@ -32,18 +32,28 @@ export class Suscripcionhistorialcomponent {
   lista: SuscripcionDTO[] = [];
   mensaje: string = '';
   mensajeAccion: string = '';     // resultado de cancelar (HUF07)
-  displayedColumns: string[];
   planes: CatalogoPlanDTO[] = [];
+
+  // Columnas que ven todos
+  private baseColumns: string[] = ['plan', 'inicio', 'fin', 'estado'];
+
+  // Solo el paciente ve cancelar
+  get displayedColumns(): string[] {
+    return this.esPaciente
+      ? [...this.baseColumns, 'cancelar']
+      : this.baseColumns;
+  }
+
+  get esPaciente(): boolean {
+    return this.loginService.hasAnyRole(['PACIENTE']);
+  }
 
   constructor(
     private loginService: Loginservice,
     private sS: Suscripcionservice,
     private cpS: Catalogoplanservice,
     private cdr: ChangeDetectorRef
-  ) {
-    this.displayedColumns = ['plan', 'inicio', 'fin', 'estado',
-    ...(this.loginService.tieneRol(['PACIENTE']) ? ['cancelar'] : [])];
-  }
+  ) { }
 
   // HUF08
   buscarHistorial(): void {

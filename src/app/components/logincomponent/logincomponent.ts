@@ -53,11 +53,16 @@ export class Logincomponent implements OnInit {
       password: this.loginForm.value.password
     };
     this.loginService.login(login).subscribe({
-      next: (sesion) => {
-        this.loginService.guardarSesion(sesion);
+      next: () => {
         this.enviando = false;
         this.loginForm.reset({ username: '', password: '' });
-        this.router.navigate(['/app']);
+        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+        const destination =
+          returnUrl?.startsWith('/') && !returnUrl.startsWith('//') && returnUrl !== '/'
+            ? returnUrl
+            : '/app';
+
+        void this.router.navigateByUrl(destination);
       },
       error: (err) => {
         console.log(err);

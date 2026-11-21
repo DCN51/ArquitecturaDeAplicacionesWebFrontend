@@ -1,5 +1,5 @@
 <app-menucomponent></app-menucomponent>
 <main class="container">
   <h2>Bienvenido a Mind Health</h2>
-  <p>Hola, {{ loginService.sesion()?.username }}. Elige una opción del menú para comenzar.</p>
+  <p>Hola, {{ loginService.getUsername() }}. Elige una opción del menú para comenzar.</p>
 </main>

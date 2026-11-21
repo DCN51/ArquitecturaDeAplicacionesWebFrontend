@@ -18,22 +18,36 @@ import { UserDTO } from '../../../models/UserDTO';
 })
 export class Casoemergencialistcomponent implements OnInit {
   dataSource: CasoEmergenciaDTO[] = [];
-  displayedColumns: string[];
   mensaje: string = '';
   mensajeAccion: string = '';
   cargando: boolean = true;
   usuarios: UserDTO[] = [];
+
+  // Columnas que ven todos
+  private baseColumns: string[] = ['id', 'paciente', 'psicologo', 'sesion', 'fecha', 'urgencia', 'estado', 'cierre'];
+
+  // El psicólogo ve editar; el administrador ve eliminar
+  get displayedColumns(): string[] {
+    const columnas = [...this.baseColumns];
+    if (this.esPsicologo) columnas.push('editar');
+    if (this.esAdmin) columnas.push('eliminar');
+    return columnas;
+  }
+
+  get esPsicologo(): boolean {
+    return this.loginService.hasAnyRole(['PSICOLOGO']);
+  }
+
+  get esAdmin(): boolean {
+    return this.loginService.hasAnyRole(['ADMINISTRADOR']);
+  }
 
   constructor(
     private loginService: Loginservice,
     private ceS: Casoemergenciaservice,
     private uS: Usersservice,
     private cdr: ChangeDetectorRef
-  ) {
-    this.displayedColumns = ['id', 'paciente', 'psicologo', 'sesion', 'fecha', 'urgencia', 'estado', 'cierre',
-      ...(this.loginService.tieneRol(['PSICOLOGO']) ? ['editar'] : []),
-      ...(this.loginService.tieneRol(['ADMINISTRADOR']) ? ['eliminar'] : [])];
-  }
+  ) { }
 
   ngOnInit(): void {
     this.cargarUsuarios();

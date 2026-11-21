@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { SuscripcionDTO } from '../models/SuscripcionDTO';
+import { SuscriptoresPorPlanDTO } from '../models/SuscriptoresPorPlanDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -27,5 +28,15 @@ export class Suscripcionservice {
   // HUF08 - Historial
   historial(usuarioId: number): Observable<SuscripcionDTO[]> {
     return this.http.get<SuscripcionDTO[]>(`${this.apiURL}/usuario/${usuarioId}`);
+  }
+    // HUF09 - Suscripciones por vencer
+  porVencer(dias: number): Observable<SuscripcionDTO[]> {
+    return this.http.get<SuscripcionDTO[]>(`${this.apiURL}/por-vencer`, {
+      params: { dias: dias }
+    });
+  }
+  // HUF10 - Suscriptores activos por plan
+  suscriptoresPorPlan(): Observable<SuscriptoresPorPlanDTO[]> {
+    return this.http.get<SuscriptoresPorPlanDTO[]>(`${this.apiURL}/suscriptores-por-plan`);
   }
 }

@@ -1,0 +1,16 @@
+<div class="container">
+  <h2>Suscriptores activos por plan</h2>
+
+  @if (mensaje) {
+    <p class="mensaje">{{ mensaje }}</p>
+  }
+
+  <div class="grafico">
+    <canvas
+      baseChart
+      [type]="chartType"
+      [data]="chartData"
+      [options]="chartOptions">
+    </canvas>
+  </div>
+</div>

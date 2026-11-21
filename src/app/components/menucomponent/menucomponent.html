@@ -5,103 +5,105 @@
   <a routerLink="/app" class="titulo">
     <img src="/logo-mindhealth.png" alt="Mind Health" width="142" height="57">
   </a>
-  @if (loginService.tieneRol(['ADMINISTRADOR'])) {
+
+  @if (esAdmin) {
     <button matButton [matMenuTriggerFor]="menu0">Usuarios</button>
     <mat-menu #menu0="matMenu">
-      @if (loginService.tieneRol(['ADMINISTRADOR'])) {
-        <button mat-menu-item routerLink="/usuarios/listar">Usuarios registrados</button>
-      }
-      @if (loginService.tieneRol(['ADMINISTRADOR'])) {
-        <button mat-menu-item routerLink="/roles/listar">Roles</button>
-      }
+      <button mat-menu-item routerLink="/usuarios/listar">Usuarios registrados</button>
+      <button mat-menu-item routerLink="/roles/listar">Roles</button>
     </mat-menu>
   }
-  @if (loginService.tieneRol(['PACIENTE', 'PSICOLOGO', 'ADMINISTRADOR'])) {
+
+  @if (esPaciente || esPsicologo || esAdmin) {
     <button matButton [matMenuTriggerFor]="menu1">Planes</button>
     <mat-menu #menu1="matMenu">
-      @if (loginService.tieneRol(['PACIENTE', 'PSICOLOGO', 'ADMINISTRADOR'])) {
-        <button mat-menu-item routerLink="/planes/listar">Planes disponibles</button>
-      }
-      @if (loginService.tieneRol(['ADMINISTRADOR'])) {
+      <button mat-menu-item routerLink="/planes/listar">Planes disponibles</button>
+      @if (esAdmin) {
         <button mat-menu-item routerLink="/planes/insertar">Registrar plan</button>
       }
     </mat-menu>
   }
-  @if (loginService.tieneRol(['PACIENTE', 'ADMINISTRADOR'])) {
+
+  @if (esPaciente || esAdmin) {
     <button matButton [matMenuTriggerFor]="menu2">Suscripción</button>
     <mat-menu #menu2="matMenu">
-      @if (loginService.tieneRol(['PACIENTE'])) {
+      @if (esPaciente) {
         <button mat-menu-item routerLink="/suscripciones/contratar">Contratar plan</button>
-      }
-      @if (loginService.tieneRol(['PACIENTE'])) {
         <button mat-menu-item routerLink="/suscripciones/cambiar-plan">Cambiar plan</button>
       }
-      @if (loginService.tieneRol(['PACIENTE', 'ADMINISTRADOR'])) {
-        <button mat-menu-item routerLink="/suscripciones/historial">Historial</button>
+      <button mat-menu-item routerLink="/suscripciones/historial">Historial</button>
+      @if (esAdmin) {
+        <button mat-menu-item routerLink="/suscripciones/por-vencer">Por vencer</button>
       }
     </mat-menu>
   }
-  @if (loginService.tieneRol(['PACIENTE', 'PSICOLOGO'])) {
+
+  @if (esAdmin) {
+    <button matButton [matMenuTriggerFor]="menuReportes">Reportes</button>
+    <mat-menu #menuReportes="matMenu">
+      <button mat-menu-item routerLink="/reportes/suscriptores-por-plan">Suscriptores por plan</button>
+    </mat-menu>
+  }
+
+  @if (esPaciente || esPsicologo) {
     <button matButton [matMenuTriggerFor]="menu3">Sesiones</button>
     <mat-menu #menu3="matMenu">
-      @if (loginService.tieneRol(['PACIENTE'])) {
+      @if (esPaciente) {
         <button mat-menu-item routerLink="/sesiones/iniciar">Iniciar sesión clínica</button>
-      }
-      @if (loginService.tieneRol(['PACIENTE'])) {
         <button mat-menu-item routerLink="/sesiones/historial">Historial</button>
       }
-      @if (loginService.tieneRol(['PSICOLOGO'])) {
+      @if (esPsicologo) {
         <button mat-menu-item routerLink="/sesiones/derivaciones">Derivaciones</button>
       }
     </mat-menu>
   }
-  @if (loginService.tieneRol(['PACIENTE', 'PSICOLOGO', 'ADMINISTRADOR'])) {
+
+  @if (esPaciente || esPsicologo || esAdmin) {
     <button matButton [matMenuTriggerFor]="menu4">Diagnósticos</button>
     <mat-menu #menu4="matMenu">
-      @if (loginService.tieneRol(['PACIENTE'])) {
+      @if (esPaciente) {
         <button mat-menu-item routerLink="/diagnosticos/insertar">Registrar</button>
       }
-      @if (loginService.tieneRol(['PACIENTE', 'PSICOLOGO'])) {
+      @if (esPaciente || esPsicologo) {
         <button mat-menu-item routerLink="/diagnosticos/historial">Historial</button>
       }
-      @if (loginService.tieneRol(['PSICOLOGO', 'ADMINISTRADOR'])) {
+      @if (esPsicologo || esAdmin) {
         <button mat-menu-item routerLink="/diagnosticos/pendientes">Pendientes de validar</button>
-      }
-      @if (loginService.tieneRol(['PSICOLOGO', 'ADMINISTRADOR'])) {
         <button mat-menu-item routerLink="/diagnosticos/validados">Validados por psicólogo</button>
       }
     </mat-menu>
   }
-  @if (loginService.tieneRol(['PACIENTE', 'PSICOLOGO'])) {
+
+  @if (esPaciente || esPsicologo) {
     <button matButton [matMenuTriggerFor]="menu5">Actividades</button>
     <mat-menu #menu5="matMenu">
-      @if (loginService.tieneRol(['PACIENTE', 'PSICOLOGO'])) {
-        <button mat-menu-item routerLink="/actividades/listar">Listar</button>
-      }
-      @if (loginService.tieneRol(['PSICOLOGO'])) {
+      <button mat-menu-item routerLink="/actividades/listar">Listar</button>
+      @if (esPsicologo) {
         <button mat-menu-item routerLink="/actividades/insertar">Registrar</button>
       }
     </mat-menu>
   }
-  @if (loginService.tieneRol(['PACIENTE', 'PSICOLOGO', 'ADMINISTRADOR'])) {
+
+  @if (esPaciente || esPsicologo || esAdmin) {
     <button matButton [matMenuTriggerFor]="menu6">Casos de Emergencia</button>
     <mat-menu #menu6="matMenu">
-      @if (loginService.tieneRol(['PACIENTE'])) {
+      @if (esPaciente) {
         <button mat-menu-item routerLink="/casos-emergencia/insertar">Registrar caso</button>
       }
-      @if (loginService.tieneRol(['PSICOLOGO', 'ADMINISTRADOR'])) {
+      @if (esPsicologo || esAdmin) {
         <button mat-menu-item routerLink="/casos-emergencia/listar">Listar casos</button>
       }
-      @if (loginService.tieneRol(['PSICOLOGO'])) {
+      @if (esPsicologo) {
         <button mat-menu-item routerLink="/casos-emergencia/pendientes">Pendientes por urgencia</button>
       }
-      @if (loginService.tieneRol(['ADMINISTRADOR'])) {
+      @if (esAdmin) {
         <button mat-menu-item routerLink="/casos-emergencia/por-psicologo">Casos por psicólogo</button>
       }
     </mat-menu>
   }
-  @if (loginService.sesion(); as sesion) {
-    <button matButton type="button" (click)="cerrarSesion()">Cerrar sesión ({{ sesion.username }})</button>
+
+  @if (username) {
+    <button matButton type="button" (click)="cerrarSesion()">Cerrar sesión ({{ username }})</button>
   } @else {
     <button matButton routerLink="/iniciar-sesion">Iniciar sesión</button>
     <button matButton routerLink="/registrarse">Registrarse</button>
