@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
-import { Loginservice } from './loginservice';
 import { DiagnosticoClinicoDTO } from '../models/DiagnosticoClinicoDTO';
 
 @Injectable({
@@ -11,47 +10,33 @@ import { DiagnosticoClinicoDTO } from '../models/DiagnosticoClinicoDTO';
 export class Diagnosticoclinicoservice {
   private apiURL = `${environment.base}/api/diagnosticos`;
 
-  constructor(private http: HttpClient, private loginService: Loginservice) { }
+  constructor(private http: HttpClient) { }
 
   insert(d: DiagnosticoClinicoDTO): Observable<DiagnosticoClinicoDTO> {
-    const token = this.loginService.getToken() || '';
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-    return this.http.post<DiagnosticoClinicoDTO>(this.apiURL, d, { headers });
+    return this.http.post<DiagnosticoClinicoDTO>(this.apiURL, d);
   }
 
   validar(id: number): Observable<DiagnosticoClinicoDTO> {
-    const token = this.loginService.getToken() || '';
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-    return this.http.put<DiagnosticoClinicoDTO>(`${this.apiURL}/${id}/validar`, {}, { headers });
+    return this.http.put<DiagnosticoClinicoDTO>(`${this.apiURL}/${id}/validar`, {});
   }
 
   listId(id: number): Observable<DiagnosticoClinicoDTO> {
-    const token = this.loginService.getToken() || '';
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-    return this.http.get<DiagnosticoClinicoDTO>(`${this.apiURL}/${id}`, { headers });
+    return this.http.get<DiagnosticoClinicoDTO>(`${this.apiURL}/${id}`);
   }
 
   historial(usuarioId: number): Observable<DiagnosticoClinicoDTO[]> {
-    const token = this.loginService.getToken() || '';
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-    return this.http.get<DiagnosticoClinicoDTO[]>(`${this.apiURL}/usuario/${usuarioId}`, { headers });
+    return this.http.get<DiagnosticoClinicoDTO[]>(`${this.apiURL}/usuario/${usuarioId}`);
   }
 
   pendientes(): Observable<DiagnosticoClinicoDTO[]> {
-    const token = this.loginService.getToken() || '';
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-    return this.http.get<DiagnosticoClinicoDTO[]>(`${this.apiURL}/pendientes`, { headers });
+    return this.http.get<DiagnosticoClinicoDTO[]>(`${this.apiURL}/pendientes`);
   }
 
   validadosPorPsicologo(psicologoId: number): Observable<DiagnosticoClinicoDTO[]> {
-    const token = this.loginService.getToken() || '';
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-    return this.http.get<DiagnosticoClinicoDTO[]>(`${this.apiURL}/psicologo/${psicologoId}`, { headers });
+    return this.http.get<DiagnosticoClinicoDTO[]>(`${this.apiURL}/psicologo/${psicologoId}`);
   }
 
   eliminar(id: number): Observable<void> {
-    const token = this.loginService.getToken() || '';
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-    return this.http.delete<void>(`${this.apiURL}/${id}`, { headers });
+    return this.http.delete<void>(`${this.apiURL}/${id}`);
   }
 }

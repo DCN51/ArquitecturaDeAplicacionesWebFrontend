@@ -39,9 +39,12 @@ import { Casosporpsicologocomponent } from './components/casoemergenciacomponent
 import { Suscripcionporvencercomponent } from './components/suscripcioncomponent/suscripcionporvencercomponent/suscripcionporvencercomponent';
 import { Reportcomponent } from './components/reportcomponent/reportcomponent';
 import { Reportsuscripcioncomponent } from './components/reportcomponent/reportsuscripcioncomponent/reportsuscripcioncomponent';
+import { authGuard } from './core/guards/auth-guard';
+import { roleGuard } from './core/guards/role-guard';
+
 
 export const routes: Routes = [
-  { path: 'app', component: Panelcomponent },
+  { path: 'app', component: Panelcomponent, canActivate: [authGuard] },
   { path: 'iniciar-sesion', component: Logincomponent },
   { path: 'registrarse', component: Registrercomponent },
   {
@@ -51,6 +54,8 @@ export const routes: Routes = [
   {
     path: 'planes',
     component: Catalogoplancomponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['PACIENTE', 'PSICOLOGO', 'ADMINISTRADOR'] },
     children: [
       { path: '', redirectTo: 'listar', pathMatch: 'full' },
       { path: 'listar', component: Catalogoplanlistcomponent },
@@ -58,10 +63,11 @@ export const routes: Routes = [
       { path: 'editar/:id', component: Catalogoplanupdatecomponent },
     ],
   },
-  
   {
     path: 'suscripciones',
     component: Suscripcioncomponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['PACIENTE', 'ADMINISTRADOR'] },
     children: [
       { path: '', redirectTo: 'historial', pathMatch: 'full' },
       { path: 'contratar', component: Suscripcioninsertcomponent },
@@ -73,6 +79,8 @@ export const routes: Routes = [
   {
     path: 'sesiones',
     component: Sesionclinicacomponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['PACIENTE', 'PSICOLOGO'] },
     children: [
       { path: '', redirectTo: 'historial', pathMatch: 'full' },
       { path: 'iniciar', component: Sesionclinicainsertcomponent },
@@ -84,6 +92,8 @@ export const routes: Routes = [
   {
     path: 'diagnosticos',
     component: Diagnosticoclinicocomponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['PACIENTE', 'PSICOLOGO', 'ADMINISTRADOR'] },
     children: [
       { path: '', redirectTo: 'historial', pathMatch: 'full' },
       { path: 'insertar', component: Diagnosticoclinicoinsertcomponent },
@@ -96,6 +106,8 @@ export const routes: Routes = [
   {
     path: 'roles',
     component: Rolecomponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMINISTRADOR'] },
     children: [
       { path: '', redirectTo: 'listar', pathMatch: 'full' },
       { path: 'listar', component: Rolelistcomponent },
@@ -104,6 +116,8 @@ export const routes: Routes = [
   {
     path: 'usuarios',
     component: Userscomponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMINISTRADOR'] },
     children: [
       { path: '', redirectTo: 'listar', pathMatch: 'full' },
       { path: 'listar', component: Userslistcomponent },
@@ -113,6 +127,8 @@ export const routes: Routes = [
   {
     path: 'actividades',
     component: Actividadcomponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['PACIENTE', 'PSICOLOGO'] },
     children: [
       { path: '', redirectTo: 'listar', pathMatch: 'full' },
       { path: 'listar', component: Actividadlistcomponent },
@@ -124,6 +140,8 @@ export const routes: Routes = [
   {
     path: 'casos-emergencia',
     component: Casoemergenciacomponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['PACIENTE', 'PSICOLOGO', 'ADMINISTRADOR'] },
     children: [
       { path: '', redirectTo: 'listar', pathMatch: 'full' },
       { path: 'listar', component: Casoemergencialistcomponent },
@@ -133,14 +151,15 @@ export const routes: Routes = [
       { path: 'por-psicologo', component: Casosporpsicologocomponent },
     ],
   },
-
   {
     path: 'reportes',
     component: Reportcomponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMINISTRADOR'] },
     children: [
       { path: '', redirectTo: 'suscriptores-por-plan', pathMatch: 'full' },
       { path: 'suscriptores-por-plan', component: Reportsuscripcioncomponent },
     ],
   },
-
+  { path: '**', redirectTo: '' },
 ];
