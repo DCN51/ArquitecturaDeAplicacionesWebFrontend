@@ -31,11 +31,17 @@ import { Actividadlistcomponent } from './components/actividadcomponent/activida
 import { Actividadinsertcomponent } from './components/actividadcomponent/actividadinsertcomponent/actividadinsertcomponent';
 import { Actividadupdatecomponent } from './components/actividadcomponent/actividadupdatecomponent/actividadupdatecomponent';
 import { Actividadcompletarcomponent } from './components/actividadcomponent/actividadcompletarcomponent/actividadcompletarcomponent';
+<<<<<<< HEAD
 import { Casoemergenciacomponent } from './components/casoemergenciacomponent/casoemergenciacomponent';
 import { Casoemergencialistcomponent } from './components/casoemergenciacomponent/casoemergencialistcomponent/casoemergencialistcomponent';
 import { Casoemergenciainsertcomponent } from './components/casoemergenciacomponent/casoemergenciainsertcomponent/casoemergenciainsertcomponent';
 import { Casoemergenciapendientescomponent } from './components/casoemergenciacomponent/casoemergenciapendientescomponent/casoemergenciapendientescomponent';
 import { Casosporpsicologocomponent } from './components/casoemergenciacomponent/casosporpsicologocomponent/casosporpsicologocomponent';
+=======
+import { Suscripcionporvencercomponent } from './components/suscripcioncomponent/suscripcionporvencercomponent/suscripcionporvencercomponent';
+import { Reportcomponent } from './components/reportcomponent/reportcomponent';
+import { Reportsuscripcioncomponent } from './components/reportcomponent/reportsuscripcioncomponent/reportsuscripcioncomponent';
+>>>>>>> 69ce7bf (HUF09-HUF10: por vencer y reporte de suscriptores por plan)
 
 export const routes: Routes = [
   { path: 'app', component: Panelcomponent },
@@ -64,6 +70,7 @@ export const routes: Routes = [
       { path: 'contratar', component: Suscripcioninsertcomponent },
       { path: 'historial', component: Suscripcionhistorialcomponent },
       { path: 'cambiar-plan', component: Suscripcioncambiarcomponent },
+      { path: 'por-vencer', component: Suscripcionporvencercomponent },
     ],
   },
   {
@@ -106,7 +113,7 @@ export const routes: Routes = [
       { path: 'editar/:id', component: Usersupdatecomponent },
     ],
   },
-    {
+  {
     path: 'actividades',
     component: Actividadcomponent,
     children: [
@@ -129,4 +136,14 @@ export const routes: Routes = [
       { path: 'por-psicologo', component: Casosporpsicologocomponent },
     ],
   },
+
+  {
+    path: 'reportes',
+    component: Reportcomponent,
+    children: [
+      { path: '', redirectTo: 'suscriptores-por-plan', pathMatch: 'full' },
+      { path: 'suscriptores-por-plan', component: Reportsuscripcioncomponent },
+    ],
+  },
+
 ];

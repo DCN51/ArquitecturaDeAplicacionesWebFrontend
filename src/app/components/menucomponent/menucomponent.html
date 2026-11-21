@@ -39,6 +39,15 @@
       @if (loginService.tieneRol(['PACIENTE', 'ADMINISTRADOR'])) {
         <button mat-menu-item routerLink="/suscripciones/historial">Historial</button>
       }
+        @if (loginService.tieneRol(['ADMINISTRADOR'])) {
+    <button matButton [matMenuTriggerFor]="menuReportes">Reportes</button>
+    <mat-menu #menuReportes="matMenu">
+      <button mat-menu-item routerLink="/reportes/suscriptores-por-plan">Suscriptores por plan</button>
+    </mat-menu>
+  }
+      @if (loginService.tieneRol(['ADMINISTRADOR'])) {
+        <button mat-menu-item routerLink="/suscripciones/por-vencer">Por vencer</button>
+      }
     </mat-menu>
   }
   @if (loginService.tieneRol(['PACIENTE', 'PSICOLOGO'])) {
