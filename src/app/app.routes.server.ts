@@ -37,5 +37,9 @@ export const serverRoutes: ServerRoute[] = [
   {
     path: '**',
     renderMode: RenderMode.Client
-  }
+  },
+  {
+    path: 'sesiones/chat/:id',
+    renderMode: RenderMode.Client
+  },
 ];

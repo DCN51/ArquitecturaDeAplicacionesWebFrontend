@@ -41,6 +41,7 @@ import { Reportcomponent } from './components/reportcomponent/reportcomponent';
 import { Reportsuscripcioncomponent } from './components/reportcomponent/reportsuscripcioncomponent/reportsuscripcioncomponent';
 import { authGuard } from './core/guards/auth-guard';
 import { roleGuard } from './core/guards/role-guard';
+import { Sesionclinicachatcomponent } from './components/sesionclinicacomponent/sesionclinicachatcomponent/sesionclinicachatcomponent';
 
 
 export const routes: Routes = [
@@ -87,6 +88,7 @@ export const routes: Routes = [
       { path: 'historial', component: Sesionclinicahistorialcomponent },
       { path: 'finalizar/:id', component: Sesionclinicafinalizarcomponent },
       { path: 'derivaciones', component: Sesionclinicaderivacionescomponent },
+      { path: 'chat/:id', component: Sesionclinicachatcomponent },
     ],
   },
   {

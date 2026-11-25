@@ -24,9 +24,14 @@
     <p class="mensaje">{{ mensaje }}</p>
   }
 
-  @if (sesionCreada) {
-    <button matButton="outlined" [routerLink]="['/sesiones/finalizar', sesionCreada.sesionClinicaId]">
-      Finalizar esta sesión
-    </button>
+    @if (sesionCreada) {
+    <div class="botones">
+      <button matButton="filled" type="button" [routerLink]="['/sesiones/chat', sesionCreada.sesionClinicaId]">
+        Conversar con la IA
+      </button>
+      <button matButton="outlined" type="button" [routerLink]="['/sesiones/finalizar', sesionCreada.sesionClinicaId]">
+        Finalizar esta sesión
+      </button>
+    </div>
   }
 </div>
