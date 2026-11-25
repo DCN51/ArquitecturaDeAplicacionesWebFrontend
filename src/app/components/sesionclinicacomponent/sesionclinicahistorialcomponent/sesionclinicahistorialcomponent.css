@@ -1,7 +1,1 @@
-.container { margin-top: 24px; }
-.buscador { display: flex; gap: 12px; align-items: baseline; }
-.mensaje { font-weight: 500; }
-table { width: 100%; }
-.en_curso { color: #1aab8b; font-weight: 600; }
-.finalizada { color: #555; }
-.validado { color: #1aab8b; font-weight: 600; }
+/* El estilo viene de src/styles.css. */

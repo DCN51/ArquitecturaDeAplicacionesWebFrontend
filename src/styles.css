@@ -176,6 +176,22 @@ app-root .container form > button {
   align-self: flex-start;
 }
 
+/* Boton principal de los formularios: azul, como en Registro. */
+app-root .container form > button[type='submit'] {
+  align-self: stretch;
+  margin-top: 10px;
+}
+
+app-root .container form button[type='submit']:not(:disabled) {
+  background: #0055cf;
+  color: #ffffff;
+  box-shadow: 0 2px 0 #003b9126;
+}
+
+app-root .container form button[type='submit']:not(:disabled):hover {
+  background: #003e9c;
+}
+
 app-root .container button[matButton='filled']:not(:disabled),
 app-root .container a[matButton='filled'] {
   background: #2d2c2b;
@@ -329,8 +345,8 @@ app-diagnosticoclinicocomponent {
   background: #f9f4f2;
 }
 
-app-root :is(app-sesionclinicacomponent, app-diagnosticoclinicocomponent)
-  .container :is(.bajo, .medio, .alto, .critico, .en_curso, .finalizada,
+/* Niveles de urgencia y riesgo: sesiones, diagnosticos y casos de emergencia. */
+app-root .container :is(.bajo, .medio, .alto, .critico, .en_curso, .finalizada,
   .validado, .pendiente) {
   display: inline-block;
   padding: 5px 10px;
@@ -340,26 +356,22 @@ app-root :is(app-sesionclinicacomponent, app-diagnosticoclinicocomponent)
   line-height: 1.6;
 }
 
-app-root :is(app-sesionclinicacomponent, app-diagnosticoclinicocomponent)
-  .container :is(.bajo, .validado) {
+app-root .container :is(.bajo, .validado) {
   background: #d5f1e3;
   color: #216345;
 }
 
-app-root :is(app-sesionclinicacomponent, app-diagnosticoclinicocomponent)
-  .container :is(.medio, .pendiente) {
+app-root .container :is(.medio, .pendiente) {
   background: #fff0b3;
   color: #795800;
 }
 
-app-root :is(app-sesionclinicacomponent, app-diagnosticoclinicocomponent)
-  .container .alto {
+app-root .container .alto {
   background: #ffe0be;
   color: #8a410e;
 }
 
-app-root :is(app-sesionclinicacomponent, app-diagnosticoclinicocomponent)
-  .container .critico {
+app-root .container .critico {
   background: #ffe0ed;
   color: #923052;
 }
@@ -397,8 +409,7 @@ app-root app-sesionclinicacomponent .container .opciones {
   background: #eee1fb;
 }
 
-app-root :is(app-sesionclinicacomponent, app-diagnosticoclinicocomponent)
-  .container textarea {
+app-root .container textarea {
   resize: vertical;
   min-height: 80px;
 }
