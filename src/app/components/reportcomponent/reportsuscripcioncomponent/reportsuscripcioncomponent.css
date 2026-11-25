@@ -1,23 +1,10 @@
-.container {
-  width: 90%;
-  max-width: 1000px;
-  margin: 32px auto;
-  padding: 28px;
-  background: #ffffff;
-  border-radius: 18px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-}
-.container h2 {
-  text-align: center;
-  color: #1aab8b;
-  margin-bottom: 24px;
-}
+/* El estilo de la tarjeta viene de src/styles.css. Aquí solo el tamaño del gráfico. */
 .grafico {
   width: 100%;
   height: 420px;
 }
+
 .grafico canvas {
   width: 100% !important;
   height: 100% !important;
 }
-.mensaje { text-align: center; font-weight: 500; }
