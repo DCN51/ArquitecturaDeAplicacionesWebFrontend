@@ -42,3 +42,6 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# API key de Gemini (cada uno crea su propio archivo a partir de gemini.example.ts)
+/src/environments/gemini.ts

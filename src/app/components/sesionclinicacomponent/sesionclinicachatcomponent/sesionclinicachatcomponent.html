@@ -1,0 +1,48 @@
+<div class="container">
+  <h2>Conversa con Mind Health</h2>
+
+  <div class="conversacion" #conversacion>
+    <div class="burbuja ia">
+      Hola, estoy aquí para escucharte. ¿Cómo te sientes hoy?
+    </div>
+
+    @for (m of mensajes; track $index) {
+      <div class="burbuja" [class.ia]="m.rol === 'ia'" [class.paciente]="m.rol === 'paciente'">
+        {{ m.texto }}
+      </div>
+    }
+
+    @if (escribiendo) {
+      <div class="burbuja ia escribiendo">La IA está escribiendo…</div>
+    }
+  </div>
+
+  @if (mensaje) {
+    <p class="mensaje">{{ mensaje }}</p>
+  }
+
+  <div class="enviar">
+    <mat-form-field class="campo">
+      <mat-label>Escribe tu mensaje</mat-label>
+      <textarea matInput [(ngModel)]="texto" name="texto" rows="2" maxlength="2000"
+                [disabled]="bloqueado" (keydown.enter)="alPresionarEnter($event)"></textarea>
+    </mat-form-field>
+    <button matIconButton type="button" aria-label="Enviar mensaje" (click)="enviarMensaje()"
+            [disabled]="bloqueado || escribiendo || !texto.trim()">
+      <mat-icon>send</mat-icon>
+    </button>
+  </div>
+
+  <div class="botones">
+    @if (!bloqueado) {
+      <button matButton="filled" type="button" [routerLink]="['/sesiones/finalizar', idSesion]">
+        Finalizar sesión
+      </button>
+    }
+    <button matButton type="button" routerLink="/sesiones/historial">Ver historial</button>
+  </div>
+
+  <p class="aviso">
+    Mind Health no reemplaza a un profesional. Si estás en peligro, llama a la Línea 113 (opción 5) o al SAMU 106.
+  </p>
+</div>
