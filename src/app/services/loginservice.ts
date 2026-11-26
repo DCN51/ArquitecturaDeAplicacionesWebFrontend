@@ -24,7 +24,9 @@ export class Loginservice {
         if (this.isBrowser) {
           sessionStorage.setItem('token', response.token);
           sessionStorage.setItem('username', response.username ?? '');
-          // Tu back manda un solo rol: se guarda como lista, igual que la profesora
+          sessionStorage.setItem('userId', String(response.userId ?? ''));
+          sessionStorage.setItem('nombres', response.nombres ?? '');
+          sessionStorage.setItem('apellidos', response.apellidos ?? '');
           sessionStorage.setItem('roles', JSON.stringify(response.rol ? [response.rol] : []));
         }
       })
@@ -55,6 +57,30 @@ export class Loginservice {
       return '';
     }
     return sessionStorage.getItem('username') ?? '';
+  }
+
+  getUserId(): number {
+    if (!this.isBrowser || !this.isAuthenticated()) {
+      return 0;
+    }
+    const id = Number(sessionStorage.getItem('userId'));
+    return Number.isInteger(id) && id > 0 ? id : 0;
+  }
+
+  getNombreCompleto(): string {
+    if (!this.isBrowser || !this.isAuthenticated()) {
+      return '';
+    }
+    const nombres = sessionStorage.getItem('nombres') ?? '';
+    const apellidos = sessionStorage.getItem('apellidos') ?? '';
+    return `${nombres} ${apellidos}`.trim();
+  }
+
+  actualizarNombre(nombres: string, apellidos: string): void {
+    if (this.isBrowser) {
+      sessionStorage.setItem('nombres', nombres);
+      sessionStorage.setItem('apellidos', apellidos);
+    }
   }
 
   getRoles(): string[] {
@@ -90,6 +116,9 @@ export class Loginservice {
     if (this.isBrowser) {
       sessionStorage.removeItem('token');
       sessionStorage.removeItem('username');
+      sessionStorage.removeItem('userId');
+      sessionStorage.removeItem('nombres');
+      sessionStorage.removeItem('apellidos');
       sessionStorage.removeItem('roles');
     }
   }

@@ -14,7 +14,6 @@ import { ActividadDTO } from '../../../models/ActividadDTO';
   styleUrl: './actividadcompletarcomponent.css',
 })
 export class Actividadcompletarcomponent implements OnInit {
-  userId: number = 0;
   idActividad: number = 0;
   actividad: ActividadDTO | null = null;
   comentario: string = '';
@@ -28,11 +27,9 @@ export class Actividadcompletarcomponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // /actividades/completar/:userId/:id
-    this.userId = Number(this.route.snapshot.paramMap.get('userId'));
     this.idActividad = Number(this.route.snapshot.paramMap.get('id'));
 
-    this.aS.getActividades(this.userId).subscribe({
+    this.aS.misActividades().subscribe({
       next: (data) => {
         const a = data.find(x => x.recommendedActivityId === this.idActividad);
         if (!a) {
@@ -44,7 +41,7 @@ export class Actividadcompletarcomponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.mensaje = 'Actividad no encontrada';
+        this.mensaje = err.error?.message || 'Actividad no encontrada';
         this.cdr.detectChanges();
       }
     });
@@ -56,7 +53,7 @@ export class Actividadcompletarcomponent implements OnInit {
       return;
     }
 
-    const feedback = this.comentario.trim() ? this.comentario.trim() : null;   // opcional
+    const feedback = this.comentario.trim() ? this.comentario.trim() : null;
 
     this.aS.completar(this.idActividad, feedback).subscribe({
       next: () => {
@@ -67,13 +64,13 @@ export class Actividadcompletarcomponent implements OnInit {
       error: (err) => {
         console.log(err);
         if (err.status === 409) {
-          this.mensaje = 'Solo se pueden completar actividades pendientes';
+          this.mensaje = err.error?.message || 'Solo se pueden completar actividades pendientes';
         } else if (err.status === 404) {
-          this.mensaje = 'Actividad no encontrada';
+          this.mensaje = err.error?.message || 'Actividad no encontrada';
         } else if (err.status === 403) {
-          this.mensaje = 'Esta actividad no está asignada a ti';
+          this.mensaje = err.error?.message || 'Esta actividad no está asignada a ti';
         } else {
-          this.mensaje = 'Error al completar la actividad';
+          this.mensaje = err.error?.message || 'Error al completar la actividad';
         }
         this.cdr.detectChanges();
       }

@@ -13,29 +13,26 @@ export class Suscripcionservice {
 
   constructor(private http: HttpClient) { }
 
-  // HUF05 - Contratar plan
   insert(s: SuscripcionDTO): Observable<SuscripcionDTO> {
     return this.http.post<SuscripcionDTO>(this.apiURL, s);
   }
-  // HUF06 - Cambiar plan
   cambiarPlan(s: SuscripcionDTO): Observable<SuscripcionDTO> {
     return this.http.put<SuscripcionDTO>(`${this.apiURL}/cambiar-plan`, s);
   }
-  // HUF07 - Cancelar suscripción
-  cancelar(usuarioId: number): Observable<void> {
-    return this.http.put<void>(`${this.apiURL}/usuario/${usuarioId}/cancelar`, {});
+  cancelar(): Observable<void> {
+    return this.http.put<void>(`${this.apiURL}/cancelar`, {});
   }
-  // HUF08 - Historial
+  misSuscripciones(): Observable<SuscripcionDTO[]> {
+    return this.http.get<SuscripcionDTO[]>(`${this.apiURL}/mis-suscripciones`);
+  }
   historial(usuarioId: number): Observable<SuscripcionDTO[]> {
     return this.http.get<SuscripcionDTO[]>(`${this.apiURL}/usuario/${usuarioId}`);
   }
-    // HUF09 - Suscripciones por vencer
   porVencer(dias: number): Observable<SuscripcionDTO[]> {
     return this.http.get<SuscripcionDTO[]>(`${this.apiURL}/por-vencer`, {
       params: { dias: dias }
     });
   }
-  // HUF10 - Suscriptores activos por plan
   suscriptoresPorPlan(): Observable<SuscriptoresPorPlanDTO[]> {
     return this.http.get<SuscriptoresPorPlanDTO[]>(`${this.apiURL}/suscriptores-por-plan`);
   }

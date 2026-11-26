@@ -1,8 +1,6 @@
 <div class="container">
   <h2>Diagnósticos pendientes de validar</h2>
 
-  <p class="aviso">Validar un diagnóstico requiere iniciar sesión como psicólogo. Sin login, el backend rechaza la validación.</p>
-
   @if (mensajeAccion) {
     <p class="mensaje">{{ mensajeAccion }}</p>
   }
@@ -19,9 +17,9 @@
         <td mat-cell *matCellDef="let element">{{ element.diagnosticoClinicoId }}</td>
       </ng-container>
 
-      <ng-container matColumnDef="usuario">
-        <th mat-header-cell *matHeaderCellDef>Usuario</th>
-        <td mat-cell *matCellDef="let element">{{ element.usuarioId }}</td>
+      <ng-container matColumnDef="paciente">
+        <th mat-header-cell *matHeaderCellDef>Paciente</th>
+        <td mat-cell *matCellDef="let element">{{ element.nombrePaciente }}</td>
       </ng-container>
 
       <ng-container matColumnDef="sesion">

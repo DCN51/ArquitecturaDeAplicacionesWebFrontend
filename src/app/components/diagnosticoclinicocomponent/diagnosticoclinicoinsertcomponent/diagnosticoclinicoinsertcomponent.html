@@ -4,14 +4,17 @@
   <form [formGroup]="diagnosticoForm" (ngSubmit)="insertarDiagnostico()">
 
     <mat-form-field class="campo">
-      <mat-label>Id de la sesión clínica</mat-label>
-      <input matInput type="number" formControlName="sesionId">
-      <mat-hint>La sesión debe estar finalizada</mat-hint>
+      <mat-label>Sesión clínica</mat-label>
+      <mat-select formControlName="sesionId">
+        @for (s of sesiones; track s.sesionClinicaId) {
+          <mat-option [value]="s.sesionClinicaId">
+            Sesión {{ s.sesionClinicaId }} · {{ s.fechaHoraInicio | date:'dd/MM/yyyy HH:mm' }}
+          </mat-option>
+        }
+      </mat-select>
+      <mat-hint>Solo aparecen tus sesiones finalizadas sin diagnóstico</mat-hint>
       @if (diagnosticoForm.get('sesionId')?.hasError('required')) {
-        <mat-error>El id de la sesión es obligatorio</mat-error>
-      }
-      @if (diagnosticoForm.get('sesionId')?.hasError('min')) {
-        <mat-error>El id debe ser mayor a 0</mat-error>
+        <mat-error>La sesión es obligatoria</mat-error>
       }
     </mat-form-field>
 

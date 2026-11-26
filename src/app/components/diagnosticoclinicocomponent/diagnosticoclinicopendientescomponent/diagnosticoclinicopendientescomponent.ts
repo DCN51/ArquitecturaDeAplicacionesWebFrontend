@@ -19,10 +19,8 @@ export class Diagnosticoclinicopendientescomponent implements OnInit {
   mensajeAccion: string = '';
   cargando: boolean = true;
 
-  // Columnas que ven todos
-  private baseColumns: string[] = ['id', 'usuario', 'sesion', 'fecha', 'resultado', 'riesgo'];
+  private baseColumns: string[] = ['id', 'paciente', 'sesion', 'fecha', 'resultado', 'riesgo'];
 
-  // Solo el psicólogo ve validar
   get displayedColumns(): string[] {
     return this.esPsicologo
       ? [...this.baseColumns, 'validar']
@@ -50,7 +48,7 @@ export class Diagnosticoclinicopendientescomponent implements OnInit {
       error: (err) => {
         console.log(err);
         this.cargando = false;
-        this.mensaje = 'Ocurrió un error al obtener los diagnósticos pendientes';
+        this.mensaje = err.error?.message || 'Ocurrió un error al obtener los diagnósticos pendientes';
         this.cdr.detectChanges();
       }
     });
@@ -69,13 +67,13 @@ export class Diagnosticoclinicopendientescomponent implements OnInit {
       error: (err) => {
         console.log(err);
         if (err.status === 409) {
-          this.mensajeAccion = 'El diagnóstico ya fue validado';
-        } else if (err.status === 400) {
-          this.mensajeAccion = err.error?.message || 'Solo un psicólogo puede validar un diagnóstico';
+          this.mensajeAccion = err.error?.message || 'El diagnóstico ya fue validado';
+        } else if (err.status === 400 || err.status === 403) {
+          this.mensajeAccion = err.error?.message || 'No puedes validar este diagnóstico';
         } else if (err.status === 404) {
-          this.mensajeAccion = 'Diagnóstico no encontrado';
+          this.mensajeAccion = err.error?.message || 'Diagnóstico no encontrado';
         } else {
-          this.mensajeAccion = 'No se pudo validar: se requiere iniciar sesión como psicólogo';
+          this.mensajeAccion = err.error?.message || 'Error al validar el diagnóstico';
         }
         this.cdr.detectChanges();
       }

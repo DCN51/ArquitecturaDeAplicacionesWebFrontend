@@ -69,7 +69,7 @@ export class Reportsuscripcioncomponent implements OnInit {
       },
       error: (error) => {
         console.error('Error al cargar!!!', error);
-        this.mensaje = 'Ocurrió un error al obtener el reporte';
+        this.mensaje = error.error?.message || 'Ocurrió un error al obtener el reporte';
         this.cdr.detectChanges();
       }
     });

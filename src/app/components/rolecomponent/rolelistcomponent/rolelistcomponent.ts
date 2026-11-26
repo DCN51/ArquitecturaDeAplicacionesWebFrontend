@@ -25,13 +25,12 @@ export class Rolelistcomponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.mensaje = 'Ocurrió un error al obtener los roles';
+        this.mensaje = err.error?.message || 'Ocurrió un error al obtener los roles';
         this.cdr.detectChanges();
       }
     });
   }
 
-  // "ROLE_PACIENTE" -> "PACIENTE"
   nombreRol(nombre: string): string {
     return nombre.replace('ROLE_', '');
   }

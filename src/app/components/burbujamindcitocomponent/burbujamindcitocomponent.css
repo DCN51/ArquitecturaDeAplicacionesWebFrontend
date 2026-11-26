@@ -1,0 +1,84 @@
+.burbuja-mindcito {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.globo {
+  position: relative;
+  max-width: 220px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: #ffffff;
+  color: #2d2c2b;
+  font-size: 13px;
+  line-height: 1.4;
+  box-shadow: 0 6px 18px rgba(45, 44, 43, 0.18);
+}
+
+.globo::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -6px;
+  width: 12px;
+  height: 12px;
+  background: inherit;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.globo strong {
+  display: block;
+  color: #6b3fa0;
+}
+
+.globo.error {
+  background: #ffe0ed;
+  color: #923052;
+}
+
+.boton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  padding: 8px;
+  border: 2px solid #eee1fb;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(45, 44, 43, 0.25);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.boton:hover:not(:disabled) {
+  transform: scale(1.06);
+}
+
+.boton:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.boton img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@media (max-width: 600px) {
+  .burbuja-mindcito {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .globo {
+    max-width: 160px;
+    font-size: 12px;
+  }
+}

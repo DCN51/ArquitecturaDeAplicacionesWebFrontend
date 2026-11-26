@@ -7,7 +7,7 @@ export class UserDTO {
   lastName: string = '';
   email: string = '';
   phone: string = '';
-  birthDate: string | null = null;   // "2001-02-11"
+  birthDate: string | null = null;
   gender: string = '';
-  accountStatus: string = '';        // "ACTIVO" o "INACTIVO"
+  accountStatus: string = '';
 }

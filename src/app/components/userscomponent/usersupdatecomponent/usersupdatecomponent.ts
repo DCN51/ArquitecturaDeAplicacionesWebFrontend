@@ -8,6 +8,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { Usersservice } from '../../../services/usersservice';
+import { Loginservice } from '../../../services/loginservice';
 import { UserDTO } from '../../../models/UserDTO';
 import { UserUpdateDTO } from '../../../models/UserUpdateDTO';
 
@@ -28,6 +29,7 @@ import { UserUpdateDTO } from '../../../models/UserUpdateDTO';
 })
 export class Usersupdatecomponent implements OnInit {
   idUsuario: number = 0;
+  esPerfil: boolean = false;
   usuarioForm: FormGroup;
   mensaje: string = '';
   encontrado: boolean = false;
@@ -35,6 +37,7 @@ export class Usersupdatecomponent implements OnInit {
 
   constructor(
     private uS: Usersservice,
+    private loginService: Loginservice,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -49,11 +52,17 @@ export class Usersupdatecomponent implements OnInit {
       telefono: ['', Validators.maxLength(20)],
       fechaNacimiento: [null],
       genero: [''],
-      password: ['', Validators.minLength(8)]   // opcional
+      password: ['', Validators.minLength(8)]
     });
   }
 
   ngOnInit(): void {
+    this.esPerfil = !this.route.snapshot.paramMap.has('id');
+    if (this.esPerfil) {
+      this.buscarUsuario();
+      return;
+    }
+
     this.idUsuario = Number(this.route.snapshot.paramMap.get('id'));
 
     if (!this.idUsuario || isNaN(this.idUsuario)) {
@@ -64,7 +73,8 @@ export class Usersupdatecomponent implements OnInit {
   }
 
   buscarUsuario(): void {
-    this.uS.listId(this.idUsuario).subscribe({
+    const consulta = this.esPerfil ? this.uS.getPerfil() : this.uS.listId(this.idUsuario);
+    consulta.subscribe({
       next: (u: UserDTO) => {
         this.encontrado = true;
         this.usuarioForm.patchValue({
@@ -82,7 +92,7 @@ export class Usersupdatecomponent implements OnInit {
       error: (err) => {
         console.log(err);
         this.encontrado = false;
-        this.mensaje = 'Usuario no encontrado';
+        this.mensaje = err.error?.message || 'Usuario no encontrado';
         this.cdr.detectChanges();
       }
     });
@@ -105,29 +115,36 @@ export class Usersupdatecomponent implements OnInit {
       gender: this.usuarioForm.value.genero
     };
 
-    this.uS.update(this.idUsuario, dto).subscribe({
-      next: () => {
+    const guardar = this.esPerfil ? this.uS.updatePerfil(dto) : this.uS.update(this.idUsuario, dto);
+    guardar.subscribe({
+      next: (u: UserDTO) => {
         this.mensaje = 'Datos actualizados correctamente';
+        if (this.esPerfil) {
+          this.loginService.actualizarNombre(u.firstName, u.lastName);
+        }
         this.cdr.detectChanges();
-        setTimeout(() => this.router.navigate(['/usuarios/listar']), 1200);
+        setTimeout(() => this.router.navigate([this.rutaVolver]), 1200);
       },
       error: (err) => {
         console.log(err);
         if (err.status === 409) {
-          this.mensaje = 'El correo ya pertenece a otro usuario';
+          this.mensaje = err.error?.message || 'El correo ya pertenece a otro usuario';
         } else if (err.status === 404) {
-          this.mensaje = 'Usuario no encontrado';
+          this.mensaje = err.error?.message || 'Usuario no encontrado';
         } else if (err.status === 400) {
-          this.mensaje = 'Revise el formato de los datos';
+          this.mensaje = err.error?.message || 'Revise el formato de los datos';
         } else {
-          this.mensaje = 'Error al actualizar los datos';
+          this.mensaje = err.error?.message || 'Error al actualizar los datos';
         }
         this.cdr.detectChanges();
       }
     });
   }
 
-  // "2001-02-11" -> Date (sin que la hora de Perú la mueva al día anterior)
+  get rutaVolver(): string {
+    return this.esPerfil ? '/app' : '/usuarios/listar';
+  }
+
   private aFecha(texto: string | null): Date | null {
     if (!texto) {
       return null;
@@ -136,7 +153,6 @@ export class Usersupdatecomponent implements OnInit {
     return new Date(anio, mes - 1, dia);
   }
 
-  // Date -> "2001-02-11" (el formato que espera el back, igual que hace la profesora)
   private aTexto(fecha: Date | null): string | null {
     return fecha ? fecha.toLocaleDateString('en-CA') : null;
   }

@@ -19,12 +19,18 @@
       }
     </mat-form-field>
 
+    <section class="beneficios">
+      <mat-checkbox formControlName="ilimitadas">Sesiones ilimitadas</mat-checkbox>
+    </section>
+
     <mat-form-field class="campo">
       <mat-label>Límite de sesiones al mes</mat-label>
       <input matInput type="number" formControlName="sesiones">
-      <mat-hint>Usa -1 para sesiones ilimitadas</mat-hint>
+      @if (planForm.get('sesiones')?.hasError('required')) {
+        <mat-error>El límite de sesiones es obligatorio</mat-error>
+      }
       @if (planForm.get('sesiones')?.hasError('min')) {
-        <mat-error>El mínimo es -1 (ilimitadas)</mat-error>
+        <mat-error>El mínimo es 1 sesión</mat-error>
       }
     </mat-form-field>
 

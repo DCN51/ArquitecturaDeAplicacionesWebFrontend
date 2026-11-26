@@ -24,7 +24,7 @@ import { ActividadDTO } from '../../../models/ActividadDTO';
 export class Actividadupdatecomponent implements OnInit {
   userId: number = 0;
   idActividad: number = 0;
-  actividad: ActividadDTO | null = null;   // la actividad original
+  actividad: ActividadDTO | null = null;
   actividadForm: FormGroup;
   mensaje: string = '';
   tipos: string[] = ['Respiración', 'Relajación', 'Actividad física', 'Hábitos', 'Registro emocional'];
@@ -38,7 +38,7 @@ export class Actividadupdatecomponent implements OnInit {
   ) {
     this.actividadForm = this.fb.group({
       codigo: [0],
-      usuarioId: [0],
+      paciente: [''],
       diagnosticoId: [0],
       estado: [''],
       titulo: ['', [Validators.required, Validators.maxLength(100)]],
@@ -48,7 +48,6 @@ export class Actividadupdatecomponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // /actividades/editar/:userId/:id
     this.userId = Number(this.route.snapshot.paramMap.get('userId'));
     this.idActividad = Number(this.route.snapshot.paramMap.get('id'));
 
@@ -59,7 +58,6 @@ export class Actividadupdatecomponent implements OnInit {
     this.buscarActividad();
   }
 
-  // Sin GET por id: se trae la lista del paciente y se busca con find()
   buscarActividad(): void {
     this.aS.getActividades(this.userId).subscribe({
       next: (data: ActividadDTO[]) => {
@@ -71,7 +69,7 @@ export class Actividadupdatecomponent implements OnInit {
           this.actividad = a;
           this.actividadForm.patchValue({
             codigo: a.recommendedActivityId,
-            usuarioId: a.userId,
+            paciente: a.nombrePaciente,
             diagnosticoId: a.diagnosisId,
             estado: a.status,
             titulo: a.title,
@@ -83,7 +81,7 @@ export class Actividadupdatecomponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.mensaje = 'Actividad no encontrada';
+        this.mensaje = err.error?.message || 'Actividad no encontrada';
         this.cdr.detectChanges();
       }
     });
@@ -99,7 +97,6 @@ export class Actividadupdatecomponent implements OnInit {
       return;
     }
 
-    // El back pide paciente y diagnóstico aunque no cambien; estado y comentario los conserva él
     const dto: ActividadDTO = {
       ...this.actividad,
       title: this.actividadForm.value.titulo,
@@ -116,11 +113,11 @@ export class Actividadupdatecomponent implements OnInit {
       error: (err) => {
         console.log(err);
         if (err.status === 404) {
-          this.mensaje = 'Actividad no encontrada';
+          this.mensaje = err.error?.message || 'Actividad no encontrada';
         } else if (err.status === 400) {
-          this.mensaje = 'Revise los datos de la actividad';
+          this.mensaje = err.error?.message || 'Revise los datos de la actividad';
         } else {
-          this.mensaje = 'Error al actualizar la actividad';
+          this.mensaje = err.error?.message || 'Error al actualizar la actividad';
         }
         this.cdr.detectChanges();
       }

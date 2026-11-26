@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Sesionclinicaservice } from '../../../services/sesionclinicaservice';
 import { Geminiservice } from '../../../services/geminiservice';
 import { MensajeChatDTO } from '../../../models/MensajeChatDTO';
+import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-sesionclinicachatcomponent',
@@ -19,10 +20,10 @@ export class Sesionclinicachatcomponent implements OnInit {
   @ViewChild('conversacion') conversacion?: ElementRef<HTMLDivElement>;
 
   idSesion: number = 0;
-  mensajes: MensajeChatDTO[] = [];   // la conversación vive solo en la pantalla
-  texto: string = '';                // lo que el paciente está escribiendo
-  escribiendo: boolean = false;      // la IA está respondiendo
-  bloqueado: boolean = false;        // la sesión no existe o ya terminó
+  mensajes: MensajeChatDTO[] = [];
+  texto: string = '';
+  escribiendo: boolean = false;
+  bloqueado: boolean = false;
   mensaje: string = '';
 
   constructor(
@@ -35,7 +36,6 @@ export class Sesionclinicachatcomponent implements OnInit {
   ngOnInit(): void {
     this.idSesion = Number(this.route.snapshot.paramMap.get('id'));
 
-    // Revisar que la sesión exista y siga en curso
     this.scS.listId(this.idSesion).subscribe({
       next: (data) => {
         if (data.estado !== 'en_curso') {
@@ -45,27 +45,26 @@ export class Sesionclinicachatcomponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.bloquear(err.status === 404 ? 'No existe la sesión' : 'Ocurrió un error al cargar la sesión');
+        this.bloquear(err.error?.message || (err.status === 404 ? 'No existe la sesión' : 'Ocurrió un error al cargar la sesión'));
         this.cdr.detectChanges();
       }
     });
   }
 
-  // Chat con la IA: el front llama directo a la API de Gemini (como el ejemplo de la profesora)
   enviarMensaje(): void {
     const texto = this.texto.trim();
     if (!texto || this.escribiendo || this.bloqueado) {
       return;
     }
 
-    const historial = [...this.mensajes];   // la conversación anterior, sin el mensaje nuevo
+    const historial = [...this.mensajes];
     this.mensajes.push({ rol: 'paciente', texto: texto });
     this.texto = '';
     this.mensaje = '';
     this.escribiendo = true;
     this.bajarConversacion();
 
-    this.gS.enviarMensaje(historial, texto).subscribe({
+    this.gS.enviarMensaje(historial, texto).pipe(timeout(20000)).subscribe({
       next: (data) => {
         const respuesta = this.leerRespuesta(data);
         this.escribiendo = false;
@@ -73,7 +72,7 @@ export class Sesionclinicachatcomponent implements OnInit {
           this.mensajes.push({ rol: 'ia', texto: respuesta });
         } else {
           this.devolverMensaje(texto);
-          this.mensaje = 'La IA no pudo responder ese mensaje. Intenta escribirlo de otra forma.';
+          this.mensaje = 'Mindcito no pudo responder ese mensaje. Intenta escribirlo de otra forma.';
         }
         this.bajarConversacion();
       },
@@ -81,19 +80,16 @@ export class Sesionclinicachatcomponent implements OnInit {
         console.log(err);
         this.escribiendo = false;
         this.devolverMensaje(texto);
-        if (err.status === 429) {
-          this.mensaje = 'Se alcanzó el límite de mensajes de la IA. Intenta más tarde.';
-        } else if (err.status === 400 || err.status === 403) {
+        if (err.status === 400 || err.status === 403) {
           this.mensaje = 'La API key o el modelo de Gemini no son válidos.';
         } else {
-          this.mensaje = 'El asistente no está disponible en este momento';
+          this.mensaje = 'Mindcito no pudo responder ahora, intenta de nuevo en unos segundos';
         }
-        this.cdr.detectChanges();
+        this.bajarConversacion();
       }
     });
   }
 
-  // Gemini devuelve el texto en candidates[0].content.parts
   private leerRespuesta(data: any): string {
     const partes: any[] = data?.candidates?.[0]?.content?.parts ?? [];
     return partes
@@ -103,13 +99,11 @@ export class Sesionclinicachatcomponent implements OnInit {
       .trim();
   }
 
-  // Si falla, se quita el mensaje sin respuesta y se devuelve al campo para reintentar
   private devolverMensaje(texto: string): void {
     this.mensajes.pop();
     this.texto = texto;
   }
 
-  // Enter envía; Shift + Enter hace salto de línea
   alPresionarEnter(evento: Event): void {
     const tecla = evento as KeyboardEvent;
     if (!tecla.shiftKey) {

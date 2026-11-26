@@ -1,19 +1,15 @@
 <div class="container">
-  <h2>Conversa con Mind Health</h2>
+  <h2>Conversa con Mindcito</h2>
 
   <div class="conversacion" #conversacion>
-    <div class="burbuja ia">
-      Hola, estoy aquí para escucharte. ¿Cómo te sientes hoy?
-    </div>
+    <div class="burbuja ia"><span class="autor">Mindcito</span>Hola, soy Mindcito, tu asistente virtual. ¿Cómo te sientes hoy?</div>
 
     @for (m of mensajes; track $index) {
-      <div class="burbuja" [class.ia]="m.rol === 'ia'" [class.paciente]="m.rol === 'paciente'">
-        {{ m.texto }}
-      </div>
+      <div class="burbuja" [class.ia]="m.rol === 'ia'" [class.paciente]="m.rol === 'paciente'">@if (m.rol === 'ia') {<span class="autor">Mindcito</span>}{{ m.texto }}</div>
     }
 
     @if (escribiendo) {
-      <div class="burbuja ia escribiendo">La IA está escribiendo…</div>
+      <div class="burbuja ia escribiendo">Mindcito está escribiendo…</div>
     }
   </div>
 
@@ -24,7 +20,7 @@
   <div class="enviar">
     <mat-form-field class="campo">
       <mat-label>Escribe tu mensaje</mat-label>
-      <textarea matInput [(ngModel)]="texto" name="texto" rows="2" maxlength="2000"
+      <textarea matInput [(ngModel)]="texto" name="texto" rows="2" maxlength="500"
                 [disabled]="bloqueado" (keydown.enter)="alPresionarEnter($event)"></textarea>
     </mat-form-field>
     <button matIconButton type="button" aria-label="Enviar mensaje" (click)="enviarMensaje()"

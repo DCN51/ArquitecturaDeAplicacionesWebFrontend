@@ -41,7 +41,6 @@ export class Suscripcioninsertcomponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {
     this.suscripcionForm = this.fb.group({
-      usuarioId: ['', [Validators.required, Validators.min(1)]],
       catalogoPlanId: ['', Validators.required],
       metodoPago: [''],
       referenciaPago: ['']
@@ -50,13 +49,11 @@ export class Suscripcioninsertcomponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarPlanes();
-    // cada vez que cambia el plan elegido, se revisa si pide datos de pago
     this.suscripcionForm.get('catalogoPlanId')?.valueChanges.subscribe(id => {
       this.actualizarValidacionPago(id);
     });
   }
 
-  // Solo se muestran los planes activos (los trae el GET de planes)
   cargarPlanes(): void {
     this.cpS.getPlanes().subscribe({
       next: (data) => {
@@ -65,13 +62,12 @@ export class Suscripcioninsertcomponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.mensaje = 'Ocurrió un error al obtener los planes';
+        this.mensaje = err.error?.message || 'Ocurrió un error al obtener los planes';
         this.cdr.detectChanges();
       }
     });
   }
 
-  // Método y referencia de pago: obligatorios solo si el plan cuesta más de 0
   actualizarValidacionPago(planId: number): void {
     const plan = this.planes.find(p => p.catalogoPlanId === planId);
     this.planEsDePago = !!plan && plan.precioMensualCatalogoPlan > 0;
@@ -92,10 +88,6 @@ export class Suscripcioninsertcomponent implements OnInit {
     referencia?.updateValueAndValidity();
   }
 
-  nombrePlan(id: number): string {
-    return this.planes.find(p => p.catalogoPlanId === id)?.nombreCatalogoPlan ?? `Plan ${id}`;
-  }
-
   contratarPlan(): void {
     if (this.suscripcionForm.invalid) {
       this.suscripcionForm.markAllAsTouched();
@@ -103,7 +95,6 @@ export class Suscripcioninsertcomponent implements OnInit {
       return;
     }
 
-    // Fechas y estado no se envían: los asigna el back
     const s: SuscripcionDTO = {
       suscripcionId: 0,
       fechaInicio: null,
@@ -111,7 +102,9 @@ export class Suscripcioninsertcomponent implements OnInit {
       estadoSuscripcion: '',
       metodoPagoSuscripcion: this.planEsDePago ? this.suscripcionForm.value.metodoPago : null,
       referenciaPagoSuscripcion: this.planEsDePago ? this.suscripcionForm.value.referenciaPago : null,
-      usuarioId: Number(this.suscripcionForm.value.usuarioId),
+      usuarioId: 0,
+      nombrePaciente: '',
+      nombrePlan: '',
       catalogoPlanId: this.suscripcionForm.value.catalogoPlanId
     };
 
@@ -121,7 +114,7 @@ export class Suscripcioninsertcomponent implements OnInit {
       next: (data) => {
         this.suscripcionCreada = data;
         this.mensaje = 'Suscripción registrada correctamente';
-        this.suscripcionForm.reset({ usuarioId: '', catalogoPlanId: '', metodoPago: '', referenciaPago: '' });
+        this.suscripcionForm.reset({ catalogoPlanId: '', metodoPago: '', referenciaPago: '' });
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -134,7 +127,7 @@ export class Suscripcioninsertcomponent implements OnInit {
         } else if (err.status === 404) {
           this.mensaje = mensajeBack || 'No existe el usuario o el plan';
         } else {
-          this.mensaje = 'Error al contratar el plan';
+          this.mensaje = err.error?.message || 'Error al contratar el plan';
         }
         this.cdr.detectChanges();
       }

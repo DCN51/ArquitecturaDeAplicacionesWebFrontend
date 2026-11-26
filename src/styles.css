@@ -1,4 +1,3 @@
-/* You can add global styles to this file, and also import other style files */
 
 @import '@fontsource/cal-sans/400.css';
 
@@ -28,7 +27,6 @@ body {
   color: #2d2c2b;
 }
 
-/* Lenguaje visual compartido por las pantallas de gestion. */
 app-root {
   --mat-sys-primary: #3b197f;
   --mat-sys-on-primary: #ffffff;
@@ -176,7 +174,6 @@ app-root .container form > button {
   align-self: flex-start;
 }
 
-/* Boton principal de los formularios: azul, como en Registro. */
 app-root .container form > button[type='submit'] {
   align-self: stretch;
   margin-top: 10px;
@@ -312,7 +309,7 @@ app-root .container .beneficios {
   background: #f4eef9;
 }
 
-app-root .container :is(.ACTIVO, .activa, .COMPLETADA,
+app-root .container :is(.ACTIVO, .activa, .COMPLETADA, .VERIFICADO,
   .INACTIVO, .cancelada, .PENDIENTE) {
   display: inline-block;
   padding: 5px 10px;
@@ -322,7 +319,7 @@ app-root .container :is(.ACTIVO, .activa, .COMPLETADA,
   white-space: nowrap;
 }
 
-app-root .container :is(.ACTIVO, .activa, .COMPLETADA) {
+app-root .container :is(.ACTIVO, .activa, .COMPLETADA, .VERIFICADO) {
   background: #d5f1e3;
   color: #216345;
 }
@@ -337,7 +334,6 @@ app-root .container .PENDIENTE {
   color: #795800;
 }
 
-/* Sesiones y diagnosticos conservan sus plantillas y logica originales. */
 app-sesionclinicacomponent,
 app-diagnosticoclinicocomponent {
   display: block;
@@ -345,7 +341,6 @@ app-diagnosticoclinicocomponent {
   background: #f9f4f2;
 }
 
-/* Niveles de urgencia y riesgo: sesiones, diagnosticos y casos de emergencia. */
 app-root .container :is(.bajo, .medio, .alto, .critico, .en_curso, .finalizada,
   .validado, .pendiente) {
   display: inline-block;

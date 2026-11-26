@@ -1,12 +1,13 @@
 export class ActividadDTO {
   recommendedActivityId: number = 0;
-  userId: number = 0;               // paciente
-  diagnosisId: number = 0;          // diagnóstico (debe ser del mismo paciente)
+  userId: number = 0;
+  diagnosisId: number = 0;
   title: string = '';
   description: string = '';
   type: string = '';
-  assignedDate: string | null = null;   // la pone el back si no se envía
+  assignedDate: string | null = null;
   completedDate: string | null = null;
-  status: string = '';                  // "PENDIENTE" o "COMPLETADA"
+  status: string = '';
   feedback: string | null = null;
+  nombrePaciente: string = '';
 }

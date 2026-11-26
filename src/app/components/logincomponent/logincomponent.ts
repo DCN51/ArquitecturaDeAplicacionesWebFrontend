@@ -70,7 +70,7 @@ export class Logincomponent implements OnInit {
         if (err.status === 0) {
           this.mensaje = 'No se pudo conectar con el servidor.';
         } else if (err.status === 401 || err.status === 403) {
-          this.mensaje = 'Verifica tu usuario y contraseña y que tu cuenta esté activa.';
+          this.mensaje = err.error?.message || 'Verifica tu usuario y contraseña y que tu cuenta esté activa.';
         } else {
           this.mensaje = err.error?.message || 'No se pudo iniciar sesión';
         }

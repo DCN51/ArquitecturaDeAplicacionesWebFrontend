@@ -1,0 +1,15 @@
+@if (visible) {
+  <div class="burbuja-mindcito">
+    <div class="globo" [class.error]="mensaje">
+      @if (mensaje) {
+        {{ mensaje }}
+      } @else {
+        ¿Quieres conversar? <strong>Habla con Mindcito</strong>
+      }
+    </div>
+    <button type="button" class="boton" (click)="abrirChat()" [disabled]="cargando"
+            aria-label="Conversar con Mindcito">
+      <img src="/logo-mindhealth.png" alt="Mind Health">
+    </button>
+  </div>
+}
