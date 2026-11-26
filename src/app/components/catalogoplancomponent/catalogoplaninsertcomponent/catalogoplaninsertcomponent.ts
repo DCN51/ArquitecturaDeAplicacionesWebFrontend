@@ -43,7 +43,7 @@ export class Catalogoplaninsertcomponent {
 
   insertarPlan(): void {
     if (this.planForm.invalid) {
-      this.planForm.markAllAsTouched();   // pinta en rojo los campos con error
+      this.planForm.markAllAsTouched();
       this.mensaje = 'Complete todos los campos correctamente';
       return;
     }

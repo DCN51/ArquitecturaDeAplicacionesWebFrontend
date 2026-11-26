@@ -13,7 +13,6 @@
     <p class="mensaje">{{ mensaje }}</p>
   }
 
-  <!-- HUF07: resultado de cancelar -->
   @if (mensajeAccion) {
     <p class="mensaje">{{ mensajeAccion }}</p>
   }
@@ -45,7 +44,6 @@
         </td>
       </ng-container>
 
-      <!-- HUF07: el botón solo aparece en la suscripción activa -->
       <ng-container matColumnDef="cancelar">
         <th mat-header-cell *matHeaderCellDef>Cancelar</th>
         <td mat-cell *matCellDef="let element">

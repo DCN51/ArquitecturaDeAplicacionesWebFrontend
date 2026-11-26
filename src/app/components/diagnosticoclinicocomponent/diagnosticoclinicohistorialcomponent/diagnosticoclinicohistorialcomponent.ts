@@ -31,10 +31,8 @@ export class Diagnosticoclinicohistorialcomponent {
   mensaje: string = '';
   mensajeAccion: string = '';
 
-  // Columnas que ven todos
   private baseColumns: string[] = ['id', 'sesion', 'fecha', 'resultado', 'riesgo', 'recomendacion', 'validacion'];
 
-  // Solo el administrador ve eliminar
   get displayedColumns(): string[] {
     return this.esAdmin
       ? [...this.baseColumns, 'eliminar']

@@ -28,15 +28,13 @@ import { ActividadDTO } from '../../../models/ActividadDTO';
 })
 export class Actividadlistcomponent {
   usuarioId: number | null = null;
-  usuarioBuscado: number = 0;     // paciente cuya tabla se está mostrando
+  usuarioBuscado: number = 0;
   lista: ActividadDTO[] = [];
   mensaje: string = '';
   mensajeAccion: string = '';
 
-  // Columnas que ven todos
   private baseColumns: string[] = ['id', 'titulo', 'tipo', 'diagnostico', 'asignada', 'estado', 'comentario'];
 
-  // El psicólogo ve editar y eliminar; el paciente ve completar
   get displayedColumns(): string[] {
     return this.esPsicologo
       ? [...this.baseColumns, 'editar', 'eliminar']
@@ -82,7 +80,6 @@ export class Actividadlistcomponent {
     });
   }
 
-  // HUF25 - solo actividades PENDIENTE
   eliminarActividad(a: ActividadDTO): void {
     if (!confirm(`¿Seguro que deseas eliminar la actividad "${a.title}"?`)) {
       return;

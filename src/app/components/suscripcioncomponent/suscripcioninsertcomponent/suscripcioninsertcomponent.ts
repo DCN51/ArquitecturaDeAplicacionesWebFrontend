@@ -50,13 +50,11 @@ export class Suscripcioninsertcomponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarPlanes();
-    // cada vez que cambia el plan elegido, se revisa si pide datos de pago
     this.suscripcionForm.get('catalogoPlanId')?.valueChanges.subscribe(id => {
       this.actualizarValidacionPago(id);
     });
   }
 
-  // Solo se muestran los planes activos (los trae el GET de planes)
   cargarPlanes(): void {
     this.cpS.getPlanes().subscribe({
       next: (data) => {
@@ -71,7 +69,6 @@ export class Suscripcioninsertcomponent implements OnInit {
     });
   }
 
-  // Método y referencia de pago: obligatorios solo si el plan cuesta más de 0
   actualizarValidacionPago(planId: number): void {
     const plan = this.planes.find(p => p.catalogoPlanId === planId);
     this.planEsDePago = !!plan && plan.precioMensualCatalogoPlan > 0;
@@ -103,7 +100,6 @@ export class Suscripcioninsertcomponent implements OnInit {
       return;
     }
 
-    // Fechas y estado no se envían: los asigna el back
     const s: SuscripcionDTO = {
       suscripcionId: 0,
       fechaInicio: null,

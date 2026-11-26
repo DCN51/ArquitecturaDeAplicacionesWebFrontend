@@ -50,7 +50,6 @@ export class Actividadinsertcomponent {
       return;
     }
 
-    // estado y fecha de asignación los pone el back (PENDIENTE y hoy)
     const a: ActividadDTO = {
       recommendedActivityId: 0,
       userId: Number(this.actividadForm.value.usuarioId),

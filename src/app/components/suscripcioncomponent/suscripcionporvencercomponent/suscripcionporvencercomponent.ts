@@ -26,10 +26,10 @@ import { CatalogoPlanDTO } from '../../../models/CatalogoPlanDTO';
   styleUrl: './suscripcionporvencercomponent.css',
 })
 export class Suscripcionporvencercomponent implements OnInit {
-  dias: number | null = 7;          // 7 por defecto, igual que el back
+  dias: number | null = 7;
   lista: SuscripcionDTO[] = [];
-  usuarios: UserDTO[] = [];         // para mostrar nombre y correo
-  planes: CatalogoPlanDTO[] = [];   // para mostrar el nombre del plan
+  usuarios: UserDTO[] = [];
+  planes: CatalogoPlanDTO[] = [];
   mensaje: string = '';
   displayedColumns: string[] = ['id', 'usuario', 'correo', 'plan', 'fin'];
 
@@ -42,7 +42,7 @@ export class Suscripcionporvencercomponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarUsuarios();
-    this.consultar();   // al entrar muestra las que vencen en 7 días
+    this.consultar();
   }
 
   cargarUsuarios(): void {
@@ -65,7 +65,7 @@ export class Suscripcionporvencercomponent implements OnInit {
     const dias = this.dias;
     this.sS.porVencer(dias).subscribe({
       next: (data: SuscripcionDTO[]) => {
-        this.lista = data;   // el back ya las ordena por fecha de fin
+        this.lista = data;
         this.mensaje = data.length > 0 ? '' : `No hay suscripciones por vencer en los próximos ${dias} días`;
         this.cargarNombresPlanes(data);
         this.cdr.detectChanges();
@@ -91,7 +91,6 @@ export class Suscripcionporvencercomponent implements OnInit {
     return u ? u.email : '-';
   }
 
-  // Igual que en el historial: pide cada plan que aún no tenemos
   cargarNombresPlanes(lista: SuscripcionDTO[]): void {
     for (const s of lista) {
       const yaLoTengo = this.planes.some(p => p.catalogoPlanId === s.catalogoPlanId);

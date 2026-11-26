@@ -25,7 +25,7 @@ export class Catalogoplanupdatecomponent implements OnInit {
   idPlan: number = 0;
   planForm: FormGroup;
   mensaje: string = '';
-  encontrado: boolean = false;   // si no se encuentra el plan, no se permite guardar
+  encontrado: boolean = false;
 
   constructor(
     private cpS: Catalogoplanservice,
@@ -47,7 +47,6 @@ export class Catalogoplanupdatecomponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Recuperar el id desde la URL (/planes/editar/:id)
     this.idPlan = Number(this.route.snapshot.paramMap.get('id'));
 
     if (!this.idPlan || isNaN(this.idPlan)) {
@@ -84,7 +83,7 @@ export class Catalogoplanupdatecomponent implements OnInit {
 
   actualizarPlan(): void {
     if (this.planForm.invalid) {
-      this.planForm.markAllAsTouched();   // pinta en rojo los campos con error
+      this.planForm.markAllAsTouched();
       this.mensaje = 'Complete todos los campos correctamente';
       return;
     }
@@ -98,14 +97,13 @@ export class Catalogoplanupdatecomponent implements OnInit {
       incluyeActividades: this.planForm.value.actividades,
       permiteDerivacion: this.planForm.value.derivacion,
       descripcionCatalogoPlan: this.planForm.value.descripcion,
-      activoCatalogoPlan: true   // el back conserva el estado real del plan
+      activoCatalogoPlan: true
     };
 
     this.cpS.update(plan).subscribe({
       next: () => {
         this.mensaje = 'Plan actualizado correctamente';
         this.cdr.detectChanges();
-        // espera un momento para que se lea el mensaje y vuelve a la lista
         setTimeout(() => this.router.navigate(['/planes/listar']), 1200);
       },
       error: (err) => {

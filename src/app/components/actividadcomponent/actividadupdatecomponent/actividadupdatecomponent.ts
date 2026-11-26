@@ -24,7 +24,7 @@ import { ActividadDTO } from '../../../models/ActividadDTO';
 export class Actividadupdatecomponent implements OnInit {
   userId: number = 0;
   idActividad: number = 0;
-  actividad: ActividadDTO | null = null;   // la actividad original
+  actividad: ActividadDTO | null = null;
   actividadForm: FormGroup;
   mensaje: string = '';
   tipos: string[] = ['Respiración', 'Relajación', 'Actividad física', 'Hábitos', 'Registro emocional'];
@@ -48,7 +48,6 @@ export class Actividadupdatecomponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // /actividades/editar/:userId/:id
     this.userId = Number(this.route.snapshot.paramMap.get('userId'));
     this.idActividad = Number(this.route.snapshot.paramMap.get('id'));
 
@@ -59,7 +58,6 @@ export class Actividadupdatecomponent implements OnInit {
     this.buscarActividad();
   }
 
-  // Sin GET por id: se trae la lista del paciente y se busca con find()
   buscarActividad(): void {
     this.aS.getActividades(this.userId).subscribe({
       next: (data: ActividadDTO[]) => {
@@ -99,7 +97,6 @@ export class Actividadupdatecomponent implements OnInit {
       return;
     }
 
-    // El back pide paciente y diagnóstico aunque no cambien; estado y comentario los conserva él
     const dto: ActividadDTO = {
       ...this.actividad,
       title: this.actividadForm.value.titulo,

@@ -28,7 +28,6 @@ export class Actividadcompletarcomponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // /actividades/completar/:userId/:id
     this.userId = Number(this.route.snapshot.paramMap.get('userId'));
     this.idActividad = Number(this.route.snapshot.paramMap.get('id'));
 
@@ -56,7 +55,7 @@ export class Actividadcompletarcomponent implements OnInit {
       return;
     }
 
-    const feedback = this.comentario.trim() ? this.comentario.trim() : null;   // opcional
+    const feedback = this.comentario.trim() ? this.comentario.trim() : null;
 
     this.aS.completar(this.idActividad, feedback).subscribe({
       next: () => {

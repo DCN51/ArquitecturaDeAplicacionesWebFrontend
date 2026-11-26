@@ -10,7 +10,6 @@ import { MensajeChatDTO } from '../models/MensajeChatDTO';
 export class Geminiservice {
   private apiURL = `https://generativelanguage.googleapis.com/v1beta/models/${gemini.model}:generateContent`;
 
-  // Instrucciones fijas para la IA: cómo debe comportarse en Mind Health
   private instrucciones = `Eres el asistente de acompañamiento emocional de Mind Health, una aplicación de salud mental.
 Respondes siempre en español, con calidez, empatía y sin juzgar.
 Escucha a la persona, valida lo que siente y haz preguntas abiertas para entenderla mejor.
@@ -21,11 +20,10 @@ Responde de forma breve: máximo 120 palabras.`;
 
   constructor(private http: HttpClient) { }
 
-  // Manda la conversación (anterior + mensaje nuevo) y devuelve la respuesta de Gemini
   enviarMensaje(historial: MensajeChatDTO[], mensaje: string): Observable<any> {
     const contenidos = [...historial.slice(-20), { rol: 'paciente', texto: mensaje }]
       .map(m => ({
-        role: m.rol === 'ia' ? 'model' : 'user',   // Gemini usa "user" y "model"
+        role: m.rol === 'ia' ? 'model' : 'user',
         parts: [{ text: m.texto }]
       }));
 

@@ -31,7 +31,6 @@ export class Rolelistcomponent implements OnInit {
     });
   }
 
-  // "ROLE_PACIENTE" -> "PACIENTE"
   nombreRol(nombre: string): string {
     return nombre.replace('ROLE_', '');
   }

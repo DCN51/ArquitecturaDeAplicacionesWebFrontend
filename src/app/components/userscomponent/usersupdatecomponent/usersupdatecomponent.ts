@@ -49,7 +49,7 @@ export class Usersupdatecomponent implements OnInit {
       telefono: ['', Validators.maxLength(20)],
       fechaNacimiento: [null],
       genero: [''],
-      password: ['', Validators.minLength(8)]   // opcional
+      password: ['', Validators.minLength(8)]
     });
   }
 
@@ -127,7 +127,6 @@ export class Usersupdatecomponent implements OnInit {
     });
   }
 
-  // "2001-02-11" -> Date (sin que la hora de Perú la mueva al día anterior)
   private aFecha(texto: string | null): Date | null {
     if (!texto) {
       return null;
@@ -136,7 +135,6 @@ export class Usersupdatecomponent implements OnInit {
     return new Date(anio, mes - 1, dia);
   }
 
-  // Date -> "2001-02-11" (el formato que espera el back, igual que hace la profesora)
   private aTexto(fecha: Date | null): string | null {
     return fecha ? fecha.toLocaleDateString('en-CA') : null;
   }

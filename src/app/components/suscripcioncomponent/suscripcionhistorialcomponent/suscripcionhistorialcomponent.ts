@@ -28,16 +28,14 @@ import { CatalogoPlanDTO } from '../../../models/CatalogoPlanDTO';
 })
 export class Suscripcionhistorialcomponent {
   usuarioId: number | null = null;
-  usuarioBuscado: number = 0;     // usuario cuyo historial se está mostrando
+  usuarioBuscado: number = 0;
   lista: SuscripcionDTO[] = [];
   mensaje: string = '';
-  mensajeAccion: string = '';     // resultado de cancelar (HUF07)
+  mensajeAccion: string = '';
   planes: CatalogoPlanDTO[] = [];
 
-  // Columnas que ven todos
   private baseColumns: string[] = ['plan', 'inicio', 'fin', 'estado'];
 
-  // Solo el paciente ve cancelar
   get displayedColumns(): string[] {
     return this.esPaciente
       ? [...this.baseColumns, 'cancelar']
@@ -55,7 +53,6 @@ export class Suscripcionhistorialcomponent {
     private cdr: ChangeDetectorRef
   ) { }
 
-  // HUF08
   buscarHistorial(): void {
     this.mensajeAccion = '';
     if (!this.usuarioId || this.usuarioId < 1) {
@@ -70,7 +67,7 @@ export class Suscripcionhistorialcomponent {
   cargarHistorial(): void {
     this.sS.historial(this.usuarioBuscado).subscribe({
       next: (data: SuscripcionDTO[]) => {
-        this.lista = data;   // el back ya las ordena de la más reciente a la más antigua
+        this.lista = data;
         this.mensaje = data.length > 0 ? '' : 'No tienes suscripciones registradas';
         this.cargarNombresPlanes(data);
         this.cdr.detectChanges();
@@ -84,7 +81,6 @@ export class Suscripcionhistorialcomponent {
     });
   }
 
-  // HUF07 - solo se llama desde la fila "activa"
   cancelarSuscripcion(s: SuscripcionDTO): void {
     const nombre = this.nombrePlan(s.catalogoPlanId);
     if (!confirm(`¿Seguro que deseas cancelar tu suscripción al plan "${nombre}"?`)) {
@@ -94,7 +90,7 @@ export class Suscripcionhistorialcomponent {
     this.sS.cancelar(this.usuarioBuscado).subscribe({
       next: () => {
         this.mensajeAccion = 'Suscripción cancelada correctamente';
-        this.cargarHistorial();   // recarga la tabla: la fila pasa a "cancelada"
+        this.cargarHistorial();
       },
       error: (err) => {
         console.log(err);
@@ -108,7 +104,6 @@ export class Suscripcionhistorialcomponent {
     });
   }
 
-  // Por cada plan del historial que aún no tenemos, lo pide con GET /api/CatalogoPlan/{id}
   cargarNombresPlanes(lista: SuscripcionDTO[]): void {
     for (const s of lista) {
       const yaLoTengo = this.planes.some(p => p.catalogoPlanId === s.catalogoPlanId);

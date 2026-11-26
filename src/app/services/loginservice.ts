@@ -24,7 +24,6 @@ export class Loginservice {
         if (this.isBrowser) {
           sessionStorage.setItem('token', response.token);
           sessionStorage.setItem('username', response.username ?? '');
-          // Tu back manda un solo rol: se guarda como lista, igual que la profesora
           sessionStorage.setItem('roles', JSON.stringify(response.rol ? [response.rol] : []));
         }
       })

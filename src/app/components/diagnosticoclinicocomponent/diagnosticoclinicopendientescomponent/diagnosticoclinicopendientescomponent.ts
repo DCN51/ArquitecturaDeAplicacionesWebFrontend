@@ -19,10 +19,8 @@ export class Diagnosticoclinicopendientescomponent implements OnInit {
   mensajeAccion: string = '';
   cargando: boolean = true;
 
-  // Columnas que ven todos
   private baseColumns: string[] = ['id', 'usuario', 'sesion', 'fecha', 'resultado', 'riesgo'];
 
-  // Solo el psicólogo ve validar
   get displayedColumns(): string[] {
     return this.esPsicologo
       ? [...this.baseColumns, 'validar']

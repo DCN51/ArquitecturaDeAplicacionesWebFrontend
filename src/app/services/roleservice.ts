@@ -12,7 +12,6 @@ export class Roleservice {
 
   constructor(private http: HttpClient) { }
 
-  // HUF18
   getRoles(): Observable<RoleDTO[]> {
     return this.http.get<RoleDTO[]>(this.apiURL);
   }

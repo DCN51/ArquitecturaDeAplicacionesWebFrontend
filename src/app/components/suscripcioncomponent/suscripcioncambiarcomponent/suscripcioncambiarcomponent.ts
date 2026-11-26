@@ -52,13 +52,11 @@ export class Suscripcioncambiarcomponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarPlanes();
-    // cada vez que cambia el plan elegido, se revisa si pide datos de pago
     this.cambioForm.get('catalogoPlanId')?.valueChanges.subscribe(id => {
       this.actualizarValidacionPago(id);
     });
   }
 
-  // Solo se muestran los planes activos
   cargarPlanes(): void {
     this.cpS.getPlanes().subscribe({
       next: (data) => {
@@ -73,7 +71,6 @@ export class Suscripcioncambiarcomponent implements OnInit {
     });
   }
 
-  // Método y referencia de pago: obligatorios solo si el plan cuesta más de 0
   actualizarValidacionPago(planId: number): void {
     const plan = this.planes.find(p => p.catalogoPlanId === planId);
     this.planEsDePago = !!plan && plan.precioMensualCatalogoPlan > 0;
@@ -106,7 +103,6 @@ export class Suscripcioncambiarcomponent implements OnInit {
       return;
     }
 
-    // Fechas y estado no se envían: los asigna el back
     const s: SuscripcionDTO = {
       suscripcionId: 0,
       fechaInicio: null,
@@ -131,7 +127,6 @@ export class Suscripcioncambiarcomponent implements OnInit {
         console.log(err);
         const mensajeBack = err.error?.message;
         if (err.status === 404) {
-          // puede ser "No existe el usuario con el id: X" o "No tienes una suscripción activa"
           this.mensaje = mensajeBack || 'No tienes una suscripción activa';
         } else if (err.status === 400) {
           this.mensaje = mensajeBack || 'Ya estás suscrito a este plan';

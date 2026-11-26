@@ -13,19 +13,15 @@ export class Usersservice {
 
   constructor(private http: HttpClient) { }
 
-  // HUF20 - tabla de usuarios
   getUsuarios(): Observable<UserDTO[]> {
     return this.http.get<UserDTO[]>(this.apiURL);
   }
-  // HUF20 - desactivar cuenta
   desactivar(id: number): Observable<UserDTO> {
     return this.http.patch<UserDTO>(`${this.apiURL}/${id}/deactivate`, {});
   }
-  // HUF21 - cargar el usuario a editar
   listId(id: number): Observable<UserDTO> {
     return this.http.get<UserDTO>(`${this.apiURL}/${id}`);
   }
-  // HUF21 - actualizar
   update(id: number, dto: UserUpdateDTO): Observable<UserDTO> {
     return this.http.put<UserDTO>(`${this.apiURL}/${id}`, dto);
   }

@@ -16,13 +16,11 @@ import { Catalogoplanservice } from '../../../services/catalogoplanservice';
 })
 export class Catalogoplanlistcomponent implements OnInit {
   dataSource: CatalogoPlanDTO[] = [];
-  mensaje: string = '';        // error al cargar la lista
-  mensajeAccion: string = '';  // resultado de desactivar
+  mensaje: string = '';
+  mensajeAccion: string = '';
 
-  // Columnas que ven todos
   private baseColumns: string[] = ['nombre', 'precio', 'sesiones', 'diagnostico', 'actividades', 'derivacion', 'descripcion'];
 
-  // Solo el administrador ve editar y desactivar
   get displayedColumns(): string[] {
     return this.esAdmin
       ? [...this.baseColumns, 'editar', 'desactivar']
@@ -39,7 +37,6 @@ export class Catalogoplanlistcomponent implements OnInit {
     this.listarPlanes();
   }
 
-  // HUF04
   listarPlanes(): void {
     this.cpS.getPlanes().subscribe({
       next: (data) => {
@@ -55,12 +52,10 @@ export class Catalogoplanlistcomponent implements OnInit {
     });
   }
 
-  // HUF03 - el plan free no se puede desactivar
   esPlanFree(plan: CatalogoPlanDTO): boolean {
     return plan.nombreCatalogoPlan.toLowerCase() === 'free';
   }
 
-  // HUF03
   desactivarPlan(plan: CatalogoPlanDTO): void {
     if (!confirm(`¿Seguro que deseas desactivar el plan "${plan.nombreCatalogoPlan}"?`)) {
       return;
@@ -69,7 +64,7 @@ export class Catalogoplanlistcomponent implements OnInit {
     this.cpS.desactivar(plan.catalogoPlanId).subscribe({
       next: () => {
         this.mensajeAccion = 'Plan desactivado correctamente';
-        this.listarPlanes();   // el plan desactivado ya no aparece en la lista
+        this.listarPlanes();
       },
       error: (err) => {
         console.log(err);

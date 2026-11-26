@@ -15,8 +15,8 @@ import { UserDTO } from '../../../models/UserDTO';
 export class Userslistcomponent implements OnInit {
   dataSource: UserDTO[] = [];
   displayedColumns: string[] = ['id', 'username', 'nombre', 'email', 'rol', 'estado', 'editar', 'desactivar'];
-  mensaje: string = '';        // error al cargar la lista
-  mensajeAccion: string = '';  // resultado de desactivar
+  mensaje: string = '';
+  mensajeAccion: string = '';
 
   constructor(private uS: Usersservice, private cdr: ChangeDetectorRef) { }
 
@@ -43,7 +43,6 @@ export class Userslistcomponent implements OnInit {
     return nombre.replace('ROLE_', '');
   }
 
-  // HUF20
   desactivarUsuario(u: UserDTO): void {
     if (!confirm(`¿Seguro que deseas desactivar la cuenta de "${u.username}"?`)) {
       return;
@@ -52,7 +51,7 @@ export class Userslistcomponent implements OnInit {
     this.uS.desactivar(u.userId).subscribe({
       next: () => {
         this.mensajeAccion = 'Cuenta desactivada correctamente';
-        this.listarUsuarios();   // la cuenta sigue en la lista, ahora como INACTIVO
+        this.listarUsuarios();
       },
       error: (err) => {
         console.log(err);
