@@ -71,7 +71,7 @@ export class Sesionclinicachatcomponent implements OnInit {
           this.mensajes.push({ rol: 'ia', texto: respuesta });
         } else {
           this.devolverMensaje(texto);
-          this.mensaje = 'La IA no pudo responder ese mensaje. Intenta escribirlo de otra forma.';
+          this.mensaje = 'Mindcito no pudo responder ese mensaje. Intenta escribirlo de otra forma.';
         }
         this.bajarConversacion();
       },
@@ -80,11 +80,11 @@ export class Sesionclinicachatcomponent implements OnInit {
         this.escribiendo = false;
         this.devolverMensaje(texto);
         if (err.status === 429) {
-          this.mensaje = 'Se alcanzó el límite de mensajes de la IA. Intenta más tarde.';
+          this.mensaje = 'Se alcanzó el límite de mensajes de Mindcito. Intenta más tarde.';
         } else if (err.status === 400 || err.status === 403) {
           this.mensaje = 'La API key o el modelo de Gemini no son válidos.';
         } else {
-          this.mensaje = 'El asistente no está disponible en este momento';
+          this.mensaje = 'Mindcito no está disponible en este momento';
         }
         this.cdr.detectChanges();
       }
