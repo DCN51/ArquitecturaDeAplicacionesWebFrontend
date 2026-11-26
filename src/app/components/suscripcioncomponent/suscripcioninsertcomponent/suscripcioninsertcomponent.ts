@@ -62,7 +62,7 @@ export class Suscripcioninsertcomponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.mensaje = 'Ocurrió un error al obtener los planes';
+        this.mensaje = err.error?.message || 'Ocurrió un error al obtener los planes';
         this.cdr.detectChanges();
       }
     });
@@ -127,7 +127,7 @@ export class Suscripcioninsertcomponent implements OnInit {
         } else if (err.status === 404) {
           this.mensaje = mensajeBack || 'No existe el usuario o el plan';
         } else {
-          this.mensaje = 'Error al contratar el plan';
+          this.mensaje = err.error?.message || 'Error al contratar el plan';
         }
         this.cdr.detectChanges();
       }

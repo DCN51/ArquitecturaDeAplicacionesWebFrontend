@@ -54,7 +54,7 @@ export class Psicologoasignarcomponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.mensaje = 'Ocurrió un error al obtener los pacientes';
+        this.mensaje = err.error?.message || 'Ocurrió un error al obtener los pacientes';
         this.cdr.detectChanges();
       }
     });
@@ -68,7 +68,7 @@ export class Psicologoasignarcomponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.mensaje = 'Ocurrió un error al obtener los psicólogos';
+        this.mensaje = err.error?.message || 'Ocurrió un error al obtener los psicólogos';
         this.cdr.detectChanges();
       }
     });

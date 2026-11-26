@@ -69,14 +69,14 @@ export class Diagnosticoclinicoinsertcomponent implements OnInit {
           },
           error: (err) => {
             console.log(err);
-            this.mensaje = 'Ocurrió un error al cargar tus diagnósticos';
+            this.mensaje = err.error?.message || 'Ocurrió un error al cargar tus diagnósticos';
             this.cdr.detectChanges();
           }
         });
       },
       error: (err) => {
         console.log(err);
-        this.mensaje = 'Ocurrió un error al cargar tus sesiones';
+        this.mensaje = err.error?.message || 'Ocurrió un error al cargar tus sesiones';
         this.cdr.detectChanges();
       }
     });
@@ -108,13 +108,13 @@ export class Diagnosticoclinicoinsertcomponent implements OnInit {
       error: (err) => {
         console.log(err);
         if (err.status === 409) {
-          this.mensaje = 'Esta sesión ya tiene un diagnóstico';
+          this.mensaje = err.error?.message || 'Esta sesión ya tiene un diagnóstico';
         } else if (err.status === 404) {
-          this.mensaje = 'Sesión no encontrada';
+          this.mensaje = err.error?.message || 'Sesión no encontrada';
         } else if (err.status === 400 || err.status === 403) {
           this.mensaje = err.error?.message || 'Solo se puede diagnosticar una sesión finalizada';
         } else {
-          this.mensaje = 'Error al registrar el diagnóstico';
+          this.mensaje = err.error?.message || 'Error al registrar el diagnóstico';
         }
         this.cdr.detectChanges();
       }

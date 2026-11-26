@@ -92,7 +92,7 @@ export class Catalogoplaninsertcomponent implements OnInit {
       error: (err) => {
         console.log(err);
         if (err.status === 409) {
-          this.mensaje = 'Ya existe un plan con ese nombre';
+          this.mensaje = err.error?.message || 'Ya existe un plan con ese nombre';
         } else {
           this.mensaje = err.error?.message || 'Error al registrar el plan';
         }

@@ -64,7 +64,7 @@ export class Suscripcioncambiarcomponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.mensaje = 'Ocurrió un error al obtener los planes';
+        this.mensaje = err.error?.message || 'Ocurrió un error al obtener los planes';
         this.cdr.detectChanges();
       }
     });
@@ -127,7 +127,7 @@ export class Suscripcioncambiarcomponent implements OnInit {
         } else if (err.status === 400) {
           this.mensaje = mensajeBack || 'Ya estás suscrito a este plan';
         } else {
-          this.mensaje = 'Error al cambiar de plan';
+          this.mensaje = err.error?.message || 'Error al cambiar de plan';
         }
         this.cdr.detectChanges();
       }

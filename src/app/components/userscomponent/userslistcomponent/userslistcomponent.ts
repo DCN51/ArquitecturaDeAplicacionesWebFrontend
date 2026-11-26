@@ -33,7 +33,7 @@ export class Userslistcomponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.mensaje = 'Ocurrió un error al obtener los usuarios';
+        this.mensaje = err.error?.message || 'Ocurrió un error al obtener los usuarios';
         this.cdr.detectChanges();
       }
     });
@@ -56,11 +56,11 @@ export class Userslistcomponent implements OnInit {
       error: (err) => {
         console.log(err);
         if (err.status === 409) {
-          this.mensajeAccion = 'La cuenta ya está inactiva';
+          this.mensajeAccion = err.error?.message || 'La cuenta ya está inactiva';
         } else if (err.status === 404) {
-          this.mensajeAccion = 'Usuario no encontrado';
+          this.mensajeAccion = err.error?.message || 'Usuario no encontrado';
         } else {
-          this.mensajeAccion = 'Error al desactivar la cuenta';
+          this.mensajeAccion = err.error?.message || 'Error al desactivar la cuenta';
         }
         this.listarUsuarios();
       }

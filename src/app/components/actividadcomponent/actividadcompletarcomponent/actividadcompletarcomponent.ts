@@ -41,7 +41,7 @@ export class Actividadcompletarcomponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.mensaje = 'Actividad no encontrada';
+        this.mensaje = err.error?.message || 'Actividad no encontrada';
         this.cdr.detectChanges();
       }
     });
@@ -64,13 +64,13 @@ export class Actividadcompletarcomponent implements OnInit {
       error: (err) => {
         console.log(err);
         if (err.status === 409) {
-          this.mensaje = 'Solo se pueden completar actividades pendientes';
+          this.mensaje = err.error?.message || 'Solo se pueden completar actividades pendientes';
         } else if (err.status === 404) {
-          this.mensaje = 'Actividad no encontrada';
+          this.mensaje = err.error?.message || 'Actividad no encontrada';
         } else if (err.status === 403) {
-          this.mensaje = 'Esta actividad no está asignada a ti';
+          this.mensaje = err.error?.message || 'Esta actividad no está asignada a ti';
         } else {
-          this.mensaje = 'Error al completar la actividad';
+          this.mensaje = err.error?.message || 'Error al completar la actividad';
         }
         this.cdr.detectChanges();
       }

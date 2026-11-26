@@ -81,7 +81,7 @@ export class Actividadupdatecomponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.mensaje = 'Actividad no encontrada';
+        this.mensaje = err.error?.message || 'Actividad no encontrada';
         this.cdr.detectChanges();
       }
     });
@@ -113,11 +113,11 @@ export class Actividadupdatecomponent implements OnInit {
       error: (err) => {
         console.log(err);
         if (err.status === 404) {
-          this.mensaje = 'Actividad no encontrada';
+          this.mensaje = err.error?.message || 'Actividad no encontrada';
         } else if (err.status === 400) {
-          this.mensaje = 'Revise los datos de la actividad';
+          this.mensaje = err.error?.message || 'Revise los datos de la actividad';
         } else {
-          this.mensaje = 'Error al actualizar la actividad';
+          this.mensaje = err.error?.message || 'Error al actualizar la actividad';
         }
         this.cdr.detectChanges();
       }

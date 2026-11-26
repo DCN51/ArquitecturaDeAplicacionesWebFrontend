@@ -82,7 +82,7 @@ export class Sesionclinicafinalizarcomponent implements OnInit {
         console.log(err);
         this.editable = false;
         this.sesionForm.disable();
-        this.mensaje = 'Sesión no encontrada';
+        this.mensaje = err.error?.message || 'Sesión no encontrada';
         this.cdr.detectChanges();
       }
     });
@@ -115,9 +115,9 @@ export class Sesionclinicafinalizarcomponent implements OnInit {
         if (err.status === 400) {
           this.mensaje = err.error?.message || 'La sesión ya fue finalizada o los datos son inválidos';
         } else if (err.status === 404) {
-          this.mensaje = 'Sesión no encontrada';
+          this.mensaje = err.error?.message || 'Sesión no encontrada';
         } else {
-          this.mensaje = 'Error al finalizar la sesión';
+          this.mensaje = err.error?.message || 'Error al finalizar la sesión';
         }
         this.cdr.detectChanges();
       }

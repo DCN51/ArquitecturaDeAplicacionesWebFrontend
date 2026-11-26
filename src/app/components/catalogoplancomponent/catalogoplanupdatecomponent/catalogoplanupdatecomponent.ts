@@ -78,7 +78,7 @@ export class Catalogoplanupdatecomponent implements OnInit {
       error: (err) => {
         console.log(err);
         this.encontrado = false;
-        this.mensaje = 'Plan no encontrado';
+        this.mensaje = err.error?.message || 'Plan no encontrado';
         this.cdr.detectChanges();
       }
     });
@@ -128,9 +128,9 @@ export class Catalogoplanupdatecomponent implements OnInit {
         if (err.status === 400) {
           this.mensaje = err.error?.message || 'El nombre del plan free no se puede cambiar';
         } else if (err.status === 404) {
-          this.mensaje = 'Plan no encontrado';
+          this.mensaje = err.error?.message || 'Plan no encontrado';
         } else {
-          this.mensaje = 'Error al actualizar el plan';
+          this.mensaje = err.error?.message || 'Error al actualizar el plan';
         }
         this.cdr.detectChanges();
       }

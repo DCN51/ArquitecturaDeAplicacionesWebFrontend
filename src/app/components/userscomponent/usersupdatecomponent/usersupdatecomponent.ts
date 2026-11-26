@@ -92,7 +92,7 @@ export class Usersupdatecomponent implements OnInit {
       error: (err) => {
         console.log(err);
         this.encontrado = false;
-        this.mensaje = 'Usuario no encontrado';
+        this.mensaje = err.error?.message || 'Usuario no encontrado';
         this.cdr.detectChanges();
       }
     });
@@ -128,13 +128,13 @@ export class Usersupdatecomponent implements OnInit {
       error: (err) => {
         console.log(err);
         if (err.status === 409) {
-          this.mensaje = 'El correo ya pertenece a otro usuario';
+          this.mensaje = err.error?.message || 'El correo ya pertenece a otro usuario';
         } else if (err.status === 404) {
-          this.mensaje = 'Usuario no encontrado';
+          this.mensaje = err.error?.message || 'Usuario no encontrado';
         } else if (err.status === 400) {
-          this.mensaje = 'Revise el formato de los datos';
+          this.mensaje = err.error?.message || 'Revise el formato de los datos';
         } else {
-          this.mensaje = 'Error al actualizar los datos';
+          this.mensaje = err.error?.message || 'Error al actualizar los datos';
         }
         this.cdr.detectChanges();
       }

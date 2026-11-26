@@ -46,7 +46,7 @@ export class Catalogoplanlistcomponent implements OnInit {
       },
       error: (err) => {
         console.log('Ocurrió un error al obtener los planes', err);
-        this.mensaje = 'Ocurrió un error al obtener los planes';
+        this.mensaje = err.error?.message || 'Ocurrió un error al obtener los planes';
         this.cdr.detectChanges();
       }
     });
@@ -69,13 +69,13 @@ export class Catalogoplanlistcomponent implements OnInit {
       error: (err) => {
         console.log(err);
         if (err.status === 400) {
-          this.mensajeAccion = 'El plan free no se puede desactivar';
+          this.mensajeAccion = err.error?.message || 'El plan free no se puede desactivar';
         } else if (err.status === 409) {
-          this.mensajeAccion = 'El plan ya está desactivado';
+          this.mensajeAccion = err.error?.message || 'El plan ya está desactivado';
         } else if (err.status === 404) {
-          this.mensajeAccion = 'Plan no encontrado';
+          this.mensajeAccion = err.error?.message || 'Plan no encontrado';
         } else {
-          this.mensajeAccion = 'Error al desactivar el plan';
+          this.mensajeAccion = err.error?.message || 'Error al desactivar el plan';
         }
         this.listarPlanes();
       }

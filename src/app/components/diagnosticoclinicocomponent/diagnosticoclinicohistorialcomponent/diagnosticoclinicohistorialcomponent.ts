@@ -81,11 +81,11 @@ export class Diagnosticoclinicohistorialcomponent implements OnInit {
         console.log(err);
         this.lista = [];
         if (err.status === 404) {
-          this.mensaje = 'No existe el usuario ingresado';
+          this.mensaje = err.error?.message || 'No existe el usuario ingresado';
         } else if (err.status === 403 || err.status === 400) {
           this.mensaje = err.error?.message || 'No puedes ver el historial de este paciente';
         } else {
-          this.mensaje = 'Ocurrió un error al consultar el historial';
+          this.mensaje = err.error?.message || 'Ocurrió un error al consultar el historial';
         }
         this.cdr.detectChanges();
       }
@@ -107,9 +107,9 @@ export class Diagnosticoclinicohistorialcomponent implements OnInit {
         if (err.status === 400) {
           this.mensajeAccion = err.error?.message || 'No se puede eliminar un diagnóstico validado';
         } else if (err.status === 404) {
-          this.mensajeAccion = 'Diagnóstico no encontrado';
+          this.mensajeAccion = err.error?.message || 'Diagnóstico no encontrado';
         } else {
-          this.mensajeAccion = 'Error al eliminar el diagnóstico';
+          this.mensajeAccion = err.error?.message || 'Error al eliminar el diagnóstico';
         }
         this.cargarHistorial();
       }

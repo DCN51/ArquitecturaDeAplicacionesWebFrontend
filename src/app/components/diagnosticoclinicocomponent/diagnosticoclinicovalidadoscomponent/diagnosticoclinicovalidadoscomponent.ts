@@ -58,7 +58,7 @@ export class Diagnosticoclinicovalidadoscomponent implements OnInit {
       error: (err) => {
         console.log(err);
         this.lista = [];
-        this.mensaje = 'Ocurrió un error al consultar los diagnósticos validados';
+        this.mensaje = err.error?.message || 'Ocurrió un error al consultar los diagnósticos validados';
         this.cdr.detectChanges();
       }
     });

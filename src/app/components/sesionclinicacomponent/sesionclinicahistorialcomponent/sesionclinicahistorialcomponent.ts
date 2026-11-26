@@ -49,7 +49,7 @@ export class Sesionclinicahistorialcomponent implements OnInit {
       error: (err) => {
         console.log(err);
         this.lista = [];
-        this.mensaje = 'Ocurrió un error al consultar el historial';
+        this.mensaje = err.error?.message || 'Ocurrió un error al consultar el historial';
         this.cdr.detectChanges();
       }
     });
@@ -88,9 +88,9 @@ export class Sesionclinicahistorialcomponent implements OnInit {
         if (err.status === 400) {
           this.mensajeAccion = err.error?.message || 'La sesión no se puede eliminar';
         } else if (err.status === 404) {
-          this.mensajeAccion = 'Sesión no encontrada';
+          this.mensajeAccion = err.error?.message || 'Sesión no encontrada';
         } else {
-          this.mensajeAccion = 'Error al eliminar la sesión';
+          this.mensajeAccion = err.error?.message || 'Error al eliminar la sesión';
         }
         this.cargarHistorial();
       }

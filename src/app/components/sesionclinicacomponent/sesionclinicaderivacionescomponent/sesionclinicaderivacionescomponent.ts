@@ -33,7 +33,7 @@ export class Sesionclinicaderivacionescomponent implements OnInit {
       error: (err) => {
         console.log(err);
         this.cargando = false;
-        this.mensaje = 'Ocurrió un error al obtener las derivaciones';
+        this.mensaje = err.error?.message || 'Ocurrió un error al obtener las derivaciones';
         this.cdr.detectChanges();
       }
     });

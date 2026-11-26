@@ -98,7 +98,7 @@ export class Actividadlistcomponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.mensaje = 'Ocurrió un error al cargar tus pacientes';
+        this.mensaje = err.error?.message || 'Ocurrió un error al cargar tus pacientes';
         this.cdr.detectChanges();
       }
     });
@@ -129,11 +129,11 @@ export class Actividadlistcomponent implements OnInit {
         console.log(err);
         this.lista = [];
         if (err.status === 404) {
-          this.mensaje = 'No existe un usuario con ese id';
+          this.mensaje = err.error?.message || 'No existe un usuario con ese id';
         } else if (err.status === 403 || err.status === 400) {
           this.mensaje = err.error?.message || 'No puedes ver las actividades de este paciente';
         } else {
-          this.mensaje = 'Ocurrió un error al obtener las actividades';
+          this.mensaje = err.error?.message || 'Ocurrió un error al obtener las actividades';
         }
         this.cdr.detectChanges();
       }
@@ -153,11 +153,11 @@ export class Actividadlistcomponent implements OnInit {
       error: (err) => {
         console.log(err);
         if (err.status === 409) {
-          this.mensajeAccion = 'Solo se pueden eliminar actividades pendientes';
+          this.mensajeAccion = err.error?.message || 'Solo se pueden eliminar actividades pendientes';
         } else if (err.status === 404) {
-          this.mensajeAccion = 'Actividad no encontrada';
+          this.mensajeAccion = err.error?.message || 'Actividad no encontrada';
         } else {
-          this.mensajeAccion = 'Error al eliminar la actividad';
+          this.mensajeAccion = err.error?.message || 'Error al eliminar la actividad';
         }
         this.cargarActividades();
       }

@@ -53,9 +53,9 @@ export class Suscripcionporvencercomponent implements OnInit {
       error: (err) => {
         console.log(err);
         this.lista = [];
-        this.mensaje = err.status === 400
+        this.mensaje = err.error?.message || (err.status === 400
           ? 'Ingrese un número de días válido (0 o más)'
-          : 'Ocurrió un error al consultar las suscripciones';
+          : 'Ocurrió un error al consultar las suscripciones');
         this.cdr.detectChanges();
       }
     });

@@ -48,7 +48,7 @@ export class Diagnosticoclinicopendientescomponent implements OnInit {
       error: (err) => {
         console.log(err);
         this.cargando = false;
-        this.mensaje = 'Ocurrió un error al obtener los diagnósticos pendientes';
+        this.mensaje = err.error?.message || 'Ocurrió un error al obtener los diagnósticos pendientes';
         this.cdr.detectChanges();
       }
     });
@@ -67,13 +67,13 @@ export class Diagnosticoclinicopendientescomponent implements OnInit {
       error: (err) => {
         console.log(err);
         if (err.status === 409) {
-          this.mensajeAccion = 'El diagnóstico ya fue validado';
+          this.mensajeAccion = err.error?.message || 'El diagnóstico ya fue validado';
         } else if (err.status === 400 || err.status === 403) {
           this.mensajeAccion = err.error?.message || 'No puedes validar este diagnóstico';
         } else if (err.status === 404) {
-          this.mensajeAccion = 'Diagnóstico no encontrado';
+          this.mensajeAccion = err.error?.message || 'Diagnóstico no encontrado';
         } else {
-          this.mensajeAccion = 'Error al validar el diagnóstico';
+          this.mensajeAccion = err.error?.message || 'Error al validar el diagnóstico';
         }
         this.cdr.detectChanges();
       }

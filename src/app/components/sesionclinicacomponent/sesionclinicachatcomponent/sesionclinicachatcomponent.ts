@@ -44,7 +44,7 @@ export class Sesionclinicachatcomponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.bloquear(err.status === 404 ? 'No existe la sesión' : 'Ocurrió un error al cargar la sesión');
+        this.bloquear(err.error?.message || (err.status === 404 ? 'No existe la sesión' : 'Ocurrió un error al cargar la sesión'));
         this.cdr.detectChanges();
       }
     });

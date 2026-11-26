@@ -59,7 +59,7 @@ export class Actividadinsertcomponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.mensaje = 'Ocurrió un error al cargar tus diagnósticos validados';
+        this.mensaje = err.error?.message || 'Ocurrió un error al cargar tus diagnósticos validados';
         this.cdr.detectChanges();
       }
     });
@@ -109,7 +109,7 @@ export class Actividadinsertcomponent implements OnInit {
           this.mensaje = err.error?.message ||
             'Datos no válidos: el usuario debe ser paciente y el diagnóstico debe existir y pertenecerle';
         } else {
-          this.mensaje = 'Error al registrar la actividad';
+          this.mensaje = err.error?.message || 'Error al registrar la actividad';
         }
         this.cdr.detectChanges();
       }

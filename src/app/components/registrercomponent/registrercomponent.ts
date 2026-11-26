@@ -63,7 +63,7 @@ export class Registrercomponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.errorRoles = 'No se pudieron cargar los roles. Verifica que el servidor esté disponible.';
+        this.errorRoles = err.error?.message || 'No se pudieron cargar los roles. Verifica que el servidor esté disponible.';
         this.cdr.detectChanges();
       }
     });
@@ -137,7 +137,7 @@ export class Registrercomponent implements OnInit {
         if (err.status === 0) {
           this.mensaje = 'No se pudo conectar con el servidor.';
         } else if (err.status === 401 || err.status === 403) {
-          this.mensaje = 'El servidor no permite el registro público.';
+          this.mensaje = err.error?.message || 'El servidor no permite el registro público.';
         } else {
           this.mensaje = err.error?.message || 'No se pudo registrar la cuenta';
         }

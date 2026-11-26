@@ -80,7 +80,7 @@ export class Suscripcionhistorialcomponent implements OnInit {
       error: (err) => {
         console.log(err);
         this.lista = [];
-        this.mensaje = 'Ocurrió un error al consultar el historial';
+        this.mensaje = err.error?.message || 'Ocurrió un error al consultar el historial';
         this.cdr.detectChanges();
       }
     });
@@ -100,9 +100,9 @@ export class Suscripcionhistorialcomponent implements OnInit {
       error: (err) => {
         console.log(err);
         if (err.status === 404) {
-          this.mensajeAccion = 'No tienes una suscripción activa';
+          this.mensajeAccion = err.error?.message || 'No tienes una suscripción activa';
         } else {
-          this.mensajeAccion = 'Error al cancelar la suscripción';
+          this.mensajeAccion = err.error?.message || 'Error al cancelar la suscripción';
         }
         this.cargarHistorial();
       }
