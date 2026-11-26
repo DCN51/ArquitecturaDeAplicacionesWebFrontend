@@ -59,9 +59,9 @@ export const routes: Routes = [
     data: { roles: ['PACIENTE', 'PSICOLOGO', 'ADMINISTRADOR'] },
     children: [
       { path: '', redirectTo: 'listar', pathMatch: 'full' },
-      { path: 'listar', component: Catalogoplanlistcomponent },
-      { path: 'insertar', component: Catalogoplaninsertcomponent },
-      { path: 'editar/:id', component: Catalogoplanupdatecomponent },
+      { path: 'listar', component: Catalogoplanlistcomponent, canActivate: [roleGuard], data: { roles: ['PACIENTE', 'PSICOLOGO', 'ADMINISTRADOR'] } },
+      { path: 'insertar', component: Catalogoplaninsertcomponent, canActivate: [roleGuard], data: { roles: ['ADMINISTRADOR'] } },
+      { path: 'editar/:id', component: Catalogoplanupdatecomponent, canActivate: [roleGuard], data: { roles: ['ADMINISTRADOR'] } },
     ],
   },
   {
@@ -71,10 +71,10 @@ export const routes: Routes = [
     data: { roles: ['PACIENTE', 'ADMINISTRADOR'] },
     children: [
       { path: '', redirectTo: 'historial', pathMatch: 'full' },
-      { path: 'contratar', component: Suscripcioninsertcomponent },
-      { path: 'historial', component: Suscripcionhistorialcomponent },
-      { path: 'cambiar-plan', component: Suscripcioncambiarcomponent },
-      { path: 'por-vencer', component: Suscripcionporvencercomponent },
+      { path: 'contratar', component: Suscripcioninsertcomponent, canActivate: [roleGuard], data: { roles: ['PACIENTE'] } },
+      { path: 'historial', component: Suscripcionhistorialcomponent, canActivate: [roleGuard], data: { roles: ['PACIENTE', 'ADMINISTRADOR'] } },
+      { path: 'cambiar-plan', component: Suscripcioncambiarcomponent, canActivate: [roleGuard], data: { roles: ['PACIENTE'] } },
+      { path: 'por-vencer', component: Suscripcionporvencercomponent, canActivate: [roleGuard], data: { roles: ['ADMINISTRADOR'] } },
     ],
   },
   {
@@ -84,11 +84,11 @@ export const routes: Routes = [
     data: { roles: ['PACIENTE', 'PSICOLOGO'] },
     children: [
       { path: '', redirectTo: 'historial', pathMatch: 'full' },
-      { path: 'iniciar', component: Sesionclinicainsertcomponent },
-      { path: 'historial', component: Sesionclinicahistorialcomponent },
-      { path: 'finalizar/:id', component: Sesionclinicafinalizarcomponent },
-      { path: 'derivaciones', component: Sesionclinicaderivacionescomponent },
-      { path: 'chat/:id', component: Sesionclinicachatcomponent },
+      { path: 'iniciar', component: Sesionclinicainsertcomponent, canActivate: [roleGuard], data: { roles: ['PACIENTE'] } },
+      { path: 'historial', component: Sesionclinicahistorialcomponent, canActivate: [roleGuard], data: { roles: ['PACIENTE'] } },
+      { path: 'finalizar/:id', component: Sesionclinicafinalizarcomponent, canActivate: [roleGuard], data: { roles: ['PACIENTE'] } },
+      { path: 'derivaciones', component: Sesionclinicaderivacionescomponent, canActivate: [roleGuard], data: { roles: ['PSICOLOGO'] } },
+      { path: 'chat/:id', component: Sesionclinicachatcomponent, canActivate: [roleGuard], data: { roles: ['PACIENTE'] } },
     ],
   },
   {
@@ -98,11 +98,11 @@ export const routes: Routes = [
     data: { roles: ['PACIENTE', 'PSICOLOGO', 'ADMINISTRADOR'] },
     children: [
       { path: '', redirectTo: 'historial', pathMatch: 'full' },
-      { path: 'insertar', component: Diagnosticoclinicoinsertcomponent },
-      { path: 'insertar/:sesionId', component: Diagnosticoclinicoinsertcomponent },
-      { path: 'historial', component: Diagnosticoclinicohistorialcomponent },
-      { path: 'pendientes', component: Diagnosticoclinicopendientescomponent },
-      { path: 'validados', component: Diagnosticoclinicovalidadoscomponent },
+      { path: 'insertar', component: Diagnosticoclinicoinsertcomponent, canActivate: [roleGuard], data: { roles: ['PACIENTE'] } },
+      { path: 'insertar/:sesionId', component: Diagnosticoclinicoinsertcomponent, canActivate: [roleGuard], data: { roles: ['PACIENTE'] } },
+      { path: 'historial', component: Diagnosticoclinicohistorialcomponent, canActivate: [roleGuard], data: { roles: ['PACIENTE', 'PSICOLOGO', 'ADMINISTRADOR'] } },
+      { path: 'pendientes', component: Diagnosticoclinicopendientescomponent, canActivate: [roleGuard], data: { roles: ['PSICOLOGO', 'ADMINISTRADOR'] } },
+      { path: 'validados', component: Diagnosticoclinicovalidadoscomponent, canActivate: [roleGuard], data: { roles: ['PSICOLOGO', 'ADMINISTRADOR'] } },
     ],
   },
   {
@@ -112,7 +112,7 @@ export const routes: Routes = [
     data: { roles: ['ADMINISTRADOR'] },
     children: [
       { path: '', redirectTo: 'listar', pathMatch: 'full' },
-      { path: 'listar', component: Rolelistcomponent },
+      { path: 'listar', component: Rolelistcomponent, canActivate: [roleGuard], data: { roles: ['ADMINISTRADOR'] } },
     ],
   },
   {
@@ -122,8 +122,8 @@ export const routes: Routes = [
     data: { roles: ['ADMINISTRADOR'] },
     children: [
       { path: '', redirectTo: 'listar', pathMatch: 'full' },
-      { path: 'listar', component: Userslistcomponent },
-      { path: 'editar/:id', component: Usersupdatecomponent },
+      { path: 'listar', component: Userslistcomponent, canActivate: [roleGuard], data: { roles: ['ADMINISTRADOR'] } },
+      { path: 'editar/:id', component: Usersupdatecomponent, canActivate: [roleGuard], data: { roles: ['ADMINISTRADOR'] } },
     ],
   },
   {
@@ -133,9 +133,9 @@ export const routes: Routes = [
     data: { roles: ['ADMINISTRADOR'] },
     children: [
       { path: '', redirectTo: 'listar', pathMatch: 'full' },
-      { path: 'listar', component: Psicologolistcomponent },
-      { path: 'capacidad/:id', component: Psicologocapacidadcomponent },
-      { path: 'asignar', component: Psicologoasignarcomponent },
+      { path: 'listar', component: Psicologolistcomponent, canActivate: [roleGuard], data: { roles: ['ADMINISTRADOR'] } },
+      { path: 'capacidad/:id', component: Psicologocapacidadcomponent, canActivate: [roleGuard], data: { roles: ['ADMINISTRADOR'] } },
+      { path: 'asignar', component: Psicologoasignarcomponent, canActivate: [roleGuard], data: { roles: ['ADMINISTRADOR'] } },
     ],
   },
   {
@@ -144,7 +144,7 @@ export const routes: Routes = [
     canActivate: [authGuard, roleGuard],
     data: { roles: ['PACIENTE', 'PSICOLOGO', 'ADMINISTRADOR'] },
     children: [
-      { path: '', component: Usersupdatecomponent },
+      { path: '', component: Usersupdatecomponent, canActivate: [roleGuard], data: { roles: ['PACIENTE', 'PSICOLOGO', 'ADMINISTRADOR'] } },
     ],
   },
   {
@@ -154,10 +154,10 @@ export const routes: Routes = [
     data: { roles: ['PACIENTE', 'PSICOLOGO'] },
     children: [
       { path: '', redirectTo: 'listar', pathMatch: 'full' },
-      { path: 'listar', component: Actividadlistcomponent },
-      { path: 'insertar', component: Actividadinsertcomponent },
-      { path: 'editar/:userId/:id', component: Actividadupdatecomponent },
-      { path: 'completar/:id', component: Actividadcompletarcomponent },
+      { path: 'listar', component: Actividadlistcomponent, canActivate: [roleGuard], data: { roles: ['PACIENTE', 'PSICOLOGO'] } },
+      { path: 'insertar', component: Actividadinsertcomponent, canActivate: [roleGuard], data: { roles: ['PSICOLOGO'] } },
+      { path: 'editar/:userId/:id', component: Actividadupdatecomponent, canActivate: [roleGuard], data: { roles: ['PSICOLOGO'] } },
+      { path: 'completar/:id', component: Actividadcompletarcomponent, canActivate: [roleGuard], data: { roles: ['PACIENTE'] } },
     ],
   },
   {
@@ -167,8 +167,8 @@ export const routes: Routes = [
     data: { roles: ['ADMINISTRADOR'] },
     children: [
       { path: '', redirectTo: 'suscriptores-por-plan', pathMatch: 'full' },
-      { path: 'suscriptores-por-plan', component: Reportsuscripcioncomponent },
-      { path: 'pacientes-por-psicologo', component: Reportpacientesporpsicologocomponent },
+      { path: 'suscriptores-por-plan', component: Reportsuscripcioncomponent, canActivate: [roleGuard], data: { roles: ['ADMINISTRADOR'] } },
+      { path: 'pacientes-por-psicologo', component: Reportpacientesporpsicologocomponent, canActivate: [roleGuard], data: { roles: ['ADMINISTRADOR'] } },
     ],
   },
   { path: '**', redirectTo: '' },
