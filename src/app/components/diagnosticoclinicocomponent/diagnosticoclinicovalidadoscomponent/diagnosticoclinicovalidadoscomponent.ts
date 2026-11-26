@@ -26,7 +26,7 @@ export class Diagnosticoclinicovalidadoscomponent implements OnInit {
   psicologoId: number | null = null;
   lista: DiagnosticoClinicoDTO[] = [];
   mensaje: string = '';
-  displayedColumns: string[] = ['id', 'usuario', 'sesion', 'resultado', 'riesgo', 'validacion'];
+  displayedColumns: string[] = ['id', 'paciente', 'sesion', 'resultado', 'riesgo', 'validacion'];
 
   constructor(private loginService: Loginservice, private dcS: Diagnosticoclinicoservice, private cdr: ChangeDetectorRef) { }
 

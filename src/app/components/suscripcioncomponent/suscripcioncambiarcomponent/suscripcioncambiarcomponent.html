@@ -52,7 +52,7 @@
   @if (nuevaSuscripcion) {
     <mat-card class="resultado">
       <mat-card-content>
-        <p><strong>Nuevo plan:</strong> {{ nombrePlan(nuevaSuscripcion.catalogoPlanId) }}</p>
+        <p><strong>Nuevo plan:</strong> {{ nuevaSuscripcion.nombrePlan }}</p>
         <p><strong>Fecha de inicio:</strong> {{ nuevaSuscripcion.fechaInicio | date:'dd/MM/yyyy':'UTC' }}</p>
         <p><strong>Fecha de fin:</strong>
           {{ nuevaSuscripcion.fechaFin ? (nuevaSuscripcion.fechaFin | date:'dd/MM/yyyy':'UTC') : 'Sin vencimiento' }}

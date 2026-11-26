@@ -63,7 +63,7 @@
     <mat-card class="resultado">
       <mat-card-content>
         <p><strong>Actividad:</strong> {{ actividadCreada.title }}</p>
-        <p><strong>Paciente:</strong> {{ actividadCreada.userId }} | <strong>Diagnóstico:</strong> {{ actividadCreada.diagnosisId }}</p>
+        <p><strong>Paciente:</strong> {{ actividadCreada.nombrePaciente }}</p>
         <p><strong>Asignada:</strong> {{ actividadCreada.assignedDate | date:'dd/MM/yyyy':'UTC' }}</p>
         <p><strong>Estado:</strong> {{ actividadCreada.status }}</p>
       </mat-card-content>

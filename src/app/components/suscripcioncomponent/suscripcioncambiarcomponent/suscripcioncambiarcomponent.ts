@@ -90,11 +90,6 @@ export class Suscripcioncambiarcomponent implements OnInit {
     referencia?.updateValueAndValidity();
   }
 
-  nombrePlan(id: number): string {
-    const plan = this.planes.find(p => p.catalogoPlanId === id);
-    return plan ? plan.nombreCatalogoPlan : `Plan ${id}`;
-  }
-
   cambiarDePlan(): void {
     if (this.cambioForm.invalid) {
       this.cambioForm.markAllAsTouched();
@@ -110,6 +105,8 @@ export class Suscripcioncambiarcomponent implements OnInit {
       metodoPagoSuscripcion: this.planEsDePago ? this.cambioForm.value.metodoPago : null,
       referenciaPagoSuscripcion: this.planEsDePago ? this.cambioForm.value.referenciaPago : null,
       usuarioId: 0,
+      nombrePaciente: '',
+      nombrePlan: '',
       catalogoPlanId: this.cambioForm.value.catalogoPlanId
     };
 

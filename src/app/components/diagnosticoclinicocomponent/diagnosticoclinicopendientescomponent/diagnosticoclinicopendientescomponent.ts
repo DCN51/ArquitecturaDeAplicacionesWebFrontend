@@ -19,7 +19,7 @@ export class Diagnosticoclinicopendientescomponent implements OnInit {
   mensajeAccion: string = '';
   cargando: boolean = true;
 
-  private baseColumns: string[] = ['id', 'usuario', 'sesion', 'fecha', 'resultado', 'riesgo'];
+  private baseColumns: string[] = ['id', 'paciente', 'sesion', 'fecha', 'resultado', 'riesgo'];
 
   get displayedColumns(): string[] {
     return this.esPsicologo

@@ -88,10 +88,6 @@ export class Suscripcioninsertcomponent implements OnInit {
     referencia?.updateValueAndValidity();
   }
 
-  nombrePlan(id: number): string {
-    return this.planes.find(p => p.catalogoPlanId === id)?.nombreCatalogoPlan ?? `Plan ${id}`;
-  }
-
   contratarPlan(): void {
     if (this.suscripcionForm.invalid) {
       this.suscripcionForm.markAllAsTouched();
@@ -107,6 +103,8 @@ export class Suscripcioninsertcomponent implements OnInit {
       metodoPagoSuscripcion: this.planEsDePago ? this.suscripcionForm.value.metodoPago : null,
       referenciaPagoSuscripcion: this.planEsDePago ? this.suscripcionForm.value.referenciaPago : null,
       usuarioId: 0,
+      nombrePaciente: '',
+      nombrePlan: '',
       catalogoPlanId: this.suscripcionForm.value.catalogoPlanId
     };
 

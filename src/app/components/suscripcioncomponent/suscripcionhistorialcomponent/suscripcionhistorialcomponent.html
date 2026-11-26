@@ -24,7 +24,7 @@
 
       <ng-container matColumnDef="plan">
         <th mat-header-cell *matHeaderCellDef>Plan</th>
-        <td mat-cell *matCellDef="let element">{{ nombrePlan(element.catalogoPlanId) }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.nombrePlan }}</td>
       </ng-container>
 
       <ng-container matColumnDef="inicio">

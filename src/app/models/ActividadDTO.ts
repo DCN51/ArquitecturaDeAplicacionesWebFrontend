@@ -9,4 +9,5 @@ export class ActividadDTO {
   completedDate: string | null = null;
   status: string = '';
   feedback: string | null = null;
+  nombrePaciente: string = '';
 }

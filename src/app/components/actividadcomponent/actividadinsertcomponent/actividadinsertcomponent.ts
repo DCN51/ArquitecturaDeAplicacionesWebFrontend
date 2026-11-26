@@ -88,7 +88,8 @@ export class Actividadinsertcomponent implements OnInit {
       assignedDate: null,
       completedDate: null,
       status: '',
-      feedback: null
+      feedback: null,
+      nombrePaciente: ''
     };
 
     this.actividadCreada = null;

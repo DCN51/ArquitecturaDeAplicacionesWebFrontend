@@ -21,19 +21,14 @@
         <td mat-cell *matCellDef="let element">{{ element.suscripcionId }}</td>
       </ng-container>
 
-      <ng-container matColumnDef="usuario">
-        <th mat-header-cell *matHeaderCellDef>Usuario</th>
-        <td mat-cell *matCellDef="let element">{{ nombreUsuario(element.usuarioId) }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="correo">
-        <th mat-header-cell *matHeaderCellDef>Correo</th>
-        <td mat-cell *matCellDef="let element">{{ correoUsuario(element.usuarioId) }}</td>
+      <ng-container matColumnDef="paciente">
+        <th mat-header-cell *matHeaderCellDef>Paciente</th>
+        <td mat-cell *matCellDef="let element">{{ element.nombrePaciente }}</td>
       </ng-container>
 
       <ng-container matColumnDef="plan">
         <th mat-header-cell *matHeaderCellDef>Plan</th>
-        <td mat-cell *matCellDef="let element">{{ nombrePlan(element.catalogoPlanId) }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.nombrePlan }}</td>
       </ng-container>
 
       <ng-container matColumnDef="fin">

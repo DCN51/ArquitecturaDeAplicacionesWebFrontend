@@ -35,6 +35,7 @@ export class Actividadlistcomponent implements OnInit {
   mensaje: string = '';
   mensajeAccion: string = '';
   pacientes: { id: number, nombre: string }[] = [];
+  diagnosticos: Map<number, string> = new Map<number, string>();
 
   private baseColumns: string[] = ['id', 'titulo', 'tipo', 'diagnostico', 'asignada', 'estado', 'comentario'];
 
@@ -61,12 +62,32 @@ export class Actividadlistcomponent implements OnInit {
     } else {
       this.mensaje = 'Cargando...';
       this.cargarActividades();
+      this.cargarMisDiagnosticos();
     }
+  }
+
+  cargarMisDiagnosticos(): void {
+    this.dcS.misDiagnosticos().subscribe({
+      next: (data: DiagnosticoClinicoDTO[]) => {
+        this.guardarDiagnosticos(data);
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.log(err)
+    });
+  }
+
+  guardarDiagnosticos(data: DiagnosticoClinicoDTO[]): void {
+    this.diagnosticos = new Map<number, string>(data.map(d => [d.diagnosticoClinicoId, d.resultadoPrincipal]));
+  }
+
+  nombreDiagnostico(id: number): string {
+    return this.diagnosticos.get(id) ?? `Diagnóstico ${id}`;
   }
 
   cargarPacientes(): void {
     this.dcS.validadosPorPsicologo(this.loginService.getUserId()).subscribe({
       next: (data: DiagnosticoClinicoDTO[]) => {
+        this.guardarDiagnosticos(data);
         const mapa = new Map<number, string>();
         data.forEach(d => mapa.set(d.usuarioId, d.nombrePaciente || `Paciente ${d.usuarioId}`));
         this.pacientes = [...mapa].map(([id, nombre]) => ({ id, nombre }));

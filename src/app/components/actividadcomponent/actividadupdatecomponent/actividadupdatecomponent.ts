@@ -38,7 +38,7 @@ export class Actividadupdatecomponent implements OnInit {
   ) {
     this.actividadForm = this.fb.group({
       codigo: [0],
-      usuarioId: [0],
+      paciente: [''],
       diagnosticoId: [0],
       estado: [''],
       titulo: ['', [Validators.required, Validators.maxLength(100)]],
@@ -69,7 +69,7 @@ export class Actividadupdatecomponent implements OnInit {
           this.actividad = a;
           this.actividadForm.patchValue({
             codigo: a.recommendedActivityId,
-            usuarioId: a.userId,
+            paciente: a.nombrePaciente,
             diagnosticoId: a.diagnosisId,
             estado: a.status,
             titulo: a.title,

@@ -12,7 +12,7 @@ import { SesionClinicaDTO } from '../../../models/SesionClinicaDTO';
 })
 export class Sesionclinicaderivacionescomponent implements OnInit {
   dataSource: SesionClinicaDTO[] = [];
-  displayedColumns: string[] = ['id', 'usuario', 'inicio', 'urgencia', 'emocion', 'resumen'];
+  displayedColumns: string[] = ['id', 'paciente', 'inicio', 'urgencia', 'emocion', 'resumen'];
   mensaje: string = '';
   cargando: boolean = true;
 

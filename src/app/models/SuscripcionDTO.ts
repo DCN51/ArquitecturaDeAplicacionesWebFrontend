@@ -7,4 +7,6 @@ export class SuscripcionDTO {
   referenciaPagoSuscripcion: string | null = null;
   usuarioId: number = 0;
   catalogoPlanId: number = 0;
+  nombrePaciente: string = '';
+  nombrePlan: string = '';
 }
