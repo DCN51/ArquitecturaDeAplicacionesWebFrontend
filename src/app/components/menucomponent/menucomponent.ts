@@ -21,6 +21,10 @@ export class Menucomponent {
     return this.loginService.getUsername();
   }
 
+  get nombreUsuario(): string {
+    return this.loginService.getNombreCompleto() || this.loginService.getUsername();
+  }
+
   get esAdmin(): boolean {
     return this.loginService.hasAnyRole(['ADMINISTRADOR']);
   }

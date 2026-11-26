@@ -85,7 +85,7 @@
   }
 
   @if (username) {
-    <button matButton type="button" (click)="cerrarSesion()">Cerrar sesión ({{ username }})</button>
+    <button matButton type="button" (click)="cerrarSesion()">Cerrar sesión ({{ nombreUsuario }})</button>
   } @else {
     <button matButton routerLink="/iniciar-sesion">Iniciar sesión</button>
     <button matButton routerLink="/registrarse">Registrarse</button>
