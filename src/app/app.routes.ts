@@ -36,6 +36,11 @@ import { Reportcomponent } from './components/reportcomponent/reportcomponent';
 import { Reportsuscripcioncomponent } from './components/reportcomponent/reportsuscripcioncomponent/reportsuscripcioncomponent';
 import { authGuard } from './core/guards/auth-guard';
 import { roleGuard } from './core/guards/role-guard';
+import { Psicologocomponent } from './components/psicologocomponent/psicologocomponent';
+import { Psicologolistcomponent } from './components/psicologocomponent/psicologolistcomponent/psicologolistcomponent';
+import { Psicologocapacidadcomponent } from './components/psicologocomponent/psicologocapacidadcomponent/psicologocapacidadcomponent';
+import { Psicologoasignarcomponent } from './components/psicologocomponent/psicologoasignarcomponent/psicologoasignarcomponent';
+import { Reportpacientesporpsicologocomponent } from './components/reportcomponent/reportpacientesporpsicologocomponent/reportpacientesporpsicologocomponent';
 import { Sesionclinicachatcomponent } from './components/sesionclinicacomponent/sesionclinicachatcomponent/sesionclinicachatcomponent';
 
 
@@ -122,6 +127,18 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'psicologos',
+    component: Psicologocomponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMINISTRADOR'] },
+    children: [
+      { path: '', redirectTo: 'listar', pathMatch: 'full' },
+      { path: 'listar', component: Psicologolistcomponent },
+      { path: 'capacidad/:id', component: Psicologocapacidadcomponent },
+      { path: 'asignar', component: Psicologoasignarcomponent },
+    ],
+  },
+  {
     path: 'perfil',
     component: Userscomponent,
     canActivate: [authGuard, roleGuard],
@@ -151,6 +168,7 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'suscriptores-por-plan', pathMatch: 'full' },
       { path: 'suscriptores-por-plan', component: Reportsuscripcioncomponent },
+      { path: 'pacientes-por-psicologo', component: Reportpacientesporpsicologocomponent },
     ],
   },
   { path: '**', redirectTo: '' },

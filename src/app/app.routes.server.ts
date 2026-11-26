@@ -22,6 +22,10 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client
   },
   {
+    path: 'psicologos/capacidad/:id',
+    renderMode: RenderMode.Client
+  },
+  {
     path: 'perfil',
     renderMode: RenderMode.Client
   },

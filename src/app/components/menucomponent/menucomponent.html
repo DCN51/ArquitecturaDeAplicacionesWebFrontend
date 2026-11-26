@@ -11,6 +11,8 @@
     <mat-menu #menu0="matMenu">
       <button mat-menu-item routerLink="/usuarios/listar">Usuarios registrados</button>
       <button mat-menu-item routerLink="/roles/listar">Roles</button>
+      <button mat-menu-item routerLink="/psicologos/listar">Psicólogos</button>
+      <button mat-menu-item routerLink="/psicologos/asignar">Asignar pacientes</button>
     </mat-menu>
   }
 
@@ -42,6 +44,7 @@
     <button matButton [matMenuTriggerFor]="menuReportes">Reportes</button>
     <mat-menu #menuReportes="matMenu">
       <button mat-menu-item routerLink="/reportes/suscriptores-por-plan">Suscriptores por plan</button>
+      <button mat-menu-item routerLink="/reportes/pacientes-por-psicologo">Pacientes por psicólogo</button>
     </mat-menu>
   }
 

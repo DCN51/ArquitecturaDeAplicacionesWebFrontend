@@ -309,7 +309,7 @@ app-root .container .beneficios {
   background: #f4eef9;
 }
 
-app-root .container :is(.ACTIVO, .activa, .COMPLETADA,
+app-root .container :is(.ACTIVO, .activa, .COMPLETADA, .VERIFICADO,
   .INACTIVO, .cancelada, .PENDIENTE) {
   display: inline-block;
   padding: 5px 10px;
@@ -319,7 +319,7 @@ app-root .container :is(.ACTIVO, .activa, .COMPLETADA,
   white-space: nowrap;
 }
 
-app-root .container :is(.ACTIVO, .activa, .COMPLETADA) {
+app-root .container :is(.ACTIVO, .activa, .COMPLETADA, .VERIFICADO) {
   background: #d5f1e3;
   color: #216345;
 }
