@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -21,7 +21,7 @@ import { CatalogoPlanDTO } from '../../../models/CatalogoPlanDTO';
   templateUrl: './catalogoplaninsertcomponent.html',
   styleUrl: './catalogoplaninsertcomponent.css',
 })
-export class Catalogoplaninsertcomponent {
+export class Catalogoplaninsertcomponent implements OnInit {
   planForm: FormGroup;
   mensaje: string = '';
 
@@ -33,12 +33,31 @@ export class Catalogoplaninsertcomponent {
     this.planForm = this.fb.group({
       nombre: ['', Validators.required],
       precio: [0, [Validators.required, Validators.min(0)]],
-      sesiones: [0, [Validators.required, Validators.min(-1)]],
+      ilimitadas: [false],
+      sesiones: [1, [Validators.required, Validators.min(1)]],
       diagnostico: [false],
       actividades: [false],
       derivacion: [false],
       descripcion: ['', Validators.required]
     });
+  }
+
+  ngOnInit(): void {
+    this.planForm.get('ilimitadas')?.valueChanges.subscribe(valor => this.alternarIlimitadas(valor));
+  }
+
+  alternarIlimitadas(ilimitadas: boolean): void {
+    const sesiones = this.planForm.get('sesiones');
+    if (ilimitadas) {
+      sesiones?.setValue(null);
+      sesiones?.disable();
+    } else {
+      sesiones?.enable();
+    }
+  }
+
+  private limiteSesiones(): number {
+    return this.planForm.value.ilimitadas ? -1 : Number(this.planForm.value.sesiones);
   }
 
   insertarPlan(): void {
@@ -52,7 +71,7 @@ export class Catalogoplaninsertcomponent {
       catalogoPlanId: 0,
       nombreCatalogoPlan: this.planForm.value.nombre,
       precioMensualCatalogoPlan: this.planForm.value.precio,
-      limiteSesionesMes: this.planForm.value.sesiones,
+      limiteSesionesMes: this.limiteSesiones(),
       incluyeDiagnostico: this.planForm.value.diagnostico,
       incluyeActividades: this.planForm.value.actividades,
       permiteDerivacion: this.planForm.value.derivacion,
@@ -64,7 +83,7 @@ export class Catalogoplaninsertcomponent {
       next: () => {
         this.mensaje = 'Plan registrado correctamente';
         this.planForm.reset({
-          nombre: '', precio: 0, sesiones: 0,
+          nombre: '', precio: 0, ilimitadas: false, sesiones: 1,
           diagnostico: false, actividades: false, derivacion: false,
           descripcion: ''
         });

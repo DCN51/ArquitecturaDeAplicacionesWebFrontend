@@ -38,7 +38,8 @@ export class Catalogoplanupdatecomponent implements OnInit {
       codigo: [0],
       nombre: ['', Validators.required],
       precio: [0, [Validators.required, Validators.min(0)]],
-      sesiones: [0, [Validators.required, Validators.min(-1)]],
+      ilimitadas: [false],
+      sesiones: [1, [Validators.required, Validators.min(1)]],
       diagnostico: [false],
       actividades: [false],
       derivacion: [false],
@@ -47,6 +48,7 @@ export class Catalogoplanupdatecomponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.planForm.get('ilimitadas')?.valueChanges.subscribe(valor => this.alternarIlimitadas(valor));
     this.idPlan = Number(this.route.snapshot.paramMap.get('id'));
 
     if (!this.idPlan || isNaN(this.idPlan)) {
@@ -64,7 +66,8 @@ export class Catalogoplanupdatecomponent implements OnInit {
           codigo: plan.catalogoPlanId,
           nombre: plan.nombreCatalogoPlan,
           precio: plan.precioMensualCatalogoPlan,
-          sesiones: plan.limiteSesionesMes,
+          ilimitadas: plan.limiteSesionesMes === -1,
+          sesiones: plan.limiteSesionesMes === -1 ? null : plan.limiteSesionesMes,
           diagnostico: plan.incluyeDiagnostico,
           actividades: plan.incluyeActividades,
           derivacion: plan.permiteDerivacion,
@@ -81,6 +84,20 @@ export class Catalogoplanupdatecomponent implements OnInit {
     });
   }
 
+  alternarIlimitadas(ilimitadas: boolean): void {
+    const sesiones = this.planForm.get('sesiones');
+    if (ilimitadas) {
+      sesiones?.setValue(null);
+      sesiones?.disable();
+    } else {
+      sesiones?.enable();
+    }
+  }
+
+  private limiteSesiones(): number {
+    return this.planForm.value.ilimitadas ? -1 : Number(this.planForm.value.sesiones);
+  }
+
   actualizarPlan(): void {
     if (this.planForm.invalid) {
       this.planForm.markAllAsTouched();
@@ -92,7 +109,7 @@ export class Catalogoplanupdatecomponent implements OnInit {
       catalogoPlanId: this.planForm.value.codigo,
       nombreCatalogoPlan: this.planForm.value.nombre,
       precioMensualCatalogoPlan: this.planForm.value.precio,
-      limiteSesionesMes: this.planForm.value.sesiones,
+      limiteSesionesMes: this.limiteSesiones(),
       incluyeDiagnostico: this.planForm.value.diagnostico,
       incluyeActividades: this.planForm.value.actividades,
       permiteDerivacion: this.planForm.value.derivacion,
