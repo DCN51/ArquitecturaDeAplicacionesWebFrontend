@@ -40,7 +40,10 @@ ESTILO: español, cálido, empático y sin juzgar. Valida lo que siente, haz pre
       contents: contenidos,
       generationConfig: {
         temperature: 0.4,
-        maxOutputTokens: 300
+        maxOutputTokens: 1024,
+        thinkingConfig: {
+          thinkingBudget: 0
+        }
       }
     };
 

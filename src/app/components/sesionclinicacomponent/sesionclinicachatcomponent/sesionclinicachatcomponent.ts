@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Sesionclinicaservice } from '../../../services/sesionclinicaservice';
 import { Geminiservice } from '../../../services/geminiservice';
 import { MensajeChatDTO } from '../../../models/MensajeChatDTO';
+import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-sesionclinicachatcomponent',
@@ -63,7 +64,7 @@ export class Sesionclinicachatcomponent implements OnInit {
     this.escribiendo = true;
     this.bajarConversacion();
 
-    this.gS.enviarMensaje(historial, texto).subscribe({
+    this.gS.enviarMensaje(historial, texto).pipe(timeout(20000)).subscribe({
       next: (data) => {
         const respuesta = this.leerRespuesta(data);
         this.escribiendo = false;
@@ -79,14 +80,12 @@ export class Sesionclinicachatcomponent implements OnInit {
         console.log(err);
         this.escribiendo = false;
         this.devolverMensaje(texto);
-        if (err.status === 429) {
-          this.mensaje = 'Se alcanzó el límite de mensajes de Mindcito. Intenta más tarde.';
-        } else if (err.status === 400 || err.status === 403) {
+        if (err.status === 400 || err.status === 403) {
           this.mensaje = 'La API key o el modelo de Gemini no son válidos.';
         } else {
-          this.mensaje = 'Mindcito no está disponible en este momento';
+          this.mensaje = 'Mindcito no pudo responder ahora, intenta de nuevo en unos segundos';
         }
-        this.cdr.detectChanges();
+        this.bajarConversacion();
       }
     });
   }
