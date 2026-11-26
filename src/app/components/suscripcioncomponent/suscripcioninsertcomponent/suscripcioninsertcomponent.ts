@@ -41,7 +41,6 @@ export class Suscripcioninsertcomponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {
     this.suscripcionForm = this.fb.group({
-      usuarioId: ['', [Validators.required, Validators.min(1)]],
       catalogoPlanId: ['', Validators.required],
       metodoPago: [''],
       referenciaPago: ['']
@@ -107,7 +106,7 @@ export class Suscripcioninsertcomponent implements OnInit {
       estadoSuscripcion: '',
       metodoPagoSuscripcion: this.planEsDePago ? this.suscripcionForm.value.metodoPago : null,
       referenciaPagoSuscripcion: this.planEsDePago ? this.suscripcionForm.value.referenciaPago : null,
-      usuarioId: Number(this.suscripcionForm.value.usuarioId),
+      usuarioId: 0,
       catalogoPlanId: this.suscripcionForm.value.catalogoPlanId
     };
 
@@ -117,7 +116,7 @@ export class Suscripcioninsertcomponent implements OnInit {
       next: (data) => {
         this.suscripcionCreada = data;
         this.mensaje = 'Suscripción registrada correctamente';
-        this.suscripcionForm.reset({ usuarioId: '', catalogoPlanId: '', metodoPago: '', referenciaPago: '' });
+        this.suscripcionForm.reset({ catalogoPlanId: '', metodoPago: '', referenciaPago: '' });
         this.cdr.detectChanges();
       },
       error: (err) => {

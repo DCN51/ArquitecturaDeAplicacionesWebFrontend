@@ -68,12 +68,12 @@ export class Diagnosticoclinicopendientescomponent implements OnInit {
         console.log(err);
         if (err.status === 409) {
           this.mensajeAccion = 'El diagnóstico ya fue validado';
-        } else if (err.status === 400) {
-          this.mensajeAccion = err.error?.message || 'Solo un psicólogo puede validar un diagnóstico';
+        } else if (err.status === 400 || err.status === 403) {
+          this.mensajeAccion = err.error?.message || 'No puedes validar este diagnóstico';
         } else if (err.status === 404) {
           this.mensajeAccion = 'Diagnóstico no encontrado';
         } else {
-          this.mensajeAccion = 'No se pudo validar: se requiere iniciar sesión como psicólogo';
+          this.mensajeAccion = 'Error al validar el diagnóstico';
         }
         this.cdr.detectChanges();
       }

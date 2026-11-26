@@ -22,6 +22,12 @@ export class Usersservice {
   listId(id: number): Observable<UserDTO> {
     return this.http.get<UserDTO>(`${this.apiURL}/${id}`);
   }
+  getPerfil(): Observable<UserDTO> {
+    return this.http.get<UserDTO>(`${this.apiURL}/me`);
+  }
+  updatePerfil(dto: UserUpdateDTO): Observable<UserDTO> {
+    return this.http.put<UserDTO>(`${this.apiURL}/me`, dto);
+  }
   update(id: number, dto: UserUpdateDTO): Observable<UserDTO> {
     return this.http.put<UserDTO>(`${this.apiURL}/${id}`, dto);
   }

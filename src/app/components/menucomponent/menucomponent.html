@@ -85,6 +85,7 @@
   }
 
   @if (username) {
+    <button matButton routerLink="/perfil">Mis datos</button>
     <button matButton type="button" (click)="cerrarSesion()">Cerrar sesión ({{ nombreUsuario }})</button>
   } @else {
     <button matButton routerLink="/iniciar-sesion">Iniciar sesión</button>

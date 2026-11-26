@@ -8,6 +8,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { Usersservice } from '../../../services/usersservice';
+import { Loginservice } from '../../../services/loginservice';
 import { UserDTO } from '../../../models/UserDTO';
 import { UserUpdateDTO } from '../../../models/UserUpdateDTO';
 
@@ -28,6 +29,7 @@ import { UserUpdateDTO } from '../../../models/UserUpdateDTO';
 })
 export class Usersupdatecomponent implements OnInit {
   idUsuario: number = 0;
+  esPerfil: boolean = false;
   usuarioForm: FormGroup;
   mensaje: string = '';
   encontrado: boolean = false;
@@ -35,6 +37,7 @@ export class Usersupdatecomponent implements OnInit {
 
   constructor(
     private uS: Usersservice,
+    private loginService: Loginservice,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -54,6 +57,12 @@ export class Usersupdatecomponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.esPerfil = !this.route.snapshot.paramMap.has('id');
+    if (this.esPerfil) {
+      this.buscarUsuario();
+      return;
+    }
+
     this.idUsuario = Number(this.route.snapshot.paramMap.get('id'));
 
     if (!this.idUsuario || isNaN(this.idUsuario)) {
@@ -64,7 +73,8 @@ export class Usersupdatecomponent implements OnInit {
   }
 
   buscarUsuario(): void {
-    this.uS.listId(this.idUsuario).subscribe({
+    const consulta = this.esPerfil ? this.uS.getPerfil() : this.uS.listId(this.idUsuario);
+    consulta.subscribe({
       next: (u: UserDTO) => {
         this.encontrado = true;
         this.usuarioForm.patchValue({
@@ -105,11 +115,15 @@ export class Usersupdatecomponent implements OnInit {
       gender: this.usuarioForm.value.genero
     };
 
-    this.uS.update(this.idUsuario, dto).subscribe({
-      next: () => {
+    const guardar = this.esPerfil ? this.uS.updatePerfil(dto) : this.uS.update(this.idUsuario, dto);
+    guardar.subscribe({
+      next: (u: UserDTO) => {
         this.mensaje = 'Datos actualizados correctamente';
+        if (this.esPerfil) {
+          this.loginService.actualizarNombre(u.firstName, u.lastName);
+        }
         this.cdr.detectChanges();
-        setTimeout(() => this.router.navigate(['/usuarios/listar']), 1200);
+        setTimeout(() => this.router.navigate([this.rutaVolver]), 1200);
       },
       error: (err) => {
         console.log(err);
@@ -125,6 +139,10 @@ export class Usersupdatecomponent implements OnInit {
         this.cdr.detectChanges();
       }
     });
+  }
+
+  get rutaVolver(): string {
+    return this.esPerfil ? '/app' : '/usuarios/listar';
   }
 
   private aFecha(texto: string | null): Date | null {

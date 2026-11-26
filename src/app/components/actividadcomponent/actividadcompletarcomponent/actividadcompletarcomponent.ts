@@ -14,7 +14,6 @@ import { ActividadDTO } from '../../../models/ActividadDTO';
   styleUrl: './actividadcompletarcomponent.css',
 })
 export class Actividadcompletarcomponent implements OnInit {
-  userId: number = 0;
   idActividad: number = 0;
   actividad: ActividadDTO | null = null;
   comentario: string = '';
@@ -28,10 +27,9 @@ export class Actividadcompletarcomponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.userId = Number(this.route.snapshot.paramMap.get('userId'));
     this.idActividad = Number(this.route.snapshot.paramMap.get('id'));
 
-    this.aS.getActividades(this.userId).subscribe({
+    this.aS.misActividades().subscribe({
       next: (data) => {
         const a = data.find(x => x.recommendedActivityId === this.idActividad);
         if (!a) {

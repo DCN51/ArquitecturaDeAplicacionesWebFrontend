@@ -4,15 +4,6 @@
   <form [formGroup]="cambioForm" (ngSubmit)="cambiarDePlan()">
 
     <mat-form-field class="campo">
-      <mat-label>Id de usuario (paciente)</mat-label>
-      <input matInput type="number" formControlName="usuarioId">
-      <mat-hint>Temporal hasta tener login con JWT</mat-hint>
-      @if (cambioForm.get('usuarioId')?.invalid) {
-        <mat-error>Ingrese un id de usuario válido</mat-error>
-      }
-    </mat-form-field>
-
-    <mat-form-field class="campo">
       <mat-label>Nuevo plan</mat-label>
       <mat-select formControlName="catalogoPlanId">
         @for (p of planes; track p.catalogoPlanId) {

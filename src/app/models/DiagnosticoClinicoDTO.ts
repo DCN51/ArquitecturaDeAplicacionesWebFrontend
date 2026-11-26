@@ -9,4 +9,6 @@ export class DiagnosticoClinicoDTO {
   recomendacionGeneral: string | null = null;
   validacionPsicologoId: number | null = null;
   fechaValidacion: string | null = null;
+  nombrePaciente: string = '';
+  nombrePsicologo: string | null = null;
 }

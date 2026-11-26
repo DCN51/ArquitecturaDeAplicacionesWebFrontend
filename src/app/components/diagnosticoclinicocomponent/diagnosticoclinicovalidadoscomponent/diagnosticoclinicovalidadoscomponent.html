@@ -1,13 +1,15 @@
 <div class="container">
   <h2>Diagnósticos validados por psicólogo</h2>
 
-  <div class="buscador">
-    <mat-form-field>
-      <mat-label>Id del psicólogo</mat-label>
-      <input matInput type="number" [(ngModel)]="psicologoId" (keyup.enter)="buscarValidados()">
-    </mat-form-field>
-    <button matButton="filled" (click)="buscarValidados()">Buscar</button>
-  </div>
+  @if (!esPsicologo) {
+    <div class="buscador">
+      <mat-form-field>
+        <mat-label>Id del psicólogo</mat-label>
+        <input matInput type="number" [(ngModel)]="psicologoId" (keyup.enter)="buscarValidados()">
+      </mat-form-field>
+      <button matButton="filled" (click)="buscarValidados()">Buscar</button>
+    </div>
+  }
 
   @if (mensaje) {
     <p class="mensaje">{{ mensaje }}</p>

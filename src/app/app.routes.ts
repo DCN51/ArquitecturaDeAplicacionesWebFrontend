@@ -122,6 +122,15 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'perfil',
+    component: Userscomponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['PACIENTE', 'PSICOLOGO', 'ADMINISTRADOR'] },
+    children: [
+      { path: '', component: Usersupdatecomponent },
+    ],
+  },
+  {
     path: 'actividades',
     component: Actividadcomponent,
     canActivate: [authGuard, roleGuard],
@@ -131,7 +140,7 @@ export const routes: Routes = [
       { path: 'listar', component: Actividadlistcomponent },
       { path: 'insertar', component: Actividadinsertcomponent },
       { path: 'editar/:userId/:id', component: Actividadupdatecomponent },
-      { path: 'completar/:userId/:id', component: Actividadcompletarcomponent },
+      { path: 'completar/:id', component: Actividadcompletarcomponent },
     ],
   },
   {

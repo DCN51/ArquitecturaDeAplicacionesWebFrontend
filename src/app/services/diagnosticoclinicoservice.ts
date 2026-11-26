@@ -24,6 +24,10 @@ export class Diagnosticoclinicoservice {
     return this.http.get<DiagnosticoClinicoDTO>(`${this.apiURL}/${id}`);
   }
 
+  misDiagnosticos(): Observable<DiagnosticoClinicoDTO[]> {
+    return this.http.get<DiagnosticoClinicoDTO[]>(`${this.apiURL}/mis-diagnosticos`);
+  }
+
   historial(usuarioId: number): Observable<DiagnosticoClinicoDTO[]> {
     return this.http.get<DiagnosticoClinicoDTO[]>(`${this.apiURL}/usuario/${usuarioId}`);
   }

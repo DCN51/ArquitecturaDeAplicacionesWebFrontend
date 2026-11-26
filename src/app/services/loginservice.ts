@@ -76,6 +76,13 @@ export class Loginservice {
     return `${nombres} ${apellidos}`.trim();
   }
 
+  actualizarNombre(nombres: string, apellidos: string): void {
+    if (this.isBrowser) {
+      sessionStorage.setItem('nombres', nombres);
+      sessionStorage.setItem('apellidos', apellidos);
+    }
+  }
+
   getRoles(): string[] {
     if (!this.isBrowser || !this.isAuthenticated()) {
       return [];

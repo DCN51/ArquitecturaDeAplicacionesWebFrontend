@@ -22,6 +22,10 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client
   },
   {
+    path: 'perfil',
+    renderMode: RenderMode.Client
+  },
+  {
     path: 'usuarios/editar/:id',
     renderMode: RenderMode.Client
   },
@@ -30,7 +34,7 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client
   },
   {
-    path: 'actividades/completar/:userId/:id',
+    path: 'actividades/completar/:id',
     renderMode: RenderMode.Client
   },
   { path: '', renderMode: RenderMode.Prerender },

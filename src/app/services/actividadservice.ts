@@ -18,6 +18,9 @@ export class Actividadservice {
   getActividades(userId: number): Observable<ActividadDTO[]> {
     return this.http.get<ActividadDTO[]>(`${this.apiURL}/users/${userId}`);
   }
+  misActividades(): Observable<ActividadDTO[]> {
+    return this.http.get<ActividadDTO[]>(`${this.apiURL}/mis-actividades`);
+  }
   update(id: number, a: ActividadDTO): Observable<ActividadDTO> {
     return this.http.put<ActividadDTO>(`${this.apiURL}/${id}`, a);
   }

@@ -43,7 +43,6 @@ export class Suscripcioncambiarcomponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {
     this.cambioForm = this.fb.group({
-      usuarioId: ['', [Validators.required, Validators.min(1)]],
       catalogoPlanId: ['', Validators.required],
       metodoPago: [''],
       referenciaPago: ['']
@@ -110,7 +109,7 @@ export class Suscripcioncambiarcomponent implements OnInit {
       estadoSuscripcion: '',
       metodoPagoSuscripcion: this.planEsDePago ? this.cambioForm.value.metodoPago : null,
       referenciaPagoSuscripcion: this.planEsDePago ? this.cambioForm.value.referenciaPago : null,
-      usuarioId: Number(this.cambioForm.value.usuarioId),
+      usuarioId: 0,
       catalogoPlanId: this.cambioForm.value.catalogoPlanId
     };
 
@@ -120,7 +119,7 @@ export class Suscripcioncambiarcomponent implements OnInit {
       next: (data) => {
         this.nuevaSuscripcion = data;
         this.mensaje = 'Plan cambiado correctamente';
-        this.cambioForm.reset({ usuarioId: '', catalogoPlanId: '', metodoPago: '', referenciaPago: '' });
+        this.cambioForm.reset({ catalogoPlanId: '', metodoPago: '', referenciaPago: '' });
         this.cdr.detectChanges();
       },
       error: (err) => {

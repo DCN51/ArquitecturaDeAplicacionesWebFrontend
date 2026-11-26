@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Loginservice } from '../../../services/loginservice';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -26,7 +26,7 @@ import { CatalogoPlanDTO } from '../../../models/CatalogoPlanDTO';
   templateUrl: './suscripcionhistorialcomponent.html',
   styleUrl: './suscripcionhistorialcomponent.css',
 })
-export class Suscripcionhistorialcomponent {
+export class Suscripcionhistorialcomponent implements OnInit {
   usuarioId: number | null = null;
   usuarioBuscado: number = 0;
   lista: SuscripcionDTO[] = [];
@@ -53,11 +53,18 @@ export class Suscripcionhistorialcomponent {
     private cdr: ChangeDetectorRef
   ) { }
 
+  ngOnInit(): void {
+    if (this.esPaciente) {
+      this.mensaje = 'Cargando...';
+      this.cargarHistorial();
+    }
+  }
+
   buscarHistorial(): void {
     this.mensajeAccion = '';
     if (!this.usuarioId || this.usuarioId < 1) {
       this.lista = [];
-      this.mensaje = 'Ingrese su id de usuario';
+      this.mensaje = 'Ingrese el id del paciente';
       return;
     }
     this.usuarioBuscado = this.usuarioId;
@@ -65,10 +72,13 @@ export class Suscripcionhistorialcomponent {
   }
 
   cargarHistorial(): void {
-    this.sS.historial(this.usuarioBuscado).subscribe({
+    const consulta = this.esPaciente
+      ? this.sS.misSuscripciones()
+      : this.sS.historial(this.usuarioBuscado);
+    consulta.subscribe({
       next: (data: SuscripcionDTO[]) => {
         this.lista = data;
-        this.mensaje = data.length > 0 ? '' : 'No tienes suscripciones registradas';
+        this.mensaje = data.length > 0 ? '' : (this.esPaciente ? 'No tienes suscripciones registradas' : 'El paciente no tiene suscripciones registradas');
         this.cargarNombresPlanes(data);
         this.cdr.detectChanges();
       },
@@ -87,7 +97,7 @@ export class Suscripcionhistorialcomponent {
       return;
     }
 
-    this.sS.cancelar(this.usuarioBuscado).subscribe({
+    this.sS.cancelar().subscribe({
       next: () => {
         this.mensajeAccion = 'Suscripción cancelada correctamente';
         this.cargarHistorial();

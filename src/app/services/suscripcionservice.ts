@@ -19,8 +19,11 @@ export class Suscripcionservice {
   cambiarPlan(s: SuscripcionDTO): Observable<SuscripcionDTO> {
     return this.http.put<SuscripcionDTO>(`${this.apiURL}/cambiar-plan`, s);
   }
-  cancelar(usuarioId: number): Observable<void> {
-    return this.http.put<void>(`${this.apiURL}/usuario/${usuarioId}/cancelar`, {});
+  cancelar(): Observable<void> {
+    return this.http.put<void>(`${this.apiURL}/cancelar`, {});
+  }
+  misSuscripciones(): Observable<SuscripcionDTO[]> {
+    return this.http.get<SuscripcionDTO[]>(`${this.apiURL}/mis-suscripciones`);
   }
   historial(usuarioId: number): Observable<SuscripcionDTO[]> {
     return this.http.get<SuscripcionDTO[]>(`${this.apiURL}/usuario/${usuarioId}`);

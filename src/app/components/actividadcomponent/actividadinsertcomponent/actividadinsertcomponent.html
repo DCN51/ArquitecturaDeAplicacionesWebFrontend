@@ -3,23 +3,20 @@
 
   <form [formGroup]="actividadForm" (ngSubmit)="insertarActividad()">
 
-    <div class="fila">
-      <mat-form-field class="campo">
-        <mat-label>Id del paciente</mat-label>
-        <input matInput type="number" formControlName="usuarioId">
-        @if (actividadForm.get('usuarioId')?.invalid) {
-          <mat-error>Ingrese un id válido</mat-error>
+    <mat-form-field class="campo">
+      <mat-label>Paciente y diagnóstico</mat-label>
+      <mat-select formControlName="diagnosticoId">
+        @for (d of diagnosticos; track d.diagnosticoClinicoId) {
+          <mat-option [value]="d.diagnosticoClinicoId">
+            {{ d.nombrePaciente }} · {{ d.resultadoPrincipal }}
+          </mat-option>
         }
-      </mat-form-field>
-
-      <mat-form-field class="campo">
-        <mat-label>Id del diagnóstico</mat-label>
-        <input matInput type="number" formControlName="diagnosticoId">
-        @if (actividadForm.get('diagnosticoId')?.invalid) {
-          <mat-error>Ingrese un id válido</mat-error>
-        }
-      </mat-form-field>
-    </div>
+      </mat-select>
+      <mat-hint>Solo aparecen los diagnósticos que validaste</mat-hint>
+      @if (actividadForm.get('diagnosticoId')?.hasError('required')) {
+        <mat-error>Elija un diagnóstico</mat-error>
+      }
+    </mat-form-field>
 
     <mat-form-field class="campo">
       <mat-label>Título</mat-label>
