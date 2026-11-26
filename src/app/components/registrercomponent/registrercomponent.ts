@@ -55,7 +55,7 @@ export class Registrercomponent implements OnInit {
 
   cargarRoles(): void {
     this.errorRoles = '';
-    this.roleService.getRoles().subscribe({
+    this.roleService.getRolesRegistro().subscribe({
       next: (data) => {
         this.roles = data.filter(rol => ['PACIENTE', 'PSICOLOGO'].includes(this.nombreRol(rol.name)));
         if (!this.roles.length) this.errorRoles = 'No hay roles disponibles para el registro. Contacta al administrador.';
