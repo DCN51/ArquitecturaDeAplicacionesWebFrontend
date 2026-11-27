@@ -11,8 +11,7 @@
     <mat-menu #menu0="matMenu">
       <button mat-menu-item routerLink="/usuarios/listar">Usuarios registrados</button>
       <button mat-menu-item routerLink="/roles/listar">Roles</button>
-      <button mat-menu-item routerLink="/psicologos/listar">Psicólogos</button>
-      <button mat-menu-item routerLink="/psicologos/asignar">Asignar pacientes</button>
+      <button mat-menu-item routerLink="/roles/insertar">Registrar rol</button>
     </mat-menu>
   }
 
@@ -26,17 +25,15 @@
     </mat-menu>
   }
 
-  @if (esPaciente || esAdmin) {
-    <button matButton [matMenuTriggerFor]="menu2">Suscripción</button>
+  @if (esPaciente) {
+    <button matButton [matMenuTriggerFor]="menu2" (menuOpened)="revisarPlan()">Suscripción</button>
     <mat-menu #menu2="matMenu">
-      @if (esPaciente) {
+      @if (!tienePlanPagado) {
         <button mat-menu-item routerLink="/suscripciones/contratar">Contratar plan</button>
+      } @else {
         <button mat-menu-item routerLink="/suscripciones/cambiar-plan">Cambiar plan</button>
       }
       <button mat-menu-item routerLink="/suscripciones/historial">Historial</button>
-      @if (esAdmin) {
-        <button mat-menu-item routerLink="/suscripciones/por-vencer">Por vencer</button>
-      }
     </mat-menu>
   }
 
@@ -44,7 +41,7 @@
     <button matButton [matMenuTriggerFor]="menuReportes">Reportes</button>
     <mat-menu #menuReportes="matMenu">
       <button mat-menu-item routerLink="/reportes/suscriptores-por-plan">Suscriptores por plan</button>
-      <button mat-menu-item routerLink="/reportes/pacientes-por-psicologo">Pacientes por psicólogo</button>
+      <button mat-menu-item routerLink="/reportes/por-vencer">Suscripciones por vencer</button>
     </mat-menu>
   }
 
@@ -87,9 +84,26 @@
     </mat-menu>
   }
 
+  @if (esPaciente || esPsicologo || esAdmin) {
+    <button matButton [matMenuTriggerFor]="menu6">Casos de Emergencia</button>
+    <mat-menu #menu6="matMenu">
+      @if (esPaciente) {
+        <button mat-menu-item routerLink="/casos-emergencia/insertar">Registrar caso</button>
+      }
+      @if (esPsicologo || esAdmin) {
+        <button mat-menu-item routerLink="/casos-emergencia/listar">Listar casos</button>
+      }
+      @if (esPsicologo) {
+        <button mat-menu-item routerLink="/casos-emergencia/pendientes">Pendientes por urgencia</button>
+      }
+      @if (esAdmin) {
+        <button mat-menu-item routerLink="/casos-emergencia/por-psicologo">Casos por psicólogo</button>
+      }
+    </mat-menu>
+  }
+
   @if (username) {
-    <button matButton routerLink="/perfil">Mis datos</button>
-    <button matButton type="button" (click)="cerrarSesion()">Cerrar sesión ({{ nombreUsuario }})</button>
+    <button matButton type="button" (click)="cerrarSesion()">Cerrar sesión ({{ username }})</button>
   } @else {
     <button matButton routerLink="/iniciar-sesion">Iniciar sesión</button>
     <button matButton routerLink="/registrarse">Registrarse</button>

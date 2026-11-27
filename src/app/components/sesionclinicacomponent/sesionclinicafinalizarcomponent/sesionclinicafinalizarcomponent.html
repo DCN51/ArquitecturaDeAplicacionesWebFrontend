@@ -3,7 +3,7 @@
 
   @if (sesion) {
     <p class="detalle">
-      Sesión {{ sesion.sesionClinicaId }} · {{ sesion.nombrePaciente }} ·
+      Sesión {{ sesion.sesionClinicaId }} · Usuario {{ sesion.usuarioId }} ·
       Inicio {{ sesion.fechaHoraInicio | date:'dd/MM/yyyy HH:mm' }} · Estado {{ sesion.estado }}
     </p>
   }

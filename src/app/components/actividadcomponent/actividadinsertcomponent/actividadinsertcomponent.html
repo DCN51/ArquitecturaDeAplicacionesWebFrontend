@@ -3,20 +3,23 @@
 
   <form [formGroup]="actividadForm" (ngSubmit)="insertarActividad()">
 
-    <mat-form-field class="campo">
-      <mat-label>Paciente y diagnóstico</mat-label>
-      <mat-select formControlName="diagnosticoId">
-        @for (d of diagnosticos; track d.diagnosticoClinicoId) {
-          <mat-option [value]="d.diagnosticoClinicoId">
-            {{ d.nombrePaciente }} · {{ d.resultadoPrincipal }}
-          </mat-option>
+    <div class="fila">
+      <mat-form-field class="campo">
+        <mat-label>Id del paciente</mat-label>
+        <input matInput type="number" formControlName="usuarioId">
+        @if (actividadForm.get('usuarioId')?.invalid) {
+          <mat-error>Ingrese un id válido</mat-error>
         }
-      </mat-select>
-      <mat-hint>Solo aparecen los diagnósticos que validaste</mat-hint>
-      @if (actividadForm.get('diagnosticoId')?.hasError('required')) {
-        <mat-error>Elija un diagnóstico</mat-error>
-      }
-    </mat-form-field>
+      </mat-form-field>
+
+      <mat-form-field class="campo">
+        <mat-label>Id del diagnóstico</mat-label>
+        <input matInput type="number" formControlName="diagnosticoId">
+        @if (actividadForm.get('diagnosticoId')?.invalid) {
+          <mat-error>Ingrese un id válido</mat-error>
+        }
+      </mat-form-field>
+    </div>
 
     <mat-form-field class="campo">
       <mat-label>Título</mat-label>
@@ -63,7 +66,7 @@
     <mat-card class="resultado">
       <mat-card-content>
         <p><strong>Actividad:</strong> {{ actividadCreada.title }}</p>
-        <p><strong>Paciente:</strong> {{ actividadCreada.nombrePaciente }}</p>
+        <p><strong>Paciente:</strong> {{ actividadCreada.userId }} | <strong>Diagnóstico:</strong> {{ actividadCreada.diagnosisId }}</p>
         <p><strong>Asignada:</strong> {{ actividadCreada.assignedDate | date:'dd/MM/yyyy':'UTC' }}</p>
         <p><strong>Estado:</strong> {{ actividadCreada.status }}</p>
       </mat-card-content>

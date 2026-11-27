@@ -15,8 +15,8 @@ import { UserDTO } from '../../../models/UserDTO';
 export class Userslistcomponent implements OnInit {
   dataSource: UserDTO[] = [];
   displayedColumns: string[] = ['id', 'username', 'nombre', 'email', 'rol', 'estado', 'editar', 'desactivar'];
-  mensaje: string = '';
-  mensajeAccion: string = '';
+  mensaje: string = '';        // error al cargar la lista
+  mensajeAccion: string = '';  // resultado de desactivar
 
   constructor(private uS: Usersservice, private cdr: ChangeDetectorRef) { }
 
@@ -33,7 +33,7 @@ export class Userslistcomponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.mensaje = err.error?.message || 'Ocurrió un error al obtener los usuarios';
+        this.mensaje = 'Ocurrió un error al obtener los usuarios';
         this.cdr.detectChanges();
       }
     });
@@ -43,6 +43,7 @@ export class Userslistcomponent implements OnInit {
     return nombre.replace('ROLE_', '');
   }
 
+  // HUF20
   desactivarUsuario(u: UserDTO): void {
     if (!confirm(`¿Seguro que deseas desactivar la cuenta de "${u.username}"?`)) {
       return;
@@ -51,16 +52,16 @@ export class Userslistcomponent implements OnInit {
     this.uS.desactivar(u.userId).subscribe({
       next: () => {
         this.mensajeAccion = 'Cuenta desactivada correctamente';
-        this.listarUsuarios();
+        this.listarUsuarios();   // la cuenta sigue en la lista, ahora como INACTIVO
       },
       error: (err) => {
         console.log(err);
         if (err.status === 409) {
-          this.mensajeAccion = err.error?.message || 'La cuenta ya está inactiva';
+          this.mensajeAccion = 'La cuenta ya está inactiva';
         } else if (err.status === 404) {
-          this.mensajeAccion = err.error?.message || 'Usuario no encontrado';
+          this.mensajeAccion = 'Usuario no encontrado';
         } else {
-          this.mensajeAccion = err.error?.message || 'Error al desactivar la cuenta';
+          this.mensajeAccion = 'Error al desactivar la cuenta';
         }
         this.listarUsuarios();
       }

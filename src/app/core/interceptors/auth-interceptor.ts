@@ -10,6 +10,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     return next(req);
   }
 
+  // Solo se manda el token a NUESTRO back (no a Gemini ni a otras APIs)
   if (!req.url.startsWith(environment.base)) {
     return next(req);
   }

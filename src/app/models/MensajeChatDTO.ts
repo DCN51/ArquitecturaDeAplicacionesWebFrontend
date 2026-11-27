@@ -1,4 +1,4 @@
 export class MensajeChatDTO {
-  rol: string = '';
+  rol: string = '';   // 'paciente' o 'ia'
   texto: string = '';
 }

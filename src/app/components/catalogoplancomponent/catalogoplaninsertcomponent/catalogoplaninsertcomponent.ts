@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -21,7 +21,7 @@ import { CatalogoPlanDTO } from '../../../models/CatalogoPlanDTO';
   templateUrl: './catalogoplaninsertcomponent.html',
   styleUrl: './catalogoplaninsertcomponent.css',
 })
-export class Catalogoplaninsertcomponent implements OnInit {
+export class Catalogoplaninsertcomponent {
   planForm: FormGroup;
   mensaje: string = '';
 
@@ -33,36 +33,28 @@ export class Catalogoplaninsertcomponent implements OnInit {
     this.planForm = this.fb.group({
       nombre: ['', Validators.required],
       precio: [0, [Validators.required, Validators.min(0)]],
-      ilimitadas: [false],
       sesiones: [1, [Validators.required, Validators.min(1)]],
+      ilimitado: [false],
       diagnostico: [false],
       actividades: [false],
       derivacion: [false],
       descripcion: ['', Validators.required]
     });
-  }
 
-  ngOnInit(): void {
-    this.planForm.get('ilimitadas')?.valueChanges.subscribe(valor => this.alternarIlimitadas(valor));
-  }
-
-  alternarIlimitadas(ilimitadas: boolean): void {
-    const sesiones = this.planForm.get('sesiones');
-    if (ilimitadas) {
-      sesiones?.setValue(null);
-      sesiones?.disable();
-    } else {
-      sesiones?.enable();
-    }
-  }
-
-  private limiteSesiones(): number {
-    return this.planForm.value.ilimitadas ? -1 : Number(this.planForm.value.sesiones);
+    // Si se marca "Sesiones ilimitadas", el límite no se pide (se envía -1)
+    this.planForm.get('ilimitado')?.valueChanges.subscribe(ilimitado => {
+      const sesiones = this.planForm.get('sesiones');
+      if (ilimitado) {
+        sesiones?.disable();
+      } else {
+        sesiones?.enable();
+      }
+    });
   }
 
   insertarPlan(): void {
     if (this.planForm.invalid) {
-      this.planForm.markAllAsTouched();
+      this.planForm.markAllAsTouched();   // pinta en rojo los campos con error
       this.mensaje = 'Complete todos los campos correctamente';
       return;
     }
@@ -71,7 +63,7 @@ export class Catalogoplaninsertcomponent implements OnInit {
       catalogoPlanId: 0,
       nombreCatalogoPlan: this.planForm.value.nombre,
       precioMensualCatalogoPlan: this.planForm.value.precio,
-      limiteSesionesMes: this.limiteSesiones(),
+      limiteSesionesMes: this.planForm.value.ilimitado ? -1 : this.planForm.value.sesiones,   // -1 = ilimitadas
       incluyeDiagnostico: this.planForm.value.diagnostico,
       incluyeActividades: this.planForm.value.actividades,
       permiteDerivacion: this.planForm.value.derivacion,
@@ -83,7 +75,7 @@ export class Catalogoplaninsertcomponent implements OnInit {
       next: () => {
         this.mensaje = 'Plan registrado correctamente';
         this.planForm.reset({
-          nombre: '', precio: 0, ilimitadas: false, sesiones: 1,
+          nombre: '', precio: 0, sesiones: 1, ilimitado: false,
           diagnostico: false, actividades: false, derivacion: false,
           descripcion: ''
         });
@@ -92,7 +84,7 @@ export class Catalogoplaninsertcomponent implements OnInit {
       error: (err) => {
         console.log(err);
         if (err.status === 409) {
-          this.mensaje = err.error?.message || 'Ya existe un plan con ese nombre';
+          this.mensaje = 'Ya existe un plan con ese nombre';
         } else {
           this.mensaje = err.error?.message || 'Error al registrar el plan';
         }

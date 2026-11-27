@@ -1,6 +1,17 @@
 <div class="container">
   <h2>Cambiar plan</h2>
 
+  @if (verificando) {
+    <p>Revisando tu plan actual...</p>
+  } @else if (!tienePlanPagado) {
+    @if (!nuevaSuscripcion) {
+      <p class="mensaje">Tienes el plan Free. Para pasarte a un plan pagado usa "Contratar plan".</p>
+    }
+    <div class="botones">
+      <button matButton="filled" type="button" routerLink="/suscripciones/contratar">Ir a contratar plan</button>
+      <button matButton type="button" routerLink="/suscripciones/historial">Ver historial</button>
+    </div>
+  } @else {
   <form [formGroup]="cambioForm" (ngSubmit)="cambiarDePlan()">
 
     <mat-form-field class="campo">
@@ -44,6 +55,7 @@
       <button matButton type="button" routerLink="/suscripciones/historial">Ver historial</button>
     </div>
   </form>
+  }
 
   @if (mensaje) {
     <p class="mensaje">{{ mensaje }}</p>
@@ -52,7 +64,7 @@
   @if (nuevaSuscripcion) {
     <mat-card class="resultado">
       <mat-card-content>
-        <p><strong>Nuevo plan:</strong> {{ nuevaSuscripcion.nombrePlan }}</p>
+        <p><strong>Nuevo plan:</strong> {{ nombrePlan(nuevaSuscripcion.catalogoPlanId) }}</p>
         <p><strong>Fecha de inicio:</strong> {{ nuevaSuscripcion.fechaInicio | date:'dd/MM/yyyy':'UTC' }}</p>
         <p><strong>Fecha de fin:</strong>
           {{ nuevaSuscripcion.fechaFin ? (nuevaSuscripcion.fechaFin | date:'dd/MM/yyyy':'UTC') : 'Sin vencimiento' }}
@@ -61,4 +73,4 @@
       </mat-card-content>
     </mat-card>
   }
-</div>
+</div>

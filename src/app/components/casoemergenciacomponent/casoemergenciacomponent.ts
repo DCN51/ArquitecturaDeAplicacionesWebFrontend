@@ -3,9 +3,9 @@ import { RouterOutlet } from '@angular/router';
 import { Menucomponent } from '../menucomponent/menucomponent';
 
 @Component({
-  selector: 'app-psicologocomponent',
+  selector: 'app-casoemergenciacomponent',
   imports: [RouterOutlet, Menucomponent],
-  templateUrl: './psicologocomponent.html',
-  styleUrl: './psicologocomponent.css',
+  templateUrl: './casoemergenciacomponent.html',
+  styleUrl: './casoemergenciacomponent.css',
 })
-export class Psicologocomponent {}
+export class Casoemergenciacomponent {}

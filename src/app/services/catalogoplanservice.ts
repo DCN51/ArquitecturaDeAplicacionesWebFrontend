@@ -12,18 +12,23 @@ export class Catalogoplanservice {
 
   constructor(private http: HttpClient) { }
 
+  // HUF04
   getPlanes(): Observable<CatalogoPlanDTO[]> {
     return this.http.get<CatalogoPlanDTO[]>(this.apiURL);
   }
+  // HUF01
   insert(p: CatalogoPlanDTO): Observable<CatalogoPlanDTO> {
     return this.http.post<CatalogoPlanDTO>(this.apiURL, p);
   }
+  // HUF02
   update(p: CatalogoPlanDTO): Observable<CatalogoPlanDTO> {
     return this.http.put<CatalogoPlanDTO>(this.apiURL, p);
   }
+  // HUF02
   listId(id: number): Observable<CatalogoPlanDTO> {
     return this.http.get<CatalogoPlanDTO>(`${this.apiURL}/${id}`);
   }
+  // HUF03
   desactivar(id: number): Observable<CatalogoPlanDTO> {
     return this.http.patch<CatalogoPlanDTO>(`${this.apiURL}/${id}/desactivar`, {});
   }

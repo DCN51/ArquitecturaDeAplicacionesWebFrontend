@@ -26,6 +26,7 @@
   object-fit: contain;
 }
 
+/* Keep the account links visually separate from status messages. */
 :host .container > .enlace {
   margin-top: 28px;
   padding: 20px 0 0;

@@ -1,0 +1,100 @@
+<div class="container">
+  <h2>{{ edicion ? 'Atender caso de emergencia' : 'Registrar caso de emergencia' }}</h2>
+
+  <form [formGroup]="casoForm" (ngSubmit)="guardarCaso()">
+
+    @if (edicion) {
+      <mat-form-field class="campo">
+        <mat-label>Caso</mat-label>
+        <input matInput formControlName="codigo" readonly>
+      </mat-form-field>
+    }
+
+    <mat-form-field class="campo">
+      <mat-label>Id de usuario (paciente)</mat-label>
+      <input matInput type="number" formControlName="usuarioId" [readonly]="edicion">
+      @if (casoForm.get('usuarioId')?.hasError('required')) {
+        <mat-error>El id del paciente es obligatorio</mat-error>
+      }
+      @if (casoForm.get('usuarioId')?.hasError('min')) {
+        <mat-error>El id debe ser mayor a 0</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Id de sesión clínica</mat-label>
+      <input matInput type="number" formControlName="sesionClinicaId" [readonly]="edicion">
+      @if (casoForm.get('sesionClinicaId')?.hasError('required')) {
+        <mat-error>El id de la sesión es obligatorio</mat-error>
+      }
+      @if (casoForm.get('sesionClinicaId')?.hasError('min')) {
+        <mat-error>El id debe ser mayor a 0</mat-error>
+      }
+    </mat-form-field>
+
+    @if (!edicion) {
+      <mat-form-field class="campo">
+        <mat-label>Fecha de la emergencia</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="fechaEmergencia" [max]="hoy">
+        <mat-hint>Si la dejas vacía se usa la fecha actual</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    }
+
+    <mat-form-field class="campo">
+      <mat-label>Nivel de urgencia</mat-label>
+      <mat-select formControlName="nivelUrgencia">
+        @for (n of niveles; track n) {
+          <mat-option [value]="n">{{ n }}</mat-option>
+        }
+      </mat-select>
+      @if (casoForm.get('nivelUrgencia')?.hasError('required')) {
+        <mat-error>El nivel de urgencia es obligatorio</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Resumen contextual</mat-label>
+      <textarea matInput formControlName="resumenContextual" rows="3"></textarea>
+    </mat-form-field>
+
+    @if (edicion) {
+      <mat-form-field class="campo">
+        <mat-label>Psicólogo asignado</mat-label>
+        <mat-select formControlName="psicologoId">
+          <mat-option [value]="null">Sin asignar</mat-option>
+          @for (p of psicologos; track p.userId) {
+            <mat-option [value]="p.userId">{{ p.firstName }} {{ p.lastName }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="campo">
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="estado">
+          @for (e of estados; track e) {
+            <mat-option [value]="e">{{ e }}</mat-option>
+          }
+        </mat-select>
+        <mat-hint>Al cerrar el caso se registra la fecha de cierre</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field class="campo">
+        <mat-label>Notas del psicólogo</mat-label>
+        <textarea matInput formControlName="notasPsicologo" rows="3"></textarea>
+      </mat-form-field>
+    }
+
+    <div class="botones">
+      <button matButton="filled" type="submit" [disabled]="!encontrado">{{ edicion ? 'Guardar' : 'Registrar' }}</button>
+      @if (edicion) {
+        <button matButton type="button" routerLink="/casos-emergencia/listar">Volver</button>
+      }
+    </div>
+  </form>
+
+  @if (mensaje) {
+    <p class="mensaje">{{ mensaje }}</p>
+  }
+</div>

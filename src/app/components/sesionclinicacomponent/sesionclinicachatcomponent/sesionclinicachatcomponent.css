@@ -1,3 +1,4 @@
+/* La tarjeta, el título y los botones vienen de src/styles.css. */
 .container { max-width: 760px; }
 
 .conversacion {
@@ -28,14 +29,6 @@
   border-bottom-left-radius: 4px;
   background: #eee1fb;
   color: #2d2c2b;
-}
-
-.burbuja .autor {
-  display: block;
-  margin-bottom: 4px;
-  color: #6b3fa0;
-  font-size: 12px;
-  font-weight: 700;
 }
 
 .burbuja.paciente {

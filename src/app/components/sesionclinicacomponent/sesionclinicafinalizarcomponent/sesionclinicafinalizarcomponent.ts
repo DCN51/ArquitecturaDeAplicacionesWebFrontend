@@ -82,7 +82,7 @@ export class Sesionclinicafinalizarcomponent implements OnInit {
         console.log(err);
         this.editable = false;
         this.sesionForm.disable();
-        this.mensaje = err.error?.message || 'Sesión no encontrada';
+        this.mensaje = 'Sesión no encontrada';
         this.cdr.detectChanges();
       }
     });
@@ -97,6 +97,7 @@ export class Sesionclinicafinalizarcomponent implements OnInit {
 
     const datos: SesionClinicaDTO = new SesionClinicaDTO();
     datos.sesionClinicaId = this.idSesion;
+    datos.usuarioId = this.sesion?.usuarioId ?? 0;
     datos.emocionDetectada = this.sesionForm.value.emocion?.trim() || null;
     datos.nivelUrgencia = this.sesionForm.value.urgencia;
     datos.resumenIa = this.sesionForm.value.resumen?.trim() || null;
@@ -115,9 +116,9 @@ export class Sesionclinicafinalizarcomponent implements OnInit {
         if (err.status === 400) {
           this.mensaje = err.error?.message || 'La sesión ya fue finalizada o los datos son inválidos';
         } else if (err.status === 404) {
-          this.mensaje = err.error?.message || 'Sesión no encontrada';
+          this.mensaje = 'Sesión no encontrada';
         } else {
-          this.mensaje = err.error?.message || 'Error al finalizar la sesión';
+          this.mensaje = 'Error al finalizar la sesión';
         }
         this.cdr.detectChanges();
       }

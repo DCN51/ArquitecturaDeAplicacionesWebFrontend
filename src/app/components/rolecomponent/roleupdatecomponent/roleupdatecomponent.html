@@ -1,0 +1,32 @@
+<div class="container">
+  <h2>Actualizar rol</h2>
+
+  <form [formGroup]="roleForm" (ngSubmit)="actualizarRol()">
+
+    <mat-form-field class="campo">
+      <mat-label>ID</mat-label>
+      <input matInput formControlName="codigo" readonly>
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Nombre del rol</mat-label>
+      <input matInput formControlName="nombre">
+      <mat-hint>Se guarda en mayúsculas con el prefijo ROLE_</mat-hint>
+      @if (roleForm.get('nombre')?.hasError('required')) {
+        <mat-error>El nombre es obligatorio</mat-error>
+      }
+      @if (roleForm.get('nombre')?.hasError('maxlength')) {
+        <mat-error>Máximo 25 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="botones">
+      <button matButton="filled" type="submit" [disabled]="!encontrado">Guardar</button>
+      <button matButton type="button" routerLink="/roles/listar">Volver</button>
+    </div>
+  </form>
+
+  @if (mensaje) {
+    <p class="mensaje">{{ mensaje }}</p>
+  }
+</div>

@@ -12,11 +12,28 @@ export class Roleservice {
 
   constructor(private http: HttpClient) { }
 
+  // HUF18 - listar roles (también lo usa Registro)
   getRoles(): Observable<RoleDTO[]> {
     return this.http.get<RoleDTO[]>(this.apiURL);
   }
 
-  getRolesRegistro(): Observable<RoleDTO[]> {
-    return this.http.get<RoleDTO[]>(`${this.apiURL}/registro`);
+  // HUF26 - registrar rol
+  insert(role: RoleDTO): Observable<RoleDTO> {
+    return this.http.post<RoleDTO>(this.apiURL, role);
+  }
+
+  // HUF27 - buscar rol por id (para editar)
+  listId(id: number): Observable<RoleDTO> {
+    return this.http.get<RoleDTO>(`${this.apiURL}/${id}`);
+  }
+
+  // HUF27 - actualizar rol
+  update(role: RoleDTO): Observable<RoleDTO> {
+    return this.http.put<RoleDTO>(this.apiURL, role);
+  }
+
+  // HUF28 - eliminar rol
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiURL}/${id}`);
   }
 }

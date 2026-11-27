@@ -1,5 +1,5 @@
 <div class="container">
-  <h2>{{ esPerfil ? 'Mis datos' : 'Actualizar datos de usuario' }}</h2>
+  <h2>Actualizar datos de usuario</h2>
 
   <form [formGroup]="usuarioForm" (ngSubmit)="actualizarUsuario()">
 
@@ -77,7 +77,7 @@
 
     <div class="botones">
       <button matButton="filled" type="submit" [disabled]="!encontrado">Guardar</button>
-      <button matButton type="button" [routerLink]="rutaVolver">Volver</button>
+      <button matButton type="button" routerLink="/usuarios/listar">Volver</button>
     </div>
   </form>
 

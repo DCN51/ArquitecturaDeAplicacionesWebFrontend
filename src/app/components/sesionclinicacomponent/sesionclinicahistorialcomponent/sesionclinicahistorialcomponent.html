@@ -1,6 +1,14 @@
 <div class="container">
   <h2>Historial de sesiones clínicas</h2>
 
+  <div class="buscador">
+    <mat-form-field>
+      <mat-label>Id de usuario (paciente)</mat-label>
+      <input matInput type="number" [(ngModel)]="usuarioId" (keyup.enter)="buscarHistorial()">
+    </mat-form-field>
+    <button matButton="filled" (click)="buscarHistorial()">Buscar</button>
+  </div>
+
   @if (mensaje) {
     <p class="mensaje">{{ mensaje }}</p>
   }

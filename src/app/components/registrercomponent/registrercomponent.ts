@@ -55,7 +55,7 @@ export class Registrercomponent implements OnInit {
 
   cargarRoles(): void {
     this.errorRoles = '';
-    this.roleService.getRolesRegistro().subscribe({
+    this.roleService.getRoles().subscribe({
       next: (data) => {
         this.roles = data.filter(rol => ['PACIENTE', 'PSICOLOGO'].includes(this.nombreRol(rol.name)));
         if (!this.roles.length) this.errorRoles = 'No hay roles disponibles para el registro. Contacta al administrador.';
@@ -63,7 +63,7 @@ export class Registrercomponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.errorRoles = err.error?.message || 'No se pudieron cargar los roles. Verifica que el servidor esté disponible.';
+        this.errorRoles = 'No se pudieron cargar los roles. Verifica que el servidor esté disponible.';
         this.cdr.detectChanges();
       }
     });
@@ -137,7 +137,7 @@ export class Registrercomponent implements OnInit {
         if (err.status === 0) {
           this.mensaje = 'No se pudo conectar con el servidor.';
         } else if (err.status === 401 || err.status === 403) {
-          this.mensaje = err.error?.message || 'El servidor no permite el registro público.';
+          this.mensaje = 'El servidor no permite el registro público.';
         } else {
           this.mensaje = err.error?.message || 'No se pudo registrar la cuenta';
         }

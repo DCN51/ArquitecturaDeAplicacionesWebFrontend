@@ -1,7 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Sesionclinicaservice } from '../../../services/sesionclinicaservice';
@@ -12,18 +15,23 @@ import { DiagnosticoClinicoDTO } from '../../../models/DiagnosticoClinicoDTO';
 @Component({
   selector: 'app-sesionclinicahistorialcomponent',
   imports: [
+    FormsModule,
     DatePipe,
     RouterLink,
     MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
     MatButtonModule,
     MatIconModule
   ],
   templateUrl: './sesionclinicahistorialcomponent.html',
   styleUrl: './sesionclinicahistorialcomponent.css',
 })
-export class Sesionclinicahistorialcomponent implements OnInit {
+export class Sesionclinicahistorialcomponent {
+  usuarioId: number | null = null;
+  usuarioBuscado: number = 0;
   lista: SesionClinicaDTO[] = [];
-  mensaje: string = 'Cargando...';
+  mensaje: string = '';
   mensajeAccion: string = '';
   sesionesConDiagnostico: Set<number> = new Set<number>();
   displayedColumns: string[] = ['id', 'inicio', 'fin', 'estado', 'emocion', 'urgencia', 'derivacion', 'finalizar', 'diagnostico', 'eliminar'];
@@ -34,12 +42,19 @@ export class Sesionclinicahistorialcomponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) { }
 
-  ngOnInit(): void {
+  buscarHistorial(): void {
+    this.mensajeAccion = '';
+    if (!this.usuarioId || this.usuarioId < 1) {
+      this.lista = [];
+      this.mensaje = 'Ingrese su id de usuario';
+      return;
+    }
+    this.usuarioBuscado = this.usuarioId;
     this.cargarHistorial();
   }
 
   cargarHistorial(): void {
-    this.scS.misSesiones().subscribe({
+    this.scS.historial(this.usuarioBuscado).subscribe({
       next: (data: SesionClinicaDTO[]) => {
         this.lista = data;
         this.mensaje = data.length > 0 ? '' : 'No tienes sesiones registradas';
@@ -49,14 +64,18 @@ export class Sesionclinicahistorialcomponent implements OnInit {
       error: (err) => {
         console.log(err);
         this.lista = [];
-        this.mensaje = err.error?.message || 'Ocurrió un error al consultar el historial';
+        if (err.status === 404) {
+          this.mensaje = 'No existe el usuario ingresado';
+        } else {
+          this.mensaje = 'Ocurrió un error al consultar el historial';
+        }
         this.cdr.detectChanges();
       }
     });
   }
 
   cargarDiagnosticos(): void {
-    this.dcS.misDiagnosticos().subscribe({
+    this.dcS.historial(this.usuarioBuscado).subscribe({
       next: (data: DiagnosticoClinicoDTO[]) => {
         this.sesionesConDiagnostico = new Set<number>(data.map(d => d.sesionClinicaId));
         this.cdr.detectChanges();
@@ -88,9 +107,9 @@ export class Sesionclinicahistorialcomponent implements OnInit {
         if (err.status === 400) {
           this.mensajeAccion = err.error?.message || 'La sesión no se puede eliminar';
         } else if (err.status === 404) {
-          this.mensajeAccion = err.error?.message || 'Sesión no encontrada';
+          this.mensajeAccion = 'Sesión no encontrada';
         } else {
-          this.mensajeAccion = err.error?.message || 'Error al eliminar la sesión';
+          this.mensajeAccion = 'Error al eliminar la sesión';
         }
         this.cargarHistorial();
       }

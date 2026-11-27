@@ -25,7 +25,7 @@ export class Catalogoplanupdatecomponent implements OnInit {
   idPlan: number = 0;
   planForm: FormGroup;
   mensaje: string = '';
-  encontrado: boolean = false;
+  encontrado: boolean = false;   // si no se encuentra el plan, no se permite guardar
 
   constructor(
     private cpS: Catalogoplanservice,
@@ -38,17 +38,27 @@ export class Catalogoplanupdatecomponent implements OnInit {
       codigo: [0],
       nombre: ['', Validators.required],
       precio: [0, [Validators.required, Validators.min(0)]],
-      ilimitadas: [false],
       sesiones: [1, [Validators.required, Validators.min(1)]],
+      ilimitado: [false],
       diagnostico: [false],
       actividades: [false],
       derivacion: [false],
       descripcion: ['', Validators.required]
     });
+
+    // Si se marca "Sesiones ilimitadas", el límite no se pide (se envía -1)
+    this.planForm.get('ilimitado')?.valueChanges.subscribe(ilimitado => {
+      const sesiones = this.planForm.get('sesiones');
+      if (ilimitado) {
+        sesiones?.disable();
+      } else {
+        sesiones?.enable();
+      }
+    });
   }
 
   ngOnInit(): void {
-    this.planForm.get('ilimitadas')?.valueChanges.subscribe(valor => this.alternarIlimitadas(valor));
+    // Recuperar el id desde la URL (/planes/editar/:id)
     this.idPlan = Number(this.route.snapshot.paramMap.get('id'));
 
     if (!this.idPlan || isNaN(this.idPlan)) {
@@ -66,8 +76,8 @@ export class Catalogoplanupdatecomponent implements OnInit {
           codigo: plan.catalogoPlanId,
           nombre: plan.nombreCatalogoPlan,
           precio: plan.precioMensualCatalogoPlan,
-          ilimitadas: plan.limiteSesionesMes === -1,
-          sesiones: plan.limiteSesionesMes === -1 ? null : plan.limiteSesionesMes,
+          ilimitado: plan.limiteSesionesMes === -1,
+          sesiones: plan.limiteSesionesMes === -1 ? 1 : plan.limiteSesionesMes,
           diagnostico: plan.incluyeDiagnostico,
           actividades: plan.incluyeActividades,
           derivacion: plan.permiteDerivacion,
@@ -78,29 +88,15 @@ export class Catalogoplanupdatecomponent implements OnInit {
       error: (err) => {
         console.log(err);
         this.encontrado = false;
-        this.mensaje = err.error?.message || 'Plan no encontrado';
+        this.mensaje = 'Plan no encontrado';
         this.cdr.detectChanges();
       }
     });
   }
 
-  alternarIlimitadas(ilimitadas: boolean): void {
-    const sesiones = this.planForm.get('sesiones');
-    if (ilimitadas) {
-      sesiones?.setValue(null);
-      sesiones?.disable();
-    } else {
-      sesiones?.enable();
-    }
-  }
-
-  private limiteSesiones(): number {
-    return this.planForm.value.ilimitadas ? -1 : Number(this.planForm.value.sesiones);
-  }
-
   actualizarPlan(): void {
     if (this.planForm.invalid) {
-      this.planForm.markAllAsTouched();
+      this.planForm.markAllAsTouched();   // pinta en rojo los campos con error
       this.mensaje = 'Complete todos los campos correctamente';
       return;
     }
@@ -109,18 +105,19 @@ export class Catalogoplanupdatecomponent implements OnInit {
       catalogoPlanId: this.planForm.value.codigo,
       nombreCatalogoPlan: this.planForm.value.nombre,
       precioMensualCatalogoPlan: this.planForm.value.precio,
-      limiteSesionesMes: this.limiteSesiones(),
+      limiteSesionesMes: this.planForm.value.ilimitado ? -1 : this.planForm.value.sesiones,   // -1 = ilimitadas
       incluyeDiagnostico: this.planForm.value.diagnostico,
       incluyeActividades: this.planForm.value.actividades,
       permiteDerivacion: this.planForm.value.derivacion,
       descripcionCatalogoPlan: this.planForm.value.descripcion,
-      activoCatalogoPlan: true
+      activoCatalogoPlan: true   // el back conserva el estado real del plan
     };
 
     this.cpS.update(plan).subscribe({
       next: () => {
         this.mensaje = 'Plan actualizado correctamente';
         this.cdr.detectChanges();
+        // espera un momento para que se lea el mensaje y vuelve a la lista
         setTimeout(() => this.router.navigate(['/planes/listar']), 1200);
       },
       error: (err) => {
@@ -128,9 +125,9 @@ export class Catalogoplanupdatecomponent implements OnInit {
         if (err.status === 400) {
           this.mensaje = err.error?.message || 'El nombre del plan free no se puede cambiar';
         } else if (err.status === 404) {
-          this.mensaje = err.error?.message || 'Plan no encontrado';
+          this.mensaje = 'Plan no encontrado';
         } else {
-          this.mensaje = err.error?.message || 'Error al actualizar el plan';
+          this.mensaje = 'Error al actualizar el plan';
         }
         this.cdr.detectChanges();
       }

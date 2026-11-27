@@ -12,8 +12,8 @@ export class Sesionclinicaservice {
 
   constructor(private http: HttpClient) { }
 
-  iniciar(): Observable<SesionClinicaDTO> {
-    return this.http.post<SesionClinicaDTO>(this.apiURL, {});
+  iniciar(s: SesionClinicaDTO): Observable<SesionClinicaDTO> {
+    return this.http.post<SesionClinicaDTO>(this.apiURL, s);
   }
 
   finalizar(id: number, s: SesionClinicaDTO): Observable<SesionClinicaDTO> {
@@ -24,8 +24,8 @@ export class Sesionclinicaservice {
     return this.http.get<SesionClinicaDTO>(`${this.apiURL}/${id}`);
   }
 
-  misSesiones(): Observable<SesionClinicaDTO[]> {
-    return this.http.get<SesionClinicaDTO[]>(`${this.apiURL}/mis-sesiones`);
+  historial(usuarioId: number): Observable<SesionClinicaDTO[]> {
+    return this.http.get<SesionClinicaDTO[]>(`${this.apiURL}/usuario/${usuarioId}`);
   }
 
   derivaciones(): Observable<SesionClinicaDTO[]> {

@@ -131,6 +131,8 @@
   background: #ffe0be;
 }
 
+/* BARRA SUPERIOR */
+
 .barra-anuncio {
   padding: 14px 24px;
   background: var(--amarillo);
@@ -140,6 +142,8 @@
   line-height: 1.6;
   text-align: center;
 }
+
+/* HEADER */
 
 .header {
   background: #e8dfda;
@@ -199,6 +203,8 @@
   text-decoration: underline;
   text-underline-offset: 6px;
 }
+
+/* HERO */
 
 .hero {
   padding-top: clamp(56px, 7vw, 96px);
@@ -269,6 +275,8 @@
   object-fit: contain;
   object-position: center bottom;
 }
+
+/* RECURSOS */
 
 .recursos {
   padding-top: 64px;
@@ -354,6 +362,8 @@
   color: #5c4869;
 }
 
+/* BLOQUES GENERALES */
+
 .bloque {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -375,6 +385,8 @@
   font-size: 16px;
   line-height: 1.65;
 }
+
+/* SESIONES CON IA */
 
 .bloque-ia {
   background: var(--amarillo);
@@ -477,6 +489,8 @@
   line-height: 2;
 }
 
+/* CÓMO FUNCIONA */
+
 .bloque-proceso {
   padding: 48px;
   margin-bottom: 64px;
@@ -558,6 +572,8 @@
   font-size: 12px;
 }
 
+/* ACTIVIDADES */
+
 .bloque-actividades {
   position: relative;
   background: var(--rosa);
@@ -638,6 +654,8 @@
   object-fit: contain;
 }
 
+/* RECORRIDO */
+
 .recorrido {
   padding-top: 15px;
   padding-bottom: 64px;
@@ -716,6 +734,8 @@
   background: #ffd000;
   color: #302d2e;
 }
+
+/* PROFESIONALES */
 
 .bloque-profesionales {
   background: white;
@@ -814,6 +834,8 @@
   text-decoration: underline;
 }
 
+/* PLANES */
+
 .planes {
   padding-top: 35px;
 }
@@ -847,6 +869,8 @@
 .catalogo-preview ul {
   padding-left: 18px;
 }
+
+/* CONEXIÓN */
 
 .conexion {
   padding-top: 10px;
@@ -891,6 +915,8 @@
   object-position: center bottom;
 }
 
+/* CTA FINAL */
+
 .llamada-final {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
@@ -924,6 +950,8 @@
   justify-self: center;
   object-fit: contain;
 }
+
+/* FOOTER */
 
 .footer {
   margin-bottom: 24px;
@@ -989,6 +1017,8 @@
   line-height: 1.7;
 }
 
+/* RESPONSIVE TABLET */
+
 @media (max-width: 900px) {
 
   .header-contenido {
@@ -1017,6 +1047,8 @@
   }
 
 }
+
+/* RESPONSIVE MÓVIL */
 
 @media (max-width: 650px) {
 
