@@ -74,7 +74,7 @@ export class Catalogoplanlistcomponent implements OnInit {
       error: (err) => {
         console.log(err);
         if (err.status === 400) {
-          this.mensajeAccion = 'El plan free no se puede desactivar';
+          this.mensajeAccion = 'No se puede desactivar el plan free';
         } else if (err.status === 409) {
           this.mensajeAccion = 'El plan ya está desactivado';
         } else if (err.status === 404) {

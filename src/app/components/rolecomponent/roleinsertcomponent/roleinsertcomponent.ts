@@ -28,7 +28,7 @@ export class Roleinsertcomponent {
     });
   }
 
-  // HUF26
+  // HUF43
   registrarRol(): void {
     if (this.roleForm.invalid) {
       this.roleForm.markAllAsTouched();

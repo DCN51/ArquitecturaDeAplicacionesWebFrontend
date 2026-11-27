@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -23,6 +23,8 @@ import { CatalogoPlanDTO } from '../../../models/CatalogoPlanDTO';
 })
 export class Catalogoplaninsertcomponent {
   planForm: FormGroup;
+  // resetForm() limpia el formulario sin dejar los campos marcados en rojo
+  @ViewChild(FormGroupDirective) formDir?: FormGroupDirective;
   mensaje: string = '';
 
   constructor(
@@ -74,7 +76,7 @@ export class Catalogoplaninsertcomponent {
     this.cpS.insert(plan).subscribe({
       next: () => {
         this.mensaje = 'Plan registrado correctamente';
-        this.planForm.reset({
+        this.formDir?.resetForm({
           nombre: '', precio: 0, sesiones: 1, ilimitado: false,
           diagnostico: false, actividades: false, derivacion: false,
           descripcion: ''

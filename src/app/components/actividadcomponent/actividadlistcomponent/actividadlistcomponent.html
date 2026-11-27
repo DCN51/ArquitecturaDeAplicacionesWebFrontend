@@ -1,12 +1,37 @@
 <div class="container">
-  <h2>Actividades recomendadas</h2>
+  <h2>{{ esPaciente ? 'Mis actividades' : 'Actividades recomendadas' }}</h2>
 
   <div class="buscador">
+    <!-- Solo el psicólogo elige qué paciente consultar -->
+    @if (esPsicologo) {
+      <mat-form-field>
+        <mat-label>Id del paciente</mat-label>
+        <input matInput type="number" [(ngModel)]="usuarioId" (keyup.enter)="buscarActividades()">
+      </mat-form-field>
+    }
+
+    <!-- HUF40: filtros por estado y fecha de asignación -->
     <mat-form-field>
-      <mat-label>Id del paciente</mat-label>
-      <input matInput type="number" [(ngModel)]="usuarioId" (keyup.enter)="buscarActividades()">
+      <mat-label>Estado</mat-label>
+      <mat-select [(ngModel)]="estadoFiltro">
+        <mat-option value="">Todos</mat-option>
+        <mat-option value="PENDIENTE">PENDIENTE</mat-option>
+        <mat-option value="COMPLETADA">COMPLETADA</mat-option>
+      </mat-select>
     </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Desde</mat-label>
+      <input matInput type="date" [(ngModel)]="desde">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Hasta</mat-label>
+      <input matInput type="date" [(ngModel)]="hasta">
+    </mat-form-field>
+
     <button matButton="filled" (click)="buscarActividades()">Buscar</button>
+    <button matButton (click)="limpiarFiltros()">Limpiar</button>
   </div>
 
   @if (mensaje) {
@@ -18,11 +43,6 @@
 
   @if (lista.length > 0) {
     <table mat-table [dataSource]="lista" class="mat-elevation-z2">
-
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef>ID</th>
-        <td mat-cell *matCellDef="let element">{{ element.recommendedActivityId }}</td>
-      </ng-container>
 
       <ng-container matColumnDef="titulo">
         <th mat-header-cell *matHeaderCellDef>Título</th>

@@ -52,7 +52,7 @@ export class Rolelistcomponent implements OnInit {
     return this.rolesDelSistema.includes(role.name);
   }
 
-  // HUF28
+  // HUF45
   eliminarRol(role: RoleDTO): void {
     if (!confirm(`¿Seguro que deseas eliminar el rol "${this.nombreRol(role.name)}"?`)) {
       return;

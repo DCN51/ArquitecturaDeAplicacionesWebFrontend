@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { UserDTO } from '../models/UserDTO';
@@ -13,9 +13,16 @@ export class Usersservice {
 
   constructor(private http: HttpClient) { }
 
-  // HUF20 - tabla de usuarios
-  getUsuarios(): Observable<UserDTO[]> {
-    return this.http.get<UserDTO[]>(this.apiURL);
+  // HUF20 - tabla de usuarios | HUF39 - filtros opcionales por rol y estado de cuenta
+  getUsuarios(roleId?: number | null, estadoCuenta?: string): Observable<UserDTO[]> {
+    let params = new HttpParams();
+    if (roleId) {
+      params = params.set('roleId', roleId);
+    }
+    if (estadoCuenta) {
+      params = params.set('estadoCuenta', estadoCuenta);
+    }
+    return this.http.get<UserDTO[]>(this.apiURL, { params });
   }
   // HUF20 - desactivar cuenta
   desactivar(id: number): Observable<UserDTO> {

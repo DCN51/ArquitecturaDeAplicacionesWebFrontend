@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild, OnInit } from '@angular/core';
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -31,6 +31,8 @@ import { CatalogoPlanDTO } from '../../../models/CatalogoPlanDTO';
 })
 export class Suscripcioncambiarcomponent implements OnInit {
   cambioForm: FormGroup;
+  // resetForm() limpia el formulario sin dejar los campos marcados en rojo
+  @ViewChild(FormGroupDirective) formDir?: FormGroupDirective;
   planes: CatalogoPlanDTO[] = [];
   metodosPago: string[] = ['tarjeta', 'yape', 'plin'];
   planEsDePago: boolean = false;
@@ -145,7 +147,7 @@ export class Suscripcioncambiarcomponent implements OnInit {
         this.nuevaSuscripcion = data;
         this.tienePlanPagado = data.fechaFin !== null;   // si bajó al free, ahora le toca Contratar
         this.mensaje = 'Plan cambiado correctamente';
-        this.cambioForm.reset({ catalogoPlanId: '', metodoPago: '', referenciaPago: '' });
+        this.formDir?.resetForm({ catalogoPlanId: '', metodoPago: '', referenciaPago: '' });
         this.cdr.detectChanges();
       },
       error: (err) => {

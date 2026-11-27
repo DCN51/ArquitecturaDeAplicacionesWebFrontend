@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -25,6 +25,8 @@ import { ActividadDTO } from '../../../models/ActividadDTO';
 })
 export class Actividadinsertcomponent {
   actividadForm: FormGroup;
+  // resetForm() limpia el formulario sin dejar los campos marcados en rojo
+  @ViewChild(FormGroupDirective) formDir?: FormGroupDirective;
   mensaje: string = '';
   actividadCreada: ActividadDTO | null = null;
   tipos: string[] = ['Respiración', 'Relajación', 'Actividad física', 'Hábitos', 'Registro emocional'];
@@ -70,7 +72,7 @@ export class Actividadinsertcomponent {
       next: (data) => {
         this.actividadCreada = data;
         this.mensaje = 'Actividad registrada correctamente';
-        this.actividadForm.reset({ usuarioId: '', diagnosticoId: '', titulo: '', descripcion: '', tipo: '' });
+        this.formDir?.resetForm({ usuarioId: '', diagnosticoId: '', titulo: '', descripcion: '', tipo: '' });
         this.cdr.detectChanges();
       },
       error: (err) => {

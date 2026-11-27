@@ -53,7 +53,9 @@ export class Reportsuscripcioncomponent implements OnInit {
     this.sS.suscriptoresPorPlan().subscribe({
       next: (data: SuscriptoresPorPlanDTO[]) => {
         this.lista = data;
-        this.mensaje = '';
+        // HUF10 CA2: si ningún plan tiene suscriptores activos se muestra el mensaje
+        const total = data.reduce((suma, item) => suma + item.cantidadSuscriptores, 0);
+        this.mensaje = total === 0 ? 'No hay suscriptores activos' : '';
         this.chartData = {
           labels: data.map(item => item.nombrePlan),
           datasets: [

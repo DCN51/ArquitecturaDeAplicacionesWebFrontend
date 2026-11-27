@@ -62,7 +62,7 @@ export class Roleupdatecomponent implements OnInit {
     });
   }
 
-  // HUF27
+  // HUF44
   actualizarRol(): void {
     if (this.roleForm.invalid) {
       this.roleForm.markAllAsTouched();

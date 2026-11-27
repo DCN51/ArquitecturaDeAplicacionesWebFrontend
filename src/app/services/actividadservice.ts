@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { ActividadDTO } from '../models/ActividadDTO';
@@ -16,9 +16,19 @@ export class Actividadservice {
   insert(a: ActividadDTO): Observable<ActividadDTO> {
     return this.http.post<ActividadDTO>(this.apiURL, a);
   }
-  // Tabla: actividades de un paciente
-  getActividades(userId: number): Observable<ActividadDTO[]> {
-    return this.http.get<ActividadDTO[]>(`${this.apiURL}/users/${userId}`);
+  // Tabla: actividades de un paciente | HUF40 - filtros opcionales por estado y fechas
+  getActividades(userId: number, status?: string, from?: string, to?: string): Observable<ActividadDTO[]> {
+    let params = new HttpParams();
+    if (status) {
+      params = params.set('status', status);
+    }
+    if (from) {
+      params = params.set('from', from);   // formato yyyy-MM-dd
+    }
+    if (to) {
+      params = params.set('to', to);
+    }
+    return this.http.get<ActividadDTO[]>(`${this.apiURL}/users/${userId}`, { params });
   }
   // HUF23
   update(id: number, a: ActividadDTO): Observable<ActividadDTO> {

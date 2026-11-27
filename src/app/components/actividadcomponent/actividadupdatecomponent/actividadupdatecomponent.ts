@@ -117,6 +117,8 @@ export class Actividadupdatecomponent implements OnInit {
         console.log(err);
         if (err.status === 404) {
           this.mensaje = 'Actividad no encontrada';
+        } else if (err.status === 403) {
+          this.mensaje = 'No tienes autorización sobre esta actividad';
         } else if (err.status === 400) {
           this.mensaje = 'Revise los datos de la actividad';
         } else {

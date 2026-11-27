@@ -1,6 +1,31 @@
 <div class="container">
   <h2>Usuarios</h2>
 
+  <!-- HUF39: filtros por rol y estado de cuenta -->
+  <div class="buscador">
+    <mat-form-field>
+      <mat-label>Rol</mat-label>
+      <mat-select [(ngModel)]="rolFiltro">
+        <mat-option [value]="null">Todos</mat-option>
+        @for (r of roles; track r.roleId) {
+          <mat-option [value]="r.roleId">{{ nombreRol(r.name) }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Estado de cuenta</mat-label>
+      <mat-select [(ngModel)]="estadoFiltro">
+        <mat-option value="">Todos</mat-option>
+        <mat-option value="ACTIVO">ACTIVO</mat-option>
+        <mat-option value="INACTIVO">INACTIVO</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button matButton="filled" (click)="listarUsuarios()">Filtrar</button>
+    <button matButton (click)="limpiarFiltros()">Limpiar</button>
+  </div>
+
   @if (mensajeAccion) {
     <p class="mensaje">{{ mensajeAccion }}</p>
   }
@@ -65,6 +90,6 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   } @else {
-    <p>No hay usuarios registrados</p>
+    <p>{{ hayFiltros ? 'No hay usuarios con esos filtros' : 'No hay usuarios registrados' }}</p>
   }
 </div>

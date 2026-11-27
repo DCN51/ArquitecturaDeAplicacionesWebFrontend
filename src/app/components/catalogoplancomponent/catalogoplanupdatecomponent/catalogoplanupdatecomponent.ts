@@ -123,7 +123,9 @@ export class Catalogoplanupdatecomponent implements OnInit {
       error: (err) => {
         console.log(err);
         if (err.status === 400) {
-          this.mensaje = err.error?.message || 'El nombre del plan free no se puede cambiar';
+          this.mensaje = 'No se puede renombrar el plan free';
+        } else if (err.status === 409) {
+          this.mensaje = 'Ya existe un plan con ese nombre';
         } else if (err.status === 404) {
           this.mensaje = 'Plan no encontrado';
         } else {

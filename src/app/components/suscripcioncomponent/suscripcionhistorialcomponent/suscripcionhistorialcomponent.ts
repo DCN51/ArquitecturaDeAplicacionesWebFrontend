@@ -80,7 +80,7 @@ export class Suscripcionhistorialcomponent implements OnInit {
 
     this.sS.cancelar(this.usuarioId).subscribe({
       next: () => {
-        this.mensajeAccion = 'Suscripción cancelada. Volviste al plan Free';
+        this.mensajeAccion = 'Suscripción cancelada correctamente. Volviste al plan Free';
         this.cargarHistorial();   // recarga la tabla: la fila pasa a "cancelada"
       },
       error: (err) => {

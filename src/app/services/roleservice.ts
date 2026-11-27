@@ -17,22 +17,22 @@ export class Roleservice {
     return this.http.get<RoleDTO[]>(this.apiURL);
   }
 
-  // HUF26 - registrar rol
+  // HUF43 - registrar rol
   insert(role: RoleDTO): Observable<RoleDTO> {
     return this.http.post<RoleDTO>(this.apiURL, role);
   }
 
-  // HUF27 - buscar rol por id (para editar)
+  // HUF44 - buscar rol por id (para editar)
   listId(id: number): Observable<RoleDTO> {
     return this.http.get<RoleDTO>(`${this.apiURL}/${id}`);
   }
 
-  // HUF27 - actualizar rol
+  // HUF44 - actualizar rol
   update(role: RoleDTO): Observable<RoleDTO> {
     return this.http.put<RoleDTO>(this.apiURL, role);
   }
 
-  // HUF28 - eliminar rol
+  // HUF45 - eliminar rol
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiURL}/${id}`);
   }

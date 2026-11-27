@@ -6,7 +6,7 @@
       <mat-label>Vencen en los próximos (días)</mat-label>
       <input matInput type="number" min="0" [(ngModel)]="dias" (keyup.enter)="consultar()">
     </mat-form-field>
-    <button matButton="filled" (click)="consultar()">Consultar</button>
+    <button matButton="filled" (click)="consultar()">Buscar</button>
   </div>
 
   @if (mensaje) {
