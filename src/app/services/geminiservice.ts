@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, retry, throwError, timeout, timer } from 'rxjs';
 import { gemini } from '../../environments/gemini';
 import { MensajeChatDTO } from '../models/MensajeChatDTO';
 
@@ -8,7 +8,11 @@ import { MensajeChatDTO } from '../models/MensajeChatDTO';
   providedIn: 'root',
 })
 export class Geminiservice {
-  private apiURL = `https://generativelanguage.googleapis.com/v1beta/models/${gemini.model}:generateContent`;
+  private baseURL = 'https://generativelanguage.googleapis.com/v1beta/models';
+
+  // Modelo de respaldo: si el modelo principal está saturado (503), responde este.
+  // Flash-Lite es el más liviano y el que menos se satura.
+  private modeloRespaldo = 'gemini-3.5-flash-lite';
 
   // Instrucciones fijas para la IA: cómo debe comportarse en Mind Health
   private instrucciones = `Eres el asistente de acompañamiento emocional de Mind Health, una aplicación de salud mental.
@@ -34,7 +38,34 @@ Responde de forma breve: máximo 120 palabras.`;
       contents: contenidos
     };
 
+    // 1) Se intenta con el modelo principal; 2) si está saturado, no responde o llegó a su
+    //    límite (429: el límite es por modelo), se intenta con el de respaldo
+    return this.llamarModelo(gemini.model, cuerpo).pipe(
+      catchError(err => (this.estaSaturado(err) || err.status === 429) && gemini.model !== this.modeloRespaldo
+        ? this.llamarModelo(this.modeloRespaldo, cuerpo)
+        : throwError(() => err))
+    );
+  }
+
+  // Llama a un modelo de Gemini.
+  // - Si no responde en 15 segundos, se corta (a veces se queda colgado cuando está saturado).
+  // - Si responde 503/500 o falla la conexión (0), reintenta 1 vez a los 2 segundos.
+  // - Los demás errores (429 límite, 400/403 key o modelo) no se reintentan.
+  private llamarModelo(modelo: string, cuerpo: any): Observable<any> {
     const headers = new HttpHeaders({ 'x-goog-api-key': gemini.apiKey });
-    return this.http.post(this.apiURL, cuerpo, { headers });
+    return this.http.post(`${this.baseURL}/${modelo}:generateContent`, cuerpo, { headers }).pipe(
+      timeout(15000),
+      retry({
+        count: 1,
+        delay: (err) => [0, 500, 503].includes(err.status)
+          ? timer(2000)
+          : throwError(() => err)
+      })
+    );
+  }
+
+  // Saturado = 503/500, sin conexión (0) o se pasó el tiempo de espera
+  estaSaturado(err: any): boolean {
+    return [0, 500, 503].includes(err.status) || err.name === 'TimeoutError';
   }
 }

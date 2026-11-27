@@ -85,8 +85,13 @@ export class Sesionclinicachatcomponent implements OnInit {
           this.mensaje = 'Se alcanzó el límite de mensajes de la IA. Intenta más tarde.';
         } else if (err.status === 400 || err.status === 403) {
           this.mensaje = 'La API key o el modelo de Gemini no son válidos.';
+        } else if (err.status === 404) {
+          this.mensaje = 'El modelo de Gemini configurado no existe. Revisa el nombre del modelo.';
+        } else if (this.gS.estaSaturado(err)) {
+          this.mensaje = 'La IA está ocupada en este momento. Intenta de nuevo en unos segundos.';
         } else {
-          this.mensaje = 'El asistente no está disponible en este momento';
+          // se muestra el código para saber qué pasó (0 = sin conexión)
+          this.mensaje = `El asistente no está disponible en este momento (error ${err.status})`;
         }
         this.cdr.detectChanges();
       }
